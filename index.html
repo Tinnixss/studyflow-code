@@ -4,8 +4,129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyFlow | Gestão Inteligente de Estudos</title>
-</head>
+    </head>
 <body>
 
+    <header>
+        <h1>StudyFlow</h1>
+        <nav id="menu-principal" aria-label="Menu Principal">
+            <ul>
+                <li><a href="#perfil">Perfil</a></li>
+                <li><a href="#cronograma">Meu Cronograma</a></li>
+                <li><a href="#foco">Modo Foco</a></li>
+                <li><a href="#relatorios">Desempenho</a></li>
+            </ul>
+        </nav>
+        
+        <section id="gamificacao-status" aria-labelledby="progresso-titulo">
+            <h2 id="progresso-titulo" class="sr-only">Seu Progresso</h2>
+            <span>Nível 5</span>
+            <progress id="barra-xp" value="650" max="1000" title="65% para o próximo nível"></progress> 
+            <small>Medalhas: 🏆 Mestre do Pomodoro</small>
+        </section>
+    </header>
+
+    <main>
+        <section id="perfil">
+            <h2>Configurações Acadêmicas</h2>
+            <form id="form-perfil">
+                <label for="curso-nome">Seu Curso:</label>
+                <input type="text" id="curso-nome" name="curso" placeholder="Ex: Engenharia de Software" required>
+                
+                <label for="metas-longo-prazo">Suas Metas de Longo Prazo:</label>
+                <textarea id="metas-longo-prazo" name="metas" placeholder="Ex: Passar no exame da OAB"></textarea>
+                
+                <fieldset>
+                    <legend>Disponibilidade Semanal</legend>
+                    <div class="dia-check">
+                        <label>
+                            <input type="checkbox" name="dia-semana" value="segunda"> Segunda-feira
+                        </label>
+                        <label for="seg-inicio">Início:</label>
+                        <input type="time" id="seg-inicio" name="seg-inicio">
+                        <label for="seg-fim">Fim:</label>
+                        <input type="time" id="seg-fim" name="seg-fim">
+                    </div>
+                    </fieldset>
+                
+                <button type="submit">Salvar Perfil</button>
+            </form>
+        </section>
+
+        <section id="cadastro-tarefas">
+            <h2>Cadastrar Nova Atividade</h2>
+            <form id="form-task">
+                <label for="task-title">Nome da Tarefa/Prova:</label>
+                <input type="text" id="task-title" name="titulo" placeholder="Ex: Estudar Álgebra" required>
+                
+                <label for="deadline">Data de Entrega (Deadline):</label>
+                <input type="date" id="deadline" name="deadline">
+                
+                <label for="priority">Nível de Prioridade:</label>
+                <select id="priority" name="prioridade">
+                    <option value="1">Prioridade Baixa</option>
+                    <option value="2">Prioridade Média</option>
+                    <option value="3">Prioridade Alta</option>
+                </select>
+
+                <label for="effort">Estimativa de Esforço (1 a 5):</label>
+                <input type="range" id="effort" name="esforço" min="1" max="5" value="3">
+                
+                <button type="submit">Adicionar ao Fluxo</button>
+            </form>
+        </section>
+
+        <section id="cronograma">
+            <h2>Sua Agenda da Semana</h2>
+            <div id="grid-cronograma">
+                <article class="task-card">
+                    <h3>Matemática Discreta</h3>
+                    <p>Urgência x Complexidade: <strong>P = 15</strong></p>
+                    <time datetime="2026-02-15">Data: 15/02/2026</time>
+                </article>
+            </div>
+
+            <figure id="grafico-desempenho">
+                <div id="container-grafico" style="height: 200px; background: #f4f4f4; border: 1px dashed #ccc; text-align: center; line-height: 200px;">
+                    [Gráfico de Horas vs Rendimento será renderizado aqui]
+                </div>
+                <figcaption>Gráfico comparativo: Horas estudadas vs Rendimento Semanal</figcaption>
+            </figure>
+        </section>
+
+        <section id="foco">
+            <h2>Temporizador de Estudo</h2>
+            <div id="timer" role="timer" aria-live="polite">25:00</div>
+            <div class="controles-timer">
+                <button type="button" onclick="iniciarPomodoro()">Modo Pomodoro</button>
+                <button type="button" onclick="tempoLivre()">Tempo Livre</button>
+            </div>
+
+            <dialog id="modal-feedback">
+                <form method="dialog">
+                    <h3>Sessão Finalizada!</h3>
+                    <label for="foco-nota">Como foi seu foco? (1 a 5):</label>
+                    <input type="number" id="foco-nota" name="foco" min="1" max="5" required>
+                    
+                    <label for="dificuldades">O que dificultou seu aprendizado?</label>
+                    <textarea id="dificuldades" name="obs" placeholder="Ex: Barulho externo, cansaço..."></textarea>
+                    
+                    <button type="submit">Salvar Registro</button>
+                </form>
+            </dialog>
+        </section>
+
+        <aside id="recomendacoes">
+            <h3>Sugestões do StudyFlow</h3>
+            <article id="sugestao-ia">
+                <p>Notamos uma queda de rendimento em Física. Que tal tentar um <strong>Mapa Mental</strong> hoje?</p>
+            </article>
+        </aside>
+    </main>
+
+    <footer>
+        <p>StudyFlow - Dados protegidos conforme a LGPD (RNF04)</p>
+        <p><small>Status do Sistema: <strong>Disponível Offline</strong> (RNF03)</small></p>
+    </footer>
 </body>
 </html>
