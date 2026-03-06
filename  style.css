@@ -1,58 +1,637 @@
-/* RESET BÁSICO */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ============================================================
+   StudyFlow | style.css
+   Versão corrigida e aprimorada
+   ============================================================
+   ÍNDICE:
+   01. Custom Properties (:root + dark mode)
+   02. Reset Básico
+   03. Base Geral
+   04. Acessibilidade (skip-link + focus-visible)
+   05. Header
+   06. Menu Principal
+   07. Gamificação / Barra de XP
+   08. Layout Principal (main)
+   09. Componente: Seção Card
+   10. Formulários
+   11. Disponibilidade Semanal (fieldset)
+   12. Botões
+   13. Cronograma
+   14. Tarefa Card
+   15. Gráfico Placeholder
+   16. Temporizador
+   17. Modal de Feedback
+   18. Recomendações (aside)
+   19. Footer
+   20. Responsividade (media queries)
+   ============================================================ */
+
+
+/* ============================================================
+   01. CUSTOM PROPERTIES
+   Fonte única da verdade — altere aqui, muda em todo o projeto
+   ============================================================ */
+:root {
+  /* Paleta principal (modo claro) */
+  --cor-fundo:           #f5f7fa;
+  --cor-superficie:      #ffffff;
+  --cor-primaria:        #1e293b;
+  --cor-destaque:        #38bdf8;
+  --cor-destaque-hover:  #0ea5e9;
+  --cor-texto:           #334155;
+  --cor-texto-suave:     #64748b;
+  --cor-borda:           #e2e8f0;
+  --cor-header-texto:    #e2e8f0;
+  --cor-xp-barra:        #38bdf8;
+
+  /* Prioridades de tarefa */
+  --cor-prioridade-alta:  #ef4444;
+  --cor-prioridade-media: #f59e0b;
+  --cor-prioridade-baixa: #22c55e;
+
+  /* Tipografia */
+  --fonte-titulo: 'Syne', sans-serif;
+  --fonte-corpo:  'Plus Jakarta Sans', sans-serif;
+
+  /* Espaçamentos */
+  --espaco-xs:  8px;
+  --espaco-sm: 16px;
+  --espaco-md: 24px;
+  --espaco-lg: 40px;
+
+  /* Bordas arredondadas */
+  --raio-sm:  8px;
+  --raio-md: 12px;
+  --raio-lg: 20px;
+
+  /* Sombras */
+  --sombra-suave: 0 1px 3px rgba(0, 0, 0, .08), 0 4px 12px rgba(0, 0, 0, .06);
 }
 
-/* BASE GERAL */
+/* Dark mode automático via preferência do sistema operacional */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cor-fundo:        #0f172a;
+    --cor-superficie:   #1e293b;
+    --cor-primaria:     #0f172a;
+    --cor-texto:        #e2e8f0;
+    --cor-texto-suave:  #94a3b8;
+    --cor-borda:        #2d3f55;
+    --cor-header-texto: #f1f5f9;
+    --sombra-suave: 0 1px 3px rgba(0, 0, 0, .3), 0 4px 12px rgba(0, 0, 0, .2);
+  }
+}
+
+
+/* ============================================================
+   02. RESET BÁSICO
+   ============================================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+/* ============================================================
+   03. BASE GERAL
+   ============================================================ */
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #f5f7fa;
-    color: #333;
-    line-height: 1.6;
+  font-family: var(--fonte-corpo);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  min-height: 100vh;
 }
 
-/* HEADER */
+
+/* ============================================================
+   04. ACESSIBILIDADE
+   ============================================================ */
+
+/* Foco visível para navegação por teclado */
+:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 3px;
+  border-radius: var(--raio-sm);
+}
+
+/* Skip link — aparece apenas ao receber foco (Tab) */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--espaco-sm);
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+  padding: var(--espaco-xs) var(--espaco-sm);
+  border-radius: var(--raio-sm);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: var(--espaco-sm);
+}
+
+
+/* ============================================================
+   05. HEADER
+   ============================================================ */
 header {
-    background-color: #1e293b;
-    color: white;
-    padding: 20px 40px;
+  background-color: var(--cor-primaria);
+  color: var(--cor-header-texto);
+  padding: var(--espaco-md) var(--espaco-lg);
 }
 
-/* TÍTULO */
-header h1 {
-    margin-bottom: 15px;
-    font-size: 28px;
+.header__logo {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(22px, 4vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--espaco-sm);
+  color: var(--cor-header-texto);
 }
 
-/* MENU */
+
+/* ============================================================
+   06. MENU PRINCIPAL
+   ============================================================ */
 #menu-principal ul {
-    list-style: none;
-    display: flex;
-    gap: 25px;
+  list-style: none;
+  display: flex;
+  gap: var(--espaco-md);
+  flex-wrap: wrap;
 }
 
-/* LINKS */
 #menu-principal a {
-    text-decoration: none;
-    color: #e2e8f0;
-    font-weight: 500;
-    transition: 0.3s;
+  text-decoration: none;
+  color: var(--cor-header-texto);
+  font-weight: 500;
+  font-size: 15px;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.25s ease, border-color 0.25s ease;
 }
 
-/* EFEITO HOVER */
-#menu-principal a:hover {
-    color: #38bdf8;
+#menu-principal a:hover,
+#menu-principal a[aria-current="page"] {
+  color: var(--cor-destaque);
+  border-bottom-color: var(--cor-destaque);
 }
 
-/* SEÇÃO DE PROGRESSO */
+
+/* ============================================================
+   07. GAMIFICAÇÃO / BARRA DE XP
+   ============================================================ */
 #gamificacao-status {
-    margin-top: 20px;
+  margin-top: var(--espaco-md);
+  padding-top: var(--espaco-md);
+  border-top: 1px solid rgba(255, 255, 255, .1);
+}
+
+#gamificacao-status h2 {
+  font-family: var(--fonte-titulo);
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--cor-destaque);
+  margin-bottom: var(--espaco-xs);
+}
+
+#gamificacao-status p {
+  font-size: 14px;
+  margin-bottom: 6px;
 }
 
 #barra-xp {
+  width: 100%;
+  max-width: 320px;
+  height: 10px;
+  border-radius: 99px;
+  margin: var(--espaco-xs) 0;
+  accent-color: var(--cor-xp-barra);
+}
+
+
+/* ============================================================
+   08. LAYOUT PRINCIPAL
+   ============================================================ */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--espaco-lg) var(--espaco-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-lg);
+}
+
+
+/* ============================================================
+   09. COMPONENTE: SEÇÃO CARD
+   Padrão reutilizável para todas as seções do app
+   ============================================================ */
+.secao-card {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-md) var(--espaco-lg);
+  box-shadow: var(--sombra-suave);
+}
+
+.secao-card h2 {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(18px, 3vw, 22px);
+  font-weight: 700;
+  color: var(--cor-primaria);
+  margin-bottom: var(--espaco-md);
+}
+
+
+/* ============================================================
+   10. FORMULÁRIOS — padrão compartilhado entre todas as seções
+   ============================================================ */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-sm);
+}
+
+.formulario label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-sm);
+  font-family: var(--fonte-corpo);
+  font-size: 15px;
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.formulario input:focus,
+.formulario select:focus,
+.formulario textarea:focus {
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, .15);
+  outline: none;
+}
+
+.formulario textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Range de esforço — colorido com a cor de destaque */
+input[type="range"] {
+  accent-color: var(--cor-destaque);
+}
+
+
+/* ============================================================
+   11. DISPONIBILIDADE SEMANAL (fieldset)
+   ============================================================ */
+.disponibilidade-fieldset {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-sm) var(--espaco-md);
+}
+
+.disponibilidade-fieldset legend {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0 var(--espaco-xs);
+  color: var(--cor-texto);
+}
+
+.grade-disponibilidade {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+  margin-top: var(--espaco-sm);
+}
+
+.grade-disponibilidade > div > label:first-child {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.horario-grupo {
+  display: grid;
+  grid-template-columns: auto 1fr auto 1fr;
+  align-items: center;
+  gap: var(--espaco-xs);
+  margin-top: 4px;
+}
+
+.horario-grupo label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ============================================================
+   12. BOTÕES
+   ============================================================ */
+
+/* Primário — ação principal */
+.btn-primario {
+  padding: 12px 24px;
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+  border: none;
+  border-radius: var(--raio-sm);
+  font-family: var(--fonte-corpo);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primario:hover {
+  background: var(--cor-destaque-hover);
+}
+
+.btn-primario:active {
+  transform: scale(0.98);
+}
+
+/* Secundário — ação alternativa (outline) */
+.btn-secundario {
+  padding: 10px 20px;
+  background: transparent;
+  color: var(--cor-destaque);
+  border: 2px solid var(--cor-destaque);
+  border-radius: var(--raio-sm);
+  font-family: var(--fonte-corpo);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-secundario:hover {
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+}
+
+
+/* ============================================================
+   13. CRONOGRAMA
+   ============================================================ */
+.cronograma__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--espaco-md);
+  flex-wrap: wrap;
+  gap: var(--espaco-xs);
+}
+
+.cronograma__semana {
+  font-size: 14px;
+  color: var(--cor-texto-suave);
+}
+
+#grade-cronograma {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--espaco-sm);
+}
+
+
+/* ============================================================
+   14. TAREFA CARD
+   ============================================================ */
+.tarefa-card {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-md);
+  padding: var(--espaco-sm);
+  background: var(--cor-fundo);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Barra lateral colorida por prioridade */
+.tarefa-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+}
+
+.tarefa-card--alta::before  { background: var(--cor-prioridade-alta);  }
+.tarefa-card--media::before { background: var(--cor-prioridade-media); }
+.tarefa-card--baixa::before { background: var(--cor-prioridade-baixa); }
+
+.tarefa-card h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  padding-left: var(--espaco-xs);
+}
+
+.tarefa-card p,
+.tarefa-card time {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  padding-left: var(--espaco-xs);
+  display: block;
+}
+
+
+/* ============================================================
+   15. GRÁFICO PLACEHOLDER
+   Substitui o antigo style="" inline no HTML
+   ============================================================ */
+.grafico-placeholder {
+  height: 200px;
+  background: var(--cor-fundo);
+  border: 2px dashed var(--cor-borda);
+  border-radius: var(--raio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-texto-suave);
+  font-size: 14px;
+  margin-bottom: var(--espaco-xs);
+}
+
+figure {
+  margin-top: var(--espaco-md);
+}
+
+figcaption {
+  font-size: 13px;
+  color: var(--cor-texto-suave);
+  text-align: center;
+  margin-top: var(--espaco-xs);
+}
+
+
+/* ============================================================
+   16. TEMPORIZADOR
+   ============================================================ */
+#mostrador-timer {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(48px, 12vw, 80px);
+  font-weight: 800;
+  color: var(--cor-primaria);
+  letter-spacing: -2px;
+  text-align: center;
+  margin: var(--espaco-md) 0;
+}
+
+.timer-controles {
+  display: flex;
+  gap: var(--espaco-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   17. MODAL DE FEEDBACK
+   ============================================================ */
+#modal-feedback {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-md) var(--espaco-lg);
+  max-width: 480px;
+  width: calc(100% - var(--espaco-md));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .15);
+  background: var(--cor-superficie);
+}
+
+#modal-feedback::backdrop {
+  background: rgba(0, 0, 0, .5);
+  backdrop-filter: blur(4px);
+}
+
+#modal-feedback h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: var(--espaco-md);
+}
+
+
+/* ============================================================
+   18. RECOMENDAÇÕES (aside)
+   ============================================================ */
+#recomendacoes {
+  background: linear-gradient(
+    135deg,
+    rgba(56, 189, 248, .06),
+    rgba(167, 139, 250, .06)
+  );
+  border: 1px solid rgba(56, 189, 248, .2);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-md) var(--espaco-lg);
+}
+
+#recomendacoes h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cor-destaque);
+  margin-bottom: var(--espaco-sm);
+}
+
+#recomendacoes p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cor-texto);
+}
+
+
+/* ============================================================
+   19. FOOTER
+   ============================================================ */
+footer {
+  background: var(--cor-primaria);
+  color: var(--cor-header-texto);
+  text-align: center;
+  padding: var(--espaco-md) var(--espaco-lg);
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-xs);
+}
+
+footer p {
+  opacity: .75;
+}
+
+
+/* ============================================================
+   20. RESPONSIVIDADE — mobile-first
+   ============================================================ */
+
+/* Tablet e abaixo (≤ 768px) */
+@media (max-width: 768px) {
+  header {
+    padding: var(--espaco-sm) var(--espaco-md);
+  }
+
+  main {
+    padding: var(--espaco-md) var(--espaco-sm);
+    gap: var(--espaco-md);
+  }
+
+  .secao-card {
+    padding: var(--espaco-sm) var(--espaco-md);
+  }
+
+  #menu-principal ul {
+    gap: var(--espaco-sm);
+  }
+
+  .horario-grupo {
+    grid-template-columns: auto 1fr; /* empilha em 2 colunas no tablet */
+  }
+
+  .cronograma__nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+  #menu-principal ul {
+    flex-direction: column;
+    gap: var(--espaco-xs);
+  }
+
+  .timer-controles {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primario,
+  .btn-secundario {
     width: 100%;
-    height: 15px;
-    margin: 10px 0;
+    text-align: center;
+  }
 }
