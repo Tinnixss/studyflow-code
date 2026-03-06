@@ -2,159 +2,390 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyFlow | Gestão Inteligente de Estudos</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- [MELHORIA 07] Meta tags SEO -->
+  <meta name="description" content="StudyFlow — Gerencie seus estudos com inteligência. Cronograma automático, temporizador Pomodoro e acompanhamento de desempenho.">
+  <meta name="author" content="StudyFlow">
+
+  <!-- [MELHORIA 07] Open Graph para compartilhamento social -->
+  <meta property="og:title" content="StudyFlow | Gestão Inteligente de Estudos">
+  <meta property="og:description" content="Organize sua rotina de estudos com cronograma automático e análise de desempenho.">
+  <meta property="og:type" content="website">
+
+  <!-- [MELHORIA 08] Cor da barra do navegador em mobile -->
+  <meta name="theme-color" content="#1e293b">
+
+  <title>StudyFlow | Gestão Inteligente de Estudos</title>
+
+  <!-- [MELHORIA 02] Google Fonts — Syne (títulos) + Plus Jakarta Sans (corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-    <header>
-        <h1>StudyFlow</h1>
+  <!-- ============================================================
+       [MELHORIA 06] SKIP LINK
+       Permite usuários de teclado/leitores de tela pularem o header
+       ============================================================ -->
+  <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo</a>
 
-        <nav id="menu-principal" aria-label="Menu Principal">
-            <ul>
-                <li><a href="#perfil">Perfil</a></li>
-                <li><a href="#cronograma">Meu Cronograma</a></li>
-                <li><a href="#foco">Modo Foco</a></li>
-                <li><a href="#relatorios">Desempenho</a></li>
-            </ul>
-        </nav>
+  <!-- ============================================================
+       HEADER
+       ============================================================ -->
+  <header role="banner">
 
-        <section id="gamificacao-status" aria-labelledby="progresso-titulo">
-            <h2 id="progresso-titulo">Seu Progresso</h2>
-            <p>Nível 5</p>
-            <progress id="barra-xp" value="650" max="1000" title="65% para o próximo nível"></progress>
-            <p><small>Medalhas: 🏆 Mestre do Pomodoro</small></p>
-        </section>
-    </header>
+    <!-- [MELHORIA 02] <h1> usa classe semântica para estilo -->
+    <h1 class="header__logo">StudyFlow</h1>
 
-    <main>
+    <!-- [MELHORIA 10] aria-current="page" na página ativa -->
+    <nav id="menu-principal" aria-label="Menu Principal">
+      <ul role="list">
+        <li><a href="#perfil"      aria-current="page">Perfil</a></li>
+        <li><a href="#cronograma">Meu Cronograma</a></li>
+        <li><a href="#foco">Modo Foco</a></li>
+        <li><a href="#relatorios">Desempenho</a></li>
+      </ul>
+    </nav>
 
-        <section id="perfil">
-            <h2>Configurações Acadêmicas</h2>
+    <!-- Barra de progresso (gamificação) -->
+    <section id="gamificacao-status" aria-labelledby="progresso-titulo">
+      <h2 id="progresso-titulo">Seu Progresso</h2>
+      <p>Nível 5 — Estudante Focado</p>
+      <!-- [MELHORIA 15] aria-label mais descritivo -->
+      <progress
+        id="barra-xp"
+        value="650"
+        max="1000"
+        aria-label="650 de 1000 XP para o nível 6 (65%)"
+      ></progress>
+      <p><small>🏆 Medalhas: Mestre do Pomodoro · 7 Dias Seguidos</small></p>
+    </section>
 
-            <form id="form-perfil">
-                <label for="curso-nome">Seu Curso:</label>
-                <input type="text" id="curso-nome" name="curso" placeholder="Ex: Engenharia de Software" required>
+  </header>
 
-                <label for="metas-longo-prazo">Suas Metas de Longo Prazo:</label>
-                <textarea id="metas-longo-prazo" name="metas"
-                    placeholder="Ex: Passar no exame da OAB"></textarea>
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+       ============================================================ -->
+  <main id="conteudo-principal">
 
-                <fieldset>
-                    <legend>Disponibilidade Semanal</legend>
+    <!-- ── PERFIL ─────────────────────────────────────────────── -->
+    <section id="perfil" class="secao-card" aria-labelledby="titulo-perfil">
+      <h2 id="titulo-perfil">Configurações Acadêmicas</h2>
 
-                    <div>
-                        <label>
-                            <input type="checkbox" name="dia-semana" value="segunda">
-                            Segunda-feira
-                        </label>
+      <form id="formulario-perfil" class="formulario" novalidate>
 
-                        <label for="seg-inicio">Início:</label>
-                        <input type="time" id="seg-inicio" name="seg-inicio">
+        <label for="nome-curso">Seu Curso:</label>
+        <input
+          type="text"
+          id="nome-curso"
+          name="curso"
+          placeholder="Ex: Engenharia de Software"
+          autocomplete="organization"
+          required
+          aria-required="true"
+        >
 
-                        <label for="seg-fim">Fim:</label>
-                        <input type="time" id="seg-fim" name="seg-fim">
-                    </div>
-                </fieldset>
+        <label for="metas-longo-prazo">Suas Metas de Longo Prazo:</label>
+        <textarea
+          id="metas-longo-prazo"
+          name="metas"
+          placeholder="Ex: Ser aprovado na OAB, dominar algoritmos..."
+          aria-describedby="dica-metas"
+        ></textarea>
+        <!-- [MELHORIA 10] Dica acessível vinculada ao campo -->
+        <small id="dica-metas" style="color: var(--cor-texto-suave); font-size: 13px;">
+          Seja específico — isso ajuda o StudyFlow a personalizar seu cronograma.
+        </small>
 
-                <button type="submit">Salvar Perfil</button>
-            </form>
-        </section>
+        <!-- [MELHORIA 16] Fieldset com todos os 7 dias -->
+        <fieldset class="disponibilidade-fieldset">
+          <legend>Disponibilidade Semanal</legend>
 
-        <section id="cadastro-tarefas">
-            <h2>Cadastrar Nova Atividade</h2>
+          <div class="grade-disponibilidade">
 
-            <form id="form-task">
-                <label for="task-title">Nome da Tarefa/Prova:</label>
-                <input type="text" id="task-title" name="titulo"
-                    placeholder="Ex: Estudar Álgebra" required>
-
-                <label for="deadline">Data de Entrega (Deadline):</label>
-                <input type="date" id="deadline" name="deadline">
-
-                <label for="priority">Nível de Prioridade:</label>
-                <select id="priority" name="prioridade">
-                    <option value="1">Prioridade Baixa</option>
-                    <option value="2">Prioridade Média</option>
-                    <option value="3">Prioridade Alta</option>
-                </select>
-
-                <label for="effort">Estimativa de Esforço (1 a 5):</label>
-                <input type="range" id="effort" name="esforco" min="1" max="5" value="3">
-
-                <button type="submit">Adicionar ao Fluxo</button>
-            </form>
-        </section>
-
-        <section id="cronograma">
-            <h2>Sua Agenda da Semana</h2>
-
-            <div id="grid-cronograma">
-                <article>
-                    <h3>Matemática Discreta</h3>
-                    <p>Urgência x Complexidade: <strong>P = 15</strong></p>
-                    <time datetime="2026-02-15">Data: 15/02/2026</time>
-                </article>
-            </div>
-
-            <figure>
-                <div style="height:200px; background:#f4f4f4; border:1px dashed #ccc; text-align:center; line-height:200px;">
-                    [Gráfico de Horas vs Rendimento será renderizado aqui]
-                </div>
-                <figcaption>
-                    Gráfico comparativo: Horas estudadas vs Rendimento Semanal
-                </figcaption>
-            </figure>
-        </section>
-
-        <section id="foco">
-            <h2>Temporizador de Estudo</h2>
-
-            <div id="timer" role="timer" aria-live="polite">
-                25:00
-            </div>
-
+            <!-- Segunda-feira -->
             <div>
-                <button type="button">Modo Pomodoro</button>
-                <button type="button">Tempo Livre</button>
+              <label>
+                <input type="checkbox" name="dia-semana" value="segunda">
+                Segunda-feira
+              </label>
+              <div class="horario-grupo">
+                <label for="segunda-inicio">Início:</label>
+                <input type="time" id="segunda-inicio" name="segunda-inicio" aria-label="Hora de início na segunda-feira">
+                <label for="segunda-fim">Fim:</label>
+                <input type="time" id="segunda-fim" name="segunda-fim" aria-label="Hora de fim na segunda-feira">
+              </div>
             </div>
 
-            <dialog id="modal-feedback">
-                <form method="dialog">
-                    <h3>Sessão Finalizada!</h3>
+            <!-- Terça-feira -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="terca">
+                Terça-feira
+              </label>
+              <div class="horario-grupo">
+                <label for="terca-inicio">Início:</label>
+                <input type="time" id="terca-inicio" name="terca-inicio" aria-label="Hora de início na terça-feira">
+                <label for="terca-fim">Fim:</label>
+                <input type="time" id="terca-fim" name="terca-fim" aria-label="Hora de fim na terça-feira">
+              </div>
+            </div>
 
-                    <label for="foco-nota">Como foi seu foco? (1 a 5):</label>
-                    <input type="number" id="foco-nota" name="foco" min="1" max="5" required>
+            <!-- Quarta-feira -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="quarta">
+                Quarta-feira
+              </label>
+              <div class="horario-grupo">
+                <label for="quarta-inicio">Início:</label>
+                <input type="time" id="quarta-inicio" name="quarta-inicio" aria-label="Hora de início na quarta-feira">
+                <label for="quarta-fim">Fim:</label>
+                <input type="time" id="quarta-fim" name="quarta-fim" aria-label="Hora de fim na quarta-feira">
+              </div>
+            </div>
 
-                    <label for="dificuldades">O que dificultou seu aprendizado?</label>
-                    <textarea id="dificuldades" name="obs"
-                        placeholder="Ex: Barulho externo, cansaço..."></textarea>
+            <!-- Quinta-feira -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="quinta">
+                Quinta-feira
+              </label>
+              <div class="horario-grupo">
+                <label for="quinta-inicio">Início:</label>
+                <input type="time" id="quinta-inicio" name="quinta-inicio" aria-label="Hora de início na quinta-feira">
+                <label for="quinta-fim">Fim:</label>
+                <input type="time" id="quinta-fim" name="quinta-fim" aria-label="Hora de fim na quinta-feira">
+              </div>
+            </div>
 
-                    <button type="submit">Salvar Registro</button>
-                </form>
-            </dialog>
-        </section>
+            <!-- Sexta-feira -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="sexta">
+                Sexta-feira
+              </label>
+              <div class="horario-grupo">
+                <label for="sexta-inicio">Início:</label>
+                <input type="time" id="sexta-inicio" name="sexta-inicio" aria-label="Hora de início na sexta-feira">
+                <label for="sexta-fim">Fim:</label>
+                <input type="time" id="sexta-fim" name="sexta-fim" aria-label="Hora de fim na sexta-feira">
+              </div>
+            </div>
 
-        <aside id="recomendacoes">
-            <h3>Sugestões do StudyFlow</h3>
-            <article>
-                <p>
-                    Notamos uma queda de rendimento em Física.
-                    Que tal tentar um <strong>Mapa Mental</strong> hoje?
-                </p>
-            </article>
-        </aside>
+            <!-- Sábado -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="sabado">
+                Sábado
+              </label>
+              <div class="horario-grupo">
+                <label for="sabado-inicio">Início:</label>
+                <input type="time" id="sabado-inicio" name="sabado-inicio" aria-label="Hora de início no sábado">
+                <label for="sabado-fim">Fim:</label>
+                <input type="time" id="sabado-fim" name="sabado-fim" aria-label="Hora de fim no sábado">
+              </div>
+            </div>
 
-    </main>
+            <!-- Domingo -->
+            <div>
+              <label>
+                <input type="checkbox" name="dia-semana" value="domingo">
+                Domingo
+              </label>
+              <div class="horario-grupo">
+                <label for="domingo-inicio">Início:</label>
+                <input type="time" id="domingo-inicio" name="domingo-inicio" aria-label="Hora de início no domingo">
+                <label for="domingo-fim">Fim:</label>
+                <input type="time" id="domingo-fim" name="domingo-fim" aria-label="Hora de fim no domingo">
+              </div>
+            </div>
 
-    <footer>
-        <p>StudyFlow - Dados protegidos conforme a LGPD</p>
-        <p><small>Status do Sistema: <strong>Disponível Offline</strong></small></p>
-    </footer>
+          </div>
+        </fieldset>
+
+        <!-- [MELHORIA 09] type="submit" explícito dentro de form -->
+        <button type="submit" class="btn-primario">Salvar Perfil</button>
+
+      </form>
+    </section>
+
+    <!-- ── CADASTRO DE TAREFAS ─────────────────────────────────── -->
+    <section id="cadastro-tarefas" class="secao-card" aria-labelledby="titulo-tarefas">
+      <h2 id="titulo-tarefas">Cadastrar Nova Atividade</h2>
+
+      <!-- [MELHORIA 05] Todos os IDs/names em português -->
+      <form id="formulario-tarefa" class="formulario" novalidate>
+
+        <label for="titulo-tarefa">Nome da Tarefa / Prova:</label>
+        <input
+          type="text"
+          id="titulo-tarefa"
+          name="titulo"
+          placeholder="Ex: Estudar Álgebra Linear"
+          required
+          aria-required="true"
+        >
+
+        <label for="prazo-entrega">Data de Entrega (Prazo):</label>
+        <input
+          type="date"
+          id="prazo-entrega"
+          name="prazo"
+          aria-describedby="dica-prazo"
+        >
+        <small id="dica-prazo" style="color: var(--cor-texto-suave); font-size: 13px;">
+          O algoritmo P = U × C usa esta data para calcular urgência.
+        </small>
+
+        <label for="nivel-prioridade">Nível de Prioridade:</label>
+        <select id="nivel-prioridade" name="prioridade">
+          <option value="1">🟢 Prioridade Baixa</option>
+          <option value="2">🟡 Prioridade Média</option>
+          <option value="3">🔴 Prioridade Alta</option>
+        </select>
+
+        <label for="esforco-estimado">
+          Estimativa de Esforço:
+          <output id="saida-esforco" for="esforco-estimado"> 3 / 5</output>
+        </label>
+        <input
+          type="range"
+          id="esforco-estimado"
+          name="esforco"
+          min="1"
+          max="5"
+          value="3"
+          aria-describedby="dica-esforco"
+          oninput="document.getElementById('saida-esforco').textContent = ' ' + this.value + ' / 5'"
+        >
+        <small id="dica-esforco" style="color: var(--cor-texto-suave); font-size: 13px;">
+          1 = Rápido / 5 = Muito trabalhoso
+        </small>
+
+        <!-- [MELHORIA 09] type="submit" explícito -->
+        <button type="submit" class="btn-primario">Adicionar ao Fluxo ＋</button>
+
+      </form>
+    </section>
+
+    <!-- ── CRONOGRAMA ──────────────────────────────────────────── -->
+    <section id="cronograma" class="secao-card" aria-labelledby="titulo-cronograma">
+
+      <!-- [MELHORIA 11] Navegação da semana com controles de anterior/próxima -->
+      <div class="cronograma__nav">
+        <h2 id="titulo-cronograma">Sua Agenda da Semana</h2>
+        <nav aria-label="Navegação de semana">
+          <!-- [MELHORIA 09] type="button" explícito em botões fora de form -->
+          <button type="button" class="btn-secundario" aria-label="Semana anterior">‹ Anterior</button>
+          <span class="cronograma__semana" aria-live="polite">10 a 16 de março de 2026</span>
+          <button type="button" class="btn-secundario" aria-label="Próxima semana">Próxima ›</button>
+        </nav>
+      </div>
+
+      <!-- Grade de tarefas — classes de prioridade no card -->
+      <div id="grade-cronograma">
+        <article class="tarefa-card tarefa-card--alta" aria-label="Tarefa: Matemática Discreta, prioridade alta">
+          <h3>Matemática Discreta</h3>
+          <p>Urgência × Complexidade: <strong>P = 15</strong></p>
+          <time datetime="2026-03-15">Prazo: 15/03/2026</time>
+        </article>
+      </div>
+
+      <!-- [MELHORIA 04] Placeholder do gráfico sem style inline -->
+      <figure style="margin-top: var(--espaco-md);">
+        <div class="grafico-placeholder" role="img" aria-label="Área reservada para o gráfico de desempenho">
+          📊 Gráfico de Horas vs. Rendimento será renderizado aqui
+        </div>
+        <figcaption>Gráfico comparativo: Horas estudadas vs. Rendimento Semanal</figcaption>
+      </figure>
+
+    </section>
+
+    <!-- ── MODO FOCO / TEMPORIZADOR ───────────────────────────── -->
+    <section id="foco" class="secao-card" aria-labelledby="titulo-foco">
+      <h2 id="titulo-foco">Temporizador de Estudo</h2>
+
+      <!-- [MELHORIA 10] role="timer" + aria-live mantidos e melhorados -->
+      <div
+        id="mostrador-timer"
+        role="timer"
+        aria-live="off"
+        aria-label="Temporizador: 25 minutos restantes"
+      >
+        25:00
+      </div>
+
+      <div class="timer-controles">
+        <!-- [MELHORIA 09] Todos os botões com type="button" explícito -->
+        <button type="button" class="btn-primario" aria-pressed="true">
+          Modo Pomodoro (25/5 min)
+        </button>
+        <button type="button" class="btn-secundario" aria-pressed="false">
+          ⏱ Tempo Livre
+        </button>
+      </div>
+
+      <!-- Modal de feedback nativo — boas práticas mantidas -->
+      <dialog id="modal-feedback" aria-labelledby="titulo-modal-feedback" aria-modal="true">
+        <form method="dialog" class="formulario">
+
+          <h3 id="titulo-modal-feedback">✅ Sessão Finalizada!</h3>
+
+          <label for="nota-foco">Como foi seu foco? (1 a 5):</label>
+          <input
+            type="number"
+            id="nota-foco"
+            name="foco"
+            min="1"
+            max="5"
+            required
+            aria-required="true"
+          >
+
+          <label for="dificuldades-sessao">O que dificultou seu aprendizado?</label>
+          <textarea
+            id="dificuldades-sessao"
+            name="observacoes"
+            placeholder="Ex: Barulho externo, cansaço, distração com celular..."
+          ></textarea>
+
+          <!-- type="submit" dentro de <form method="dialog"> fecha o dialog -->
+          <button type="submit" class="btn-primario">Salvar Registro</button>
+
+        </form>
+      </dialog>
+
+    </section>
+
+    <!-- ── RECOMENDAÇÕES ──────────────────────────────────────── -->
+    <!-- [MELHORIA 12] role="complementary" semântico para conteúdo de apoio -->
+    <aside id="recomendacoes" role="complementary" aria-labelledby="titulo-recomendacoes">
+      <h3 id="titulo-recomendacoes"> Sugestões do StudyFlow</h3>
+      <article aria-label="Recomendação para Física">
+        <p>
+          Notamos uma queda de rendimento em <strong>Física</strong> nas últimas 3 sessões.
+          Que tal tentar um <strong>Mapa Mental</strong> hoje para revisar os conceitos?
+        </p>
+      </article>
+    </aside>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer role="contentinfo">
+    <p>© 2026 StudyFlow — Dados protegidos conforme a <abbr title="Lei Geral de Proteção de Dados">LGPD</abbr></p>
+    <p><small>Status do Sistema: <strong>🟢 Disponível Offline</strong></small></p>
+  </footer>
 
 </body>
-
 </html>
