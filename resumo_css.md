@@ -1,12 +1,65 @@
-# Resumo sobre CSS
+# Resumo de Aprendizado: CSS e Box Model
 
-## 1. A utilidade do CSS e o uso de arquivos externos
+Este documento contém os conceitos fundamentais explorados em aula sobre a estilização de páginas web, organização de código e o funcionamento das "caixas" no navegador.
 
-O CSS (Cascading Style Sheets) é a linguagem responsável por definir a aparência visual de uma página web. Enquanto o HTML organiza o conteúdo da página, o CSS cuida do design, permitindo alterar cores, fontes, espaçamentos, tamanhos e a organização dos elementos na tela.
+---
 
-Existem três formas de aplicar CSS: inline (diretamente na tag HTML), interno (dentro da tag `<style>` no HTML) e externo. O método mais recomendado é o **arquivo externo**, normalmente chamado `style.css`.
+## 1. A Utilidade do CSS e o Uso de Arquivos Externos
 
-Utilizar um arquivo externo é melhor porque deixa o código mais organizado, facilita a manutenção do projeto e permite reutilizar o mesmo estilo em várias páginas do site. Para conectar o CSS ao HTML, utilizamos a seguinte linha dentro da tag `<head>`:
+O **CSS (Cascading Style Sheets)** é a linguagem responsável por dar "vida" ao HTML. Enquanto o HTML define a estrutura (textos, imagens e links), o CSS permite adicionar cores, ajustar fontes e criar layouts, transformando páginas simples em projetos visualmente atraentes.
 
-```html
-<link rel="stylesheet" href="style.css">
+### Por que usar o arquivo externo (`style.css`)?
+Embora existam três formas de aplicar CSS (inline, interno e externo), a criação de um **arquivo externo** é a mais recomendada por:
+* **Organização:** Mantém o código HTML limpo e focado na estrutura.
+* **Manutenção:** Facilita alterações em projetos grandes; você muda em um lugar e reflete em todo o site.
+* **Padronização:** Permite que várias páginas HTML utilizem as mesmas regras de estilo.
+
+> **Importante:** Para conectar o arquivo, usamos a tag `<link>` dentro do `<head>` do HTML:
+> `<link rel="stylesheet" href="style.css">`
+
+---
+
+## 2. O Modelo de Caixa: Margin vs. Padding
+
+No CSS, tudo é uma caixa (**Box Model**). Entender a diferença entre o espaço interno e externo é crucial para o layout:
+
+* **Padding (Preenchimento):** É o espaço interno. Ele fica entre o conteúdo (texto/imagem) e a borda do elemento. Serve para dar "respiro" dentro da caixa.
+* **Margin (Margem):** É o espaço externo. Ele serve para afastar um elemento de seus vizinhos, criando distância entre as caixas.
+
+> **Dica de Ouro:** É comum iniciar o CSS com o seletor universal `* { margin: 0; padding: 0; box-sizing: border-box; }` para remover os espaçamentos padrão dos navegadores e ter controle total.
+
+---
+
+## 3. Glossário de Propriedades Principais
+
+Abaixo, as propriedades mais utilizadas para manipular o visual e o posicionamento:
+
+| Propriedade | O que faz? |
+| :--- | :--- |
+| `color` | Altera a cor do texto. |
+| `background-color` | Define a cor de fundo de um elemento. |
+| `font-size` | Ajusta o tamanho da fonte. |
+| `font-family` | Define a família tipográfica (fonte) utilizada. |
+| `display: flex` | Ativa o Flexbox para alinhar e posicionar elementos filhos facilmente. |
+| `flex-direction` | Define a direção dos itens (ex: `column` para vertical ou `row` para horizontal). |
+| `gap` | Determina o espaçamento entre os elementos dentro de um container flex. |
+| `border-radius` | Arredonda os cantos das bordas (útil para botões). |
+| `text-align` | Alinha o texto (ex: `center` para centralizar). |
+
+---
+
+## 4. Organização com Classes
+
+As **classes** são atributos HTML (`class="nome-da-classe"`) fundamentais para uma estilização organizada e específica.
+
+* **Precisão:** Ao contrário de selecionar uma tag (como o `p`), que afetaria todos os parágrafos do site, a classe permite que você escolha exatamente qual elemento deseja estilizar.
+* **Reutilização:** Você pode criar uma classe `.botao-azul` e aplicá-la a diversos botões em diferentes partes do site.
+* **Sintaxe no CSS:** Para chamar uma classe no arquivo `.css`, usamos sempre um ponto antes do nome:
+    ```css
+    .minha-classe {
+        color: blue;
+    }
+    ```
+
+---
+*Resumo criado para fins de revisão de conteúdo de Desenvolvimento Web.*
