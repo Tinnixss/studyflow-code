@@ -163,56 +163,8 @@
     <p style="margin-top:4px;"><small>Status: <strong style="color:var(--accent);">🟢 Online</strong></small></p>
   </footer>
 
-  <script>
-    // ── TEMA ──────────────────────────────────────────────
-    const inputTema = document.getElementById('toggle-tema');
-    const labelTema = document.getElementById('label-tema');
-    const iconeTema = document.getElementById('icone-tema');
-    const htmlEl    = document.documentElement;
-
-    if (localStorage.getItem('sf-tema') === 'light') {
-      inputTema.checked = true;
-      htmlEl.setAttribute('data-tema', 'light');
-      labelTema.textContent = 'Light';
-      iconeTema.textContent = '☀️';
-    }
-    inputTema.addEventListener('change', () => {
-      const light = inputTema.checked;
-      htmlEl.setAttribute('data-tema', light ? 'light' : 'dark');
-      labelTema.textContent = light ? 'Light' : 'Dark';
-      iconeTema.textContent = light ? '☀️' : '🌙';
-      localStorage.setItem('sf-tema', light ? 'light' : 'dark');
-    });
-
-    // ── NAV ───────────────────────────────────────────────
-    const nav = document.getElementById('nav-principal');
-    window.addEventListener('scroll', () => nav.classList.toggle('rolado', window.scrollY > 20), { passive: true });
-
-    const navToggle = document.getElementById('nav-toggle');
-    const navLinks  = document.getElementById('nav-links');
-    navToggle.addEventListener('click', () => {
-      const aberto = navToggle.classList.toggle('aberto');
-      navLinks.classList.toggle('aberto');
-      navToggle.setAttribute('aria-expanded', aberto);
-      navToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navToggle.classList.remove('aberto');
-        navLinks.classList.remove('aberto');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // ── TIMER MOCK ────────────────────────────────────────
-    const timerMock = document.getElementById('timer-mock');
-    let seg = 37, min = 24;
-    setInterval(() => {
-      seg--;
-      if (seg < 0) { seg = 59; min--; }
-      if (min < 0) { min = 24; seg = 59; }
-      timerMock.textContent = String(min).padStart(2,'0') + ':' + String(seg).padStart(2,'0');
-    }, 1000);
-  </script>
+  <!-- Script externo — colocado antes de </body> para garantir
+       que todo o HTML já foi carregado antes do JS rodar -->
+  <script src="script.js"></script>
 </body>
 </html>
