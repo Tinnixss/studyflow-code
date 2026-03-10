@@ -227,21 +227,9 @@ footer a:hover { text-decoration: underline; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── RESPONSIVO COMPARTILHADO ───────────────────────────────── */
-@media (max-width: 900px) {
-  .nav__links { display: none; }
-  .nav__links.aberto {
-    display: flex; flex-direction: column; position: absolute;
-    top: 68px; left: 0; right: 0; background: var(--bg-nav);
-    backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-    padding: var(--s2) var(--s3) var(--s3); gap: var(--s1);
-  }
-  .nav__toggle { display: flex; }
-}
-@media (max-width: 600px) {
-  .nav__inner { padding: 0 var(--s2); }
-  .nav__actions .btn-nav { display: none; }
-}
+/* ── RESPONSIVO COMPARTILHADO (Navbar) ──────────────────────── */
+/* Navbar móvel faz parte do Breakpoint 2 (768px) — ver seção de
+   Media Queries no final deste arquivo                          */
 
 /* ================================================================
    index.html — Estilos específicos da Landing Page
@@ -423,17 +411,123 @@ footer a:hover { text-decoration: underline; }
 .feature-card__titulo { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: var(--s1); }
 .feature-card__texto { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
 
-/* Responsivo — landing */
-@media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; text-align: center; padding: var(--s6) var(--s3); gap: var(--s5); }
-  .hero__subtitulo { margin-inline: auto; }
-  .hero__ctas { justify-content: center; }
-  .hero__social-proof { justify-content: center; }
-  .hero__visual { max-width: 480px; margin: 0 auto; }
-  .features__grid { grid-template-columns: repeat(2, 1fr); }
+/* ================================================================
+   MEDIA QUERIES — DESIGN RESPONSIVO
+   ================================================================
+   Estratégia: Desktop-First (estilos base = desktop, depois
+   sobrescrevemos para telas menores com max-width)
+
+   BREAKPOINT 1 → TABLET   : max-width 1024px
+   BREAKPOINT 2 → MOBILE   : max-width  768px
+   BREAKPOINT 3 → MOBILE P : max-width  480px
+   ================================================================ */
+
+
+/* ── BREAKPOINT 1 — TABLET (até 1024px) ─────────────────────────
+   Telas médias: iPads, tablets em geral.
+   O grid de features passa de 3 colunas para 2.
+   O hero começa a reduzir espaçamentos.
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Hero: reduz padding e fonte do título */
+  .hero__inner {
+    padding: var(--s6) var(--s3);
+    gap: var(--s4);
+  }
+
+  /* Features: 3 colunas → 2 colunas */
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Navbar: links ficam mais compactos */
+  .nav__links {
+    gap: var(--s1);
+  }
+  .nav__links a {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
 }
-@media (max-width: 600px) {
-  .features__grid { grid-template-columns: 1fr; }
-  .hero__ctas { flex-direction: column; align-items: stretch; }
-  .btn-primario, .btn-secundario { justify-content: center; }
+
+
+/* ── BREAKPOINT 2 — MOBILE (até 768px) ──────────────────────────
+   Celulares maiores, modo paisagem.
+   Layout de coluna única. Menu hambúrguer entra em ação.
+   Tamanhos de fonte reduzidos. Elementos empilhados.
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Hero: grid de 2 colunas → 1 coluna, texto centralizado */
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: var(--s5) var(--s3);
+    gap: var(--s4);
+  }
+  .hero__subtitulo  { margin-inline: auto; }
+  .hero__ctas       { justify-content: center; }
+  .hero__social-proof { justify-content: center; }
+  .hero__visual     { max-width: 440px; margin: 0 auto; }
+
+  /* Features: 2 colunas → 1 coluna */
+  .features__grid {
+    grid-template-columns: 1fr;
+  }
+  .features { padding: var(--s5) var(--s3); }
+
+  /* Navbar: esconde links, exibe botão hambúrguer */
+  .nav__links { display: none; }
+  .nav__links.aberto {
+    display: flex; flex-direction: column; position: absolute;
+    top: 68px; left: 0; right: 0;
+    background: var(--bg-nav); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: var(--s2) var(--s3) var(--s3); gap: var(--s1);
+  }
+  .nav__toggle { display: flex; }
+
+  /* Footer: reduz padding */
+  footer { padding: var(--s3); }
+}
+
+
+/* ── BREAKPOINT 3 — MOBILE PEQUENO (até 480px) ───────────────────
+   Celulares compactos (iPhone SE, Galaxy A etc).
+   Máxima simplicidade: 1 coluna, fontes menores, botões full-width.
+   ──────────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Navbar: reduz padding e esconde botão "Começar grátis" */
+  .nav__inner { padding: 0 var(--s2); }
+  .nav__actions .btn-nav { display: none; }
+
+  /* Hero: botões empilhados e full-width */
+  .hero__ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .btn-primario,
+  .btn-secundario {
+    justify-content: center;
+    width: 100%;
+    padding: 14px 20px;
+  }
+
+  /* Hero: fonte do título um pouco menor em telas muito pequenas */
+  .hero__titulo {
+    font-size: clamp(30px, 8vw, 46px);
+    letter-spacing: -1px;
+  }
+
+  /* Modal: ocupa quase toda a largura */
+  .modal {
+    max-width: 95vw;
+    padding: var(--s3);
+  }
+
+  /* Toast: ocupa toda a largura */
+  .toast {
+    right: var(--s2);
+    left: var(--s2);
+    bottom: var(--s2);
+  }
 }
