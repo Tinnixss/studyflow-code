@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* ================================================================
    StudyFlow | style.css — COMPARTILHADO (index + perfil)
    ================================================================
@@ -18,8 +20,8 @@
   --accent-glow:    rgba(56, 189, 248, 0.20);
   --text-primary:   #f0f8ff;
   --text-secondary: #94a3b8;
-  --font-display:   'Syne', sans-serif;
-  --font-body:      'Plus Jakarta Sans', sans-serif;
+  --font-display:   'DM Sans', sans-serif;
+  --font-body:      'Inter', sans-serif;
   --s1:  8px; --s2: 16px; --s3: 24px; --s4: 32px;
   --s5: 48px; --s6: 64px; --s7: 80px;
   --r-sm: 8px; --r-md: 14px; --r-lg: 22px; --r-xl: 32px;
@@ -39,6 +41,15 @@
   --text-secondary: #475569;
   --shadow-card: 0 4px 24px rgba(0,0,0,.08), 0 1px 4px rgba(0,0,0,.05);
   --shadow-glow: 0 0 40px rgba(56,189,248,.08);
+}
+
+/* No light mode, o gradiente claro fica invisível —
+   substituímos por azul sólido mais escuro e legível */
+[data-tema="light"] .hero__titulo-gradiente {
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 60%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 /* ── RESET + BASE ───────────────────────────────────────────── */
@@ -264,9 +275,9 @@ footer a:hover { text-decoration: underline; }
   mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 100%);
 }
 .hero__inner {
-  max-width: 1100px; margin: 0 auto; padding: var(--s7) var(--s4);
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: var(--s6); align-items: center; position: relative; z-index: 1;
+  max-width: 1280px; margin: 0 auto; padding: var(--s6) var(--s4);
+  display: grid; grid-template-columns: 1fr 1.15fr;
+  gap: var(--s4); align-items: center; position: relative; z-index: 1;
 }
 
 /* L08 — Badge */
@@ -337,14 +348,15 @@ footer a:hover { text-decoration: underline; }
 .hero__social-texto strong { color: var(--text-primary); font-weight: 600; }
 
 /* L11 — Card hero */
-.hero__visual { position: relative; animation: fadeUp 0.7s 0.15s ease both; }
+.hero__visual { position: relative; animation: fadeUp 0.7s 0.15s ease both; width: 100%; }
 .hero__deco { position: absolute; border-radius: 50%; filter: blur(40px); pointer-events: none; }
 .hero__deco--1 { width: 200px; height: 200px; background: rgba(56,189,248,.06); top: -60px; right: -60px; }
 .hero__deco--2 { width: 120px; height: 120px; background: rgba(125,211,252,.08); bottom: -40px; left: -40px; }
 .hero__app-card {
   background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: var(--r-xl); padding: var(--s3);
+  border-radius: var(--r-xl); padding: var(--s4);
   box-shadow: var(--shadow-card), var(--shadow-glow); position: relative;
+  width: 100%;
   transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .hero__app-card::before {
@@ -357,8 +369,8 @@ footer a:hover { text-decoration: underline; }
 }
 .app-mock__titulo { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-primary); }
 .app-mock__badge { font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-glow); padding: 3px 10px; border-radius: 99px; }
-.app-mock__timer { text-align: center; padding: var(--s3) 0; }
-.app-mock__timer-num { font-family: var(--font-display); font-size: 52px; font-weight: 800; letter-spacing: -2px; color: var(--accent); line-height: 1; }
+.app-mock__timer { text-align: center; padding: var(--s4) 0; }
+.app-mock__timer-num { font-family: var(--font-display); font-size: 72px; font-weight: 800; letter-spacing: -3px; color: var(--accent); line-height: 1; }
 .app-mock__timer-label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; text-transform: uppercase; letter-spacing: .08em; }
 .app-mock__progress-wrap { margin: var(--s2) 0 var(--s3); }
 .app-mock__progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; }
@@ -467,7 +479,7 @@ footer a:hover { text-decoration: underline; }
   .hero__subtitulo  { margin-inline: auto; }
   .hero__ctas       { justify-content: center; }
   .hero__social-proof { justify-content: center; }
-  .hero__visual     { max-width: 440px; margin: 0 auto; }
+  .hero__visual     { max-width: 520px; margin: 0 auto; }
 
   /* Features: 2 colunas → 1 coluna */
   .features__grid {
