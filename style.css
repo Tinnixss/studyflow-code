@@ -542,3 +542,33 @@ footer a:hover { text-decoration: underline; }
     bottom: var(--s2);
   }
 }
+
+/* ── Footer status ──────────────────────────────────────────── */
+.footer__status { margin-top: 4px; }
+.footer__status-valor { color: var(--accent); }
+
+/* ── Range inputs (cronograma modal) ───────────────────────── */
+.range-wrap { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.range-val   { color: var(--accent); font-weight: 700; }
+input[type="range"] { width: 100%; accent-color: var(--accent); }
+
+/* ── Contador de pomodoros (foco) ───────────────────────────── */
+.pomodoros-contador { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+.pomodoros-num      { font-family: var(--font-display); font-weight: 700; color: var(--accent); font-size: 16px; }
+.pomodoros-icones   { font-size: 16px; }
+.link-acento { color: var(--accent); text-decoration: none; }
+.link-acento:hover { text-decoration: underline; }
+
+/* ── Caixa de prioridade calculada (cronograma modal) ───────── */
+.prioridade-calc-box {
+  background: var(--accent-glow); border: 1px solid var(--border-hover);
+  border-radius: var(--r-sm); padding: 10px var(--s2);
+  font-size: 13px; margin-bottom: var(--s3);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.prioridade-calc-label { color: var(--text-secondary); }
+.prioridade-calc-val   { font-family: var(--font-display); font-weight: 800; font-size: 18px; color: var(--accent); }
+
+/* ── Barras de progresso via data-w (sem style inline) ─────── */
+/* O JS em perfil.html aplica: el.style.width = el.dataset.w + '%' */
+[data-w] { width: 0; transition: width 0.8s ease; }
