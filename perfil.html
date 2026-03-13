@@ -3,170 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="StudyFlow — Modo Foco com Pomodoro. Sessões de 25 minutos para máxima concentração e produtividade.">
-  <meta name="theme-color" content="#0d1b2a">
-  <title>StudyFlow | Modo Foco</title>
+  <title>StudyFlow | Meu Perfil</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-/* ── LAYOUT ──────────────────────────────────────────────────── */
+/* ── LAYOUT ─────────────────────────────────────────────────── */
 .pagina {
-  max-width: 900px; margin: 0 auto;
-  padding: calc(68px + var(--s4)) var(--s4) var(--s7);
-  display: flex; flex-direction: column; gap: var(--s4);
+  max-width: 1100px; margin: 0 auto;
+  padding: calc(68px + var(--s5)) var(--s4) var(--s7);
+  display: grid; grid-template-columns: 320px 1fr;
+  gap: var(--s4); align-items: start;
 }
-/* ── CABEÇALHO ───────────────────────────────────────────────── */
-.page-header__titulo {
-  font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 38px);
-  font-weight: 800; letter-spacing: -1.5px; line-height: 1.1;
+/* ── CARD PERFIL ────────────────────────────────────────────── */
+.card {
+  position: relative; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  border-radius: var(--r-xl); background: var(--bg-surface);
+  border: 1px solid var(--border); box-shadow: var(--shadow-card);
+  overflow: hidden; transition: background 0.4s ease, border-color 0.4s ease;
 }
-.page-header__titulo span {
+.card__img {
+  height: 140px; width: 100%;
+  background: linear-gradient(135deg, #0d1b2a 0%, #1a3a5c 50%, #0ea5e9 100%);
+  position: relative;
+}
+.card__img-grid {
+  position: absolute; inset: 0; opacity: 0.3;
+  background-image:
+    linear-gradient(rgba(56,189,248,.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56,189,248,.3) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.card__avatar {
+  position: relative; margin-top: -50px; width: 100px; height: 100px;
+  background: var(--bg-surface); border-radius: 50%;
+  border: 3px solid var(--border-hover);
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 0 0 4px var(--bg-base), 0 4px 16px rgba(0,0,0,.3);
+  z-index: 1; font-size: 48px; transition: background 0.4s ease;
+}
+.card__title {
+  margin-top: var(--s2); font-family: var(--font-display);
+  font-weight: 700; font-size: 20px; color: var(--text-primary); padding: 0 var(--s3);
+}
+.card__subtitle { margin-top: 4px; font-size: 14px; color: var(--text-secondary); padding: 0 var(--s3); }
+.card__nivel {
+  margin-top: var(--s2); display: inline-flex; align-items: center; gap: 6px;
+  background: var(--accent-glow); border: 1px solid var(--border-hover);
+  color: var(--accent); font-size: 12px; font-weight: 700;
+  padding: 4px 12px; border-radius: 99px;
+}
+.card__xp { width: calc(100% - 48px); margin: var(--s2) var(--s3) 0; }
+.card__xp-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+.card__xp-track { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.card__xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #7dd3fc); border-radius: 99px; transition: width 0.6s ease; }
+.card__wrapper { display: flex; padding: var(--s3); width: 100%; justify-content: center; }
+.card__btn {
+  height: 38px; padding: 0 20px; border: 2px solid var(--text-primary); border-radius: var(--r-sm);
+  font-family: var(--font-body); font-weight: 700; font-size: 13px;
+  color: var(--text-primary); background: transparent; white-space: nowrap; cursor: pointer;
+  transition: all 0.25s ease; display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.card__btn-solid { background: var(--accent); color: #0d1b2a; border-color: var(--accent); }
+.card__btn-solid:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+.card__btn svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; }
+/* ── PAINEL ─────────────────────────────────────────────────── */
+.painel { display: flex; flex-direction: column; gap: var(--s3); }
+.painel__titulo {
+  font-family: var(--font-display); font-size: clamp(30px, 4vw, 46px);
+  font-weight: 800; letter-spacing: -2px; line-height: 1.05; color: var(--text-primary);
+}
+.painel__titulo span {
   background: linear-gradient(135deg, var(--accent) 0%, #7dd3fc 60%, #bae6fd 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
-.page-header__sub { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-/* ── GRID ────────────────────────────────────────────────────── */
-.foco-grid { display: grid; grid-template-columns: 1fr 320px; gap: var(--s4); align-items: start; }
-/* ── TIMER CARD ──────────────────────────────────────────────── */
-.timer-card {
+.painel__subtitulo { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+/* ── STATS ──────────────────────────────────────────────────── */
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+.stat-card {
   background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: var(--r-xl); padding: var(--s5) var(--s4);
-  display: flex; flex-direction: column; align-items: center; gap: var(--s3);
-  transition: background 0.4s, border-color 0.4s; position: relative; overflow: hidden;
+  border-radius: var(--r-lg); padding: var(--s3);
+  transition: border-color 0.25s ease, transform 0.25s ease, background 0.4s ease;
+  position: relative; overflow: hidden;
 }
-.timer-card::before {
-  content: ''; position: absolute; top: -1px; left: 60px; right: 60px; height: 1px;
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
   background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0; transition: opacity 0.3s ease;
 }
-/* Círculo SVG do timer */
-.timer-anel { position: relative; width: 240px; height: 240px; flex-shrink: 0; }
-.timer-anel svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.timer-anel__trilha { fill: none; stroke: var(--border); stroke-width: 8; }
-.timer-anel__progresso {
-  fill: none; stroke: var(--accent); stroke-width: 8;
-  stroke-linecap: round;
-  stroke-dasharray: 691; /* 2π×110 */
-  stroke-dashoffset: 0;
-  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
-}
-.timer-anel__progresso.pausa { stroke: #f59e0b; }
-.timer-anel__centro {
-  position: absolute; inset: 0; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 4px;
-}
-.timer-num {
-  font-family: var(--font-display); font-size: 56px; font-weight: 800;
-  color: var(--text-primary); letter-spacing: -3px; line-height: 1;
-}
-.timer-modo {
-  font-size: 12px; font-weight: 600; color: var(--accent);
-  text-transform: uppercase; letter-spacing: .1em;
-}
-/* Sessão atual */
-.sessao-atual {
-  text-align: center; padding: 10px var(--s3);
+.stat-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+.stat-card:hover::before { opacity: 1; }
+.stat-card__icone {
+  width: 40px; height: 40px; border-radius: var(--r-md);
   background: var(--accent-glow); border: 1px solid var(--border-hover);
-  border-radius: var(--r-md); width: 100%;
+  display: flex; align-items: center; justify-content: center; margin-bottom: var(--s2);
 }
-.sessao-atual__label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: .06em; }
-.sessao-atual__nome { font-size: 14px; font-weight: 700; color: var(--text-primary); margin-top: 2px; }
-/* Controles */
-.timer-controles { display: flex; align-items: center; gap: var(--s2); }
-.btn-controle {
-  width: 52px; height: 52px; border-radius: 50%; border: 2px solid var(--border);
-  background: none; color: var(--text-secondary); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
-.btn-controle:hover { border-color: var(--border-hover); color: var(--text-primary); }
-.btn-controle svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2; }
-.btn-play {
-  width: 68px; height: 68px; background: var(--accent); color: #0d1b2a;
-  border-color: var(--accent);
-}
-.btn-play:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #0d1b2a; }
-.btn-play svg { width: 26px; height: 26px; }
-/* Modos de tempo */
-.timer-modos { display: flex; gap: var(--s1); background: var(--bg-base); border-radius: var(--r-md); padding: 4px; }
-.modo-btn {
-  flex: 1; padding: 7px 12px; border: none; border-radius: var(--r-sm);
-  background: none; color: var(--text-secondary); font-family: var(--font-body);
-  font-size: 12px; font-weight: 600; cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-.modo-btn.ativo { background: var(--bg-surface); color: var(--accent); box-shadow: 0 1px 4px rgba(0,0,0,.15); }
-/* ── PAINEL LATERAL ──────────────────────────────────────────── */
-.painel-lateral { display: flex; flex-direction: column; gap: var(--s3); }
+.stat-card__icone svg { width: 20px; height: 20px; stroke: var(--accent); stroke-width: 2; }
+.stat-card__valor { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--accent); letter-spacing: -1px; line-height: 1; }
+.stat-card__label { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+/* ── SEÇÃO GENÉRICA ─────────────────────────────────────────── */
 .secao {
   background: var(--bg-surface); border: 1px solid var(--border);
   border-radius: var(--r-lg); padding: var(--s3);
-  transition: background 0.4s, border-color 0.4s;
+  transition: background 0.4s ease, border-color 0.4s ease;
 }
 .secao__titulo {
-  font-family: var(--font-display); font-size: 14px; font-weight: 700;
+  font-family: var(--font-display); font-size: 15px; font-weight: 700;
   color: var(--text-primary); margin-bottom: var(--s2);
   display: flex; align-items: center; gap: 8px;
 }
-.secao__titulo svg { width: 15px; height: 15px; stroke: var(--accent); stroke-width: 2.5; }
-/* Stats de sessão */
-.stats-sessao { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s2); }
-.stat-mini {
-  background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-md);
-  padding: 12px; text-align: center;
+.secao__titulo svg { width: 16px; height: 16px; stroke: var(--accent); stroke-width: 2.5; flex-shrink: 0; }
+/* ── METAS ──────────────────────────────────────────────────── */
+.meta-item { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.meta-item:last-child { border-bottom: none; padding-bottom: 0; }
+.meta-item__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.meta-item__nome { font-size: 13px; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 6px; }
+.meta-item__nome svg { width: 13px; height: 13px; stroke: var(--text-secondary); stroke-width: 2; }
+.meta-item__valores { font-size: 12px; color: var(--text-secondary); }
+.meta-item__track { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.meta-item__fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), #7dd3fc); transition: width 0.6s ease; }
+.meta-item__fill.aviso  { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.meta-item__fill.ok     { background: linear-gradient(90deg, #22c55e, #4ade80); }
+/* ── GRÁFICO DE BARRAS ──────────────────────────────────────── */
+.grafico-barras { display: flex; align-items: flex-end; gap: 8px; height: 120px; margin-top: var(--s2); }
+.barra-col { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+.barra-col__fill {
+  width: 100%; border-radius: var(--r-sm) var(--r-sm) 0 0;
+  background: linear-gradient(180deg, rgba(56,189,248,.5), rgba(56,189,248,.15));
+  min-height: 4px; position: relative; cursor: default;
+  transition: filter 0.2s ease;
 }
-.stat-mini__val { font-family: var(--font-display); font-size: 22px; font-weight: 800; color: var(--accent); line-height: 1; }
-.stat-mini__label { font-size: 11px; color: var(--text-secondary); margin-top: 3px; }
-/* Histórico de sessões */
-.sessao-hist {
-  display: flex; align-items: center; gap: 10px;
-  padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 12px;
+.barra-col__fill.hoje { background: linear-gradient(180deg, var(--accent), #0ea5e9); box-shadow: 0 0 16px var(--accent-glow); }
+.barra-col__fill:hover { filter: brightness(1.3); }
+.barra-col__fill::after {
+  content: attr(data-horas); position: absolute; top: -26px; left: 50%;
+  transform: translateX(-50%); background: var(--bg-base); border: 1px solid var(--border-hover);
+  color: var(--text-primary); font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap;
+  opacity: 0; transition: opacity 0.2s ease; pointer-events: none;
 }
-.sessao-hist:last-child { border-bottom: none; padding-bottom: 0; }
-.sessao-hist__icone { font-size: 16px; flex-shrink: 0; }
-.sessao-hist__info { flex: 1; }
-.sessao-hist__nome { font-weight: 600; color: var(--text-primary); font-size: 13px; }
-.sessao-hist__meta { color: var(--text-secondary); }
-.sessao-hist__dur { font-weight: 700; color: var(--accent); font-family: var(--font-display); }
-/* Seletor de tarefa */
-.tarefa-seletor {
-  display: flex; flex-direction: column; gap: 6px;
+.barra-col__fill:hover::after { opacity: 1; }
+.barra-col__label { font-size: 10px; color: var(--text-secondary); font-weight: 600; }
+.barra-col__label.hoje { color: var(--accent); }
+/* ── SEQUÊNCIA ──────────────────────────────────────────────── */
+.sequencia__dias { display: flex; gap: 5px; flex-wrap: wrap; margin-top: var(--s2); }
+.dia {
+  width: 34px; height: 34px; border-radius: var(--r-sm);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 9px; font-weight: 600; gap: 1px;
+  border: 1px solid var(--border); background: var(--bg-base); transition: background 0.2s ease;
 }
-.tarefa-opcao {
-  display: flex; align-items: center; gap: 10px; padding: 9px 10px;
-  background: var(--bg-base); border: 1px solid var(--border); border-radius: var(--r-sm);
-  cursor: pointer; transition: border-color 0.2s, background 0.2s; font-size: 13px;
+.dia__num { font-size: 12px; font-weight: 700; }
+.dia.feito { background: var(--accent-glow); border-color: var(--border-hover); color: var(--accent); }
+.dia.hoje  { background: var(--accent); color: #0d1b2a; border-color: var(--accent); }
+.dia.falhou { opacity: 0.3; }
+/* ── DISCIPLINAS ────────────────────────────────────────────── */
+.disciplina-item {
+  display: flex; align-items: center; gap: var(--s2);
+  padding: 10px 0; border-bottom: 1px solid var(--border);
 }
-.tarefa-opcao:hover { border-color: var(--border-hover); }
-.tarefa-opcao.selecionada { border-color: var(--accent); background: var(--accent-glow); }
-.tarefa-opcao__check { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; transition: background 0.2s; }
-.tarefa-opcao.selecionada .tarefa-opcao__check { background: var(--accent); }
-.tarefa-opcao__nome { flex: 1; font-weight: 600; color: var(--text-primary); }
-.tarefa-opcao__mat { font-size: 11px; color: var(--text-secondary); }
+.disciplina-item:last-child { border-bottom: none; }
+.disciplina-item__icone {
+  width: 36px; height: 36px; border-radius: var(--r-sm);
+  background: var(--accent-glow); border: 1px solid var(--border-hover);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.disciplina-item__info { flex: 1; min-width: 0; }
+.disciplina-item__nome { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.disciplina-item__sub { font-size: 12px; color: var(--text-secondary); }
+.disciplina-item__barra-wrap { width: 70px; }
+.disciplina-item__barra-track { height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.disciplina-item__barra-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), #7dd3fc); }
+.btn-delete {
+  background: none; border: none; cursor: pointer; padding: 6px; border-radius: var(--r-sm);
+  color: var(--text-secondary); transition: color 0.2s ease, background 0.2s ease;
+  display: flex; align-items: center; flex-shrink: 0;
+}
+.btn-delete:hover { color: #ef4444; background: rgba(239,68,68,.1); }
+.btn-delete svg { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2.5; }
 /* Estado vazio */
 .estado-vazio {
-  display: flex; flex-direction: column; align-items: center;
-  padding: var(--s3) var(--s2); gap: 8px; text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: var(--s4) var(--s3); gap: var(--s2); text-align: center;
 }
-.estado-vazio svg { width: 32px; height: 32px; stroke: var(--border-hover); stroke-width: 1.5; }
-.estado-vazio p { font-size: 12px; color: var(--text-secondary); }
-/* Notificação de fim */
-.notif {
-  position: fixed; top: 88px; left: 50%; transform: translateX(-50%) translateY(-20px);
-  background: var(--bg-surface); border: 1px solid var(--border-hover);
-  border-radius: var(--r-lg); padding: 14px var(--s3); font-size: 14px; font-weight: 600;
-  color: var(--text-primary); box-shadow: var(--shadow-card); z-index: 999;
-  opacity: 0; transition: opacity 0.3s, transform 0.3s; pointer-events: none;
-  display: flex; align-items: center; gap: 10px; white-space: nowrap;
+.estado-vazio svg { width: 40px; height: 40px; stroke: var(--border-hover); stroke-width: 1.5; }
+.estado-vazio__titulo { font-size: 14px; font-weight: 600; color: var(--text-secondary); }
+.estado-vazio__desc { font-size: 12px; color: var(--text-secondary); opacity: 0.7; }
+.btn-add-disciplina {
+  width: 100%; margin-top: var(--s2); padding: 9px; background: none;
+  border: 1px dashed var(--border); border-radius: var(--r-sm);
+  color: var(--text-secondary); font-family: var(--font-body); font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
-.notif.visivel { opacity: 1; transform: translateX(-50%) translateY(0); }
-/* ── RESPONSIVO ──────────────────────────────────────────────── */
-@media (max-width: 800px) { .foco-grid { grid-template-columns: 1fr; } }
-@media (max-width: 500px) { .timer-num { font-size: 44px; } .timer-anel { width: 200px; height: 200px; } }
+.btn-add-disciplina:hover { border-color: var(--accent); color: var(--accent); }
+.btn-add-disciplina svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; }
+/* ── RESPONSIVO ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .pagina { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 500px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
   </style>
-  <!-- Anti-FOUC: aplica tema salvo ANTES do body renderizar, evitando flash -->
-  <script>try{var t=localStorage.getItem("sf-tema");if(t)document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
 </head>
 <body>
-<header role="banner">
 <nav class="nav" id="nav-principal" aria-label="Menu Principal">
   <div class="nav__inner">
     <a href="index.html" class="nav__logo">
@@ -175,9 +219,9 @@
     <ul class="nav__links" id="nav-links" role="list">
       <li><a href="index.html">Início</a></li>
       <li><a href="index.html#funcionalidades">Funcionalidades</a></li>
-      <li><a href="perfil.html">Perfil</a></li>
+      <li><a href="perfil.html" aria-current="page">Perfil</a></li>
       <li><a href="cronograma.html">Cronograma</a></li>
-      <li><a href="foco.html" aria-current="page">Modo Foco</a></li>
+      <li><a href="foco.html">Modo Foco</a></li>
     </ul>
     <div class="nav__actions">
       <div class="toggle-tema" title="Alternar tema">
@@ -190,105 +234,232 @@
       <a href="#" class="btn-nav">Começar grátis →</a>
     </div>
     <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
-      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-<!-- NOTIFICAÇÃO -->
-<div class="notif" id="notif">🍅 <span id="notif-msg">Pomodoro concluído!</span></div>
-<main class="pagina" role="main" aria-label="Modo Foco — Temporizador Pomodoro">
-  <div>
-    <h1 class="page-header__titulo">Modo <span>Foco</span></h1>
-    <p class="page-header__sub">Temporizador Pomodoro — concentre-se por 25 minutos</p>
-  </div>
-  <div class="foco-grid">
-    <!-- TIMER PRINCIPAL -->
-    <div class="timer-card">
-      <!-- Modos -->
-      <div class="timer-modos">
-        <button class="modo-btn ativo" data-modo="pomodoro" data-min="25">🍅 Pomodoro</button>
-        <button class="modo-btn" data-modo="pausa-curta" data-min="5">☕ Pausa curta</button>
-        <button class="modo-btn" data-modo="pausa-longa" data-min="15">🛋️ Pausa longa</button>
-      </div>
-      <!-- Anel SVG -->
-      <div class="timer-anel">
-        <svg viewBox="0 0 240 240">
-          <circle class="timer-anel__trilha" cx="120" cy="120" r="110"/>
-          <circle class="timer-anel__progresso" id="anel-prog" cx="120" cy="120" r="110"/>
-        </svg>
-        <div class="timer-anel__centro">
-          <div class="timer-num" id="timer-display">25:00</div>
-          <div class="timer-modo" id="timer-modo-label">Pomodoro</div>
+<main class="pagina">
+  <!-- CARD PERFIL -->
+  <aside>
+    <div class="card">
+      <div class="card__img"><div class="card__img-grid"></div></div>
+      <div class="card__avatar" id="avatar-display">🐱</div>
+      <div class="card__title" id="nome-display">João Silva</div>
+      <div class="card__subtitle" id="curso-display">Medicina</div>
+      <div class="card__nivel" id="nivel-display">⚡ Nível 5 — Explorador</div>
+      <div class="card__xp">
+        <div class="card__xp-label">
+          <span id="xp-label">XP: 3.600 / 5.000</span>
+          <span id="xp-pct">72%</span>
         </div>
+        <div class="card__xp-track"><div class="card__xp-fill" id="xp-fill" style="width:72%"></div></div>
       </div>
-      <!-- Tarefa atual -->
-      <div class="sessao-atual" id="sessao-atual-wrap">
-        <div class="sessao-atual__label">Estudando agora</div>
-        <div class="sessao-atual__nome" id="sessao-atual-nome">Nenhuma tarefa selecionada</div>
-      </div>
-      <!-- Controles -->
-      <div class="timer-controles">
-        <button class="btn-controle" id="btn-reiniciar" title="Reiniciar" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+      <div class="card__wrapper">
+        <button class="card__btn card__btn-solid" id="btn-editar" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Editar perfil
         </button>
-        <button class="btn-controle btn-play" id="btn-play" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icone-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        </button>
-        <button class="btn-controle" id="btn-pular" title="Pular" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
-        </button>
-      </div>
-      <!-- Contador de pomodoros -->
-      <div class="pomodoros-contador">
-        <span>Sessões hoje:</span>
-        <span id="pomodoros-hoje" class="pomodoros-num">0</span>
-        <span id="pomodoros-icones" class="pomodoros-icones">○○○○</span>
       </div>
     </div>
-    <!-- PAINEL LATERAL -->
-    <div class="painel-lateral">
-      <!-- STATS -->
-      <div class="secao">
-        <div class="secao__titulo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Sessão de Hoje
-        </div>
-        <div class="stats-sessao">
-          <div class="stat-mini">
-            <div class="stat-mini__val" id="s-pomodoros">0</div>
-            <div class="stat-mini__label">Pomodoros</div>
-          </div>
-          <div class="stat-mini">
-            <div class="stat-mini__val" id="s-minutos">0</div>
-            <div class="stat-mini__label">Minutos focados</div>
-          </div>
-        </div>
-      </div>
-      <!-- TAREFAS PARA FOCAR -->
-      <div class="secao">
-        <div class="secao__titulo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Tarefas de Hoje
-        </div>
-        <div class="tarefa-seletor" id="tarefa-seletor"></div>
-      </div>
-      <!-- HISTÓRICO -->
-      <div class="secao">
-        <div class="secao__titulo">
+  </aside>
+  <!-- PAINEL -->
+  <div class="painel">
+    <div>
+      <h1 class="painel__titulo">Meu <span>Desempenho</span></h1>
+      <p class="painel__subtitulo" id="saudacao">Resumo da sua jornada de estudos</p>
+    </div>
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__icone">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Histórico de Sessões
         </div>
-        <div id="historico-lista"></div>
+        <div class="stat-card__valor" id="stat-horas">142h</div>
+        <div class="stat-card__label">Horas estudadas</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-card__icone">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+        </div>
+        <div class="stat-card__valor" id="stat-sequencia">12</div>
+        <div class="stat-card__label">Dias seguidos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__icone">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-card__valor" id="stat-tarefas">87</div>
+        <div class="stat-card__label">Tarefas feitas</div>
+      </div>
+    </div>
+    <!-- METAS DA SEMANA -->
+    <div class="secao">
+      <div class="secao__titulo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        Metas da Semana
+      </div>
+      <div id="metas-lista">
+        <div class="meta-item">
+          <div class="meta-item__header">
+            <span class="meta-item__nome">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Horas de estudo
+            </span>
+            <span class="meta-item__valores">14h / 20h</span>
+          </div>
+          <div class="meta-item__track"><div class="meta-item__fill aviso" style="width:70%"></div></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-item__header">
+            <span class="meta-item__nome">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              Tarefas concluídas
+            </span>
+            <span class="meta-item__valores">18 / 20</span>
+          </div>
+          <div class="meta-item__track"><div class="meta-item__fill ok" style="width:90%"></div></div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-item__header">
+            <span class="meta-item__nome">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              Sessões Pomodoro
+            </span>
+            <span class="meta-item__valores">22 / 30</span>
+          </div>
+          <div class="meta-item__track"><div class="meta-item__fill" style="width:73%"></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- GRÁFICO -->
+    <div class="secao">
+      <div class="secao__titulo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        Horas por dia — esta semana
+      </div>
+      <div class="grafico-barras" id="grafico-barras"></div>
+    </div>
+    <!-- SEQUÊNCIA -->
+    <div class="secao">
+      <div class="secao__titulo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>
+        Sequência — <span id="mes-sequencia">Março 2026</span>
+      </div>
+      <div class="sequencia__dias" id="sequencia-dias"></div>
+    </div>
+    <!-- DISCIPLINAS -->
+    <div class="secao">
+      <div class="secao__titulo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        Disciplinas Favoritas
+      </div>
+      <div id="disciplinas-lista"></div>
+      <button class="btn-add-disciplina" id="btn-add-disciplina" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Adicionar disciplina
+      </button>
     </div>
   </div>
 </main>
+<!-- MODAL EDITAR PERFIL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__titulo">
+      Editar Perfil
+      <button class="modal__fechar" id="modal-fechar" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="form-grupo">
+      <label>Avatar</label>
+      <div class="avatar-grid" id="avatar-grid">
+        <div class="avatar-op selecionado" data-emoji="🐱">🐱</div>
+        <div class="avatar-op" data-emoji="🦊">🦊</div>
+        <div class="avatar-op" data-emoji="🐼">🐼</div>
+        <div class="avatar-op" data-emoji="🦁">🦁</div>
+        <div class="avatar-op" data-emoji="🐸">🐸</div>
+        <div class="avatar-op" data-emoji="🐧">🐧</div>
+        <div class="avatar-op" data-emoji="🦄">🦄</div>
+        <div class="avatar-op" data-emoji="🐙">🐙</div>
+      </div>
+    </div>
+    <div class="form-grupo">
+      <label for="input-nome">Nome</label>
+      <input type="text" id="input-nome" placeholder="Seu nome">
+    </div>
+    <div class="form-grupo">
+      <label for="input-curso">Curso / Área</label>
+      <input type="text" id="input-curso" placeholder="Ex: Medicina, Engenharia...">
+    </div>
+    <div class="modal__acoes">
+      <button class="btn-cancelar" id="btn-cancelar" type="button">Cancelar</button>
+      <button class="btn-salvar" id="btn-salvar" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        Salvar
+      </button>
+    </div>
+  </div>
+</div>
+<!-- MODAL ADICIONAR DISCIPLINA -->
+<div class="modal-overlay" id="modal-disciplina" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal__titulo">
+      Nova Disciplina
+      <button class="modal__fechar" id="modal-disc-fechar" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="form-grupo">
+      <label>Ícone</label>
+      <div class="avatar-grid" id="disc-icone-grid">
+        <div class="avatar-op selecionado" data-emoji="📐">📐</div>
+        <div class="avatar-op" data-emoji="💻">💻</div>
+        <div class="avatar-op" data-emoji="⚡">⚡</div>
+        <div class="avatar-op" data-emoji="🧬">🧬</div>
+        <div class="avatar-op" data-emoji="📖">📖</div>
+        <div class="avatar-op" data-emoji="🔬">🔬</div>
+        <div class="avatar-op" data-emoji="🎨">🎨</div>
+        <div class="avatar-op" data-emoji="🌍">🌍</div>
+      </div>
+    </div>
+    <div class="form-grupo">
+      <label for="disc-nome">Nome da disciplina</label>
+      <input type="text" id="disc-nome" placeholder="Ex: Cálculo, Direito Penal...">
+    </div>
+    <div class="modal__acoes">
+      <button class="btn-cancelar" id="modal-disc-cancelar" type="button">Cancelar</button>
+      <button class="btn-salvar" id="modal-disc-salvar" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Adicionar
+      </button>
+    </div>
+  </div>
+</div>
+<!-- TOAST -->
 <div class="toast" id="toast">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
   <span id="toast-msg"></span>
 </div>
 <script>
-// ── TEMA ──────────────────────────────────────────────────────
+// ── DADOS ──────────────────────────────────────────────────────
+const DEFAULTS = {
+  avatar: '🐱', nome: 'João Silva', curso: 'Medicina',
+  horas: 142, tarefas: 87, sequencia: 12,
+  disciplinas: [
+    { icone:'📐', nome:'Cálculo',    horas:48 },
+    { icone:'💻', nome:'Algoritmos', horas:36 },
+    { icone:'⚡', nome:'Física',     horas:30 },
+    { icone:'🧬', nome:'Biologia',   horas:28 }
+  ]
+};
+function salvarDados(d) { localStorage.setItem('sf-perfil', JSON.stringify(d)); }
+function carregarDados() {
+  try {
+    const s = localStorage.getItem('sf-perfil');
+    return s ? { ...DEFAULTS, ...JSON.parse(s) } : { ...DEFAULTS };
+  } catch { return { ...DEFAULTS }; }
+}
+// ── TEMA ───────────────────────────────────────────────────────
 const inputTema = document.getElementById('toggle-tema');
 const labelTema = document.getElementById('label-tema');
 const iconeTema = document.getElementById('icone-tema');
@@ -298,13 +469,13 @@ if (localStorage.getItem('sf-tema') === 'light') {
   labelTema.textContent = 'Light'; iconeTema.textContent = '☀️';
 }
 inputTema.addEventListener('change', () => {
-  const l = inputTema.checked;
-  htmlEl.setAttribute('data-tema', l ? 'light' : 'dark');
-  labelTema.textContent = l ? 'Light' : 'Dark';
-  iconeTema.textContent = l ? '☀️' : '🌙';
-  localStorage.setItem('sf-tema', l ? 'light' : 'dark');
+  const light = inputTema.checked;
+  htmlEl.setAttribute('data-tema', light ? 'light' : 'dark');
+  labelTema.textContent = light ? 'Light' : 'Dark';
+  iconeTema.textContent = light ? '☀️' : '🌙';
+  localStorage.setItem('sf-tema', light ? 'light' : 'dark');
 });
-// ── NAV ───────────────────────────────────────────────────────
+// ── NAV ────────────────────────────────────────────────────────
 const nav = document.getElementById('nav-principal');
 window.addEventListener('scroll', () => nav.classList.toggle('rolado', window.scrollY > 20), { passive: true });
 const navToggle = document.getElementById('nav-toggle');
@@ -313,211 +484,216 @@ navToggle.addEventListener('click', () => {
   const ab = navToggle.classList.toggle('aberto');
   navLinks.classList.toggle('aberto');
   navToggle.setAttribute('aria-expanded', ab);
+  navToggle.setAttribute('aria-label', ab ? 'Fechar menu' : 'Abrir menu');
 });
-// ── TOAST ─────────────────────────────────────────────────────
-function toast(msg) {
+// ── TOAST ──────────────────────────────────────────────────────
+function mostrarToast(msg) {
   document.getElementById('toast-msg').textContent = msg;
   const t = document.getElementById('toast');
   t.classList.add('visivel');
   setTimeout(() => t.classList.remove('visivel'), 2500);
 }
-function notificar(msg) {
-  document.getElementById('notif-msg').textContent = msg;
-  const n = document.getElementById('notif');
-  n.classList.add('visivel');
-  setTimeout(() => n.classList.remove('visivel'), 4000);
-  // API de notificação do browser
-  if (Notification.permission === 'granted') {
-    new Notification('StudyFlow 🍅', { body: msg });
+// ── XP / NÍVEL ─────────────────────────────────────────────────
+function calcularNivel(h) {
+  if (h < 10)  return { nivel:1, titulo:'Iniciante',   xp:h*10, max:100  };
+  if (h < 30)  return { nivel:2, titulo:'Aprendiz',    xp:h*8,  max:240  };
+  if (h < 60)  return { nivel:3, titulo:'Estudioso',   xp:h*7,  max:420  };
+  if (h < 100) return { nivel:4, titulo:'Dedicado',    xp:h*6,  max:600  };
+  if (h < 150) return { nivel:5, titulo:'Explorador',  xp:h*5,  max:750  };
+  if (h < 250) return { nivel:6, titulo:'Veterano',    xp:h*4,  max:1000 };
+  return             { nivel:7, titulo:'Mestre',       xp:h*3,  max:1200 };
+}
+// ── RENDER PERFIL ──────────────────────────────────────────────
+function renderPerfil(d) {
+  document.getElementById('avatar-display').textContent  = d.avatar;
+  document.getElementById('nome-display').textContent    = d.nome;
+  document.getElementById('curso-display').textContent   = d.curso;
+  document.getElementById('stat-horas').textContent      = d.horas + 'h';
+  document.getElementById('stat-tarefas').textContent    = d.tarefas;
+  document.getElementById('stat-sequencia').textContent  = d.sequencia;
+  const n   = calcularNivel(d.horas);
+  const pct = Math.min(100, Math.round((n.xp / n.max) * 100));
+  document.getElementById('nivel-display').textContent   = `⚡ Nível ${n.nivel} — ${n.titulo}`;
+  document.getElementById('xp-label').textContent        = `XP: ${n.xp.toLocaleString()} / ${n.max.toLocaleString()}`;
+  document.getElementById('xp-pct').textContent          = pct + '%';
+  document.getElementById('xp-fill').style.width         = pct + '%';
+  const hora = new Date().getHours();
+  const saud = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
+  document.getElementById('saudacao').textContent = `${saud}, ${d.nome.split(' ')[0]}!`;
+}
+// ── GRÁFICO ────────────────────────────────────────────────────
+function renderGrafico() {
+  // Tenta carregar dados reais do localStorage; usa mock caso não exista
+  let horasPorDia;
+  try {
+    const raw = localStorage.getItem('sf-horas-semana');
+    horasPorDia = raw ? JSON.parse(raw) : [2.5, 4, 3, 5.5, 2, 4.5, 3];
+  } catch { horasPorDia = [2.5, 4, 3, 5.5, 2, 4.5, 3]; }
+  const nomes   = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+  const hojeIdx = (new Date().getDay() + 6) % 7; // 0=Seg
+  const maxH    = Math.max(...horasPorDia, 0.1);
+  const cont    = document.getElementById('grafico-barras');
+  cont.innerHTML = '';
+  horasPorDia.forEach((h, i) => {
+    const altura = Math.round((h / maxH) * 100);
+    cont.innerHTML += `
+      <div class="barra-col">
+        <div class="barra-col__fill${i === hojeIdx ? ' hoje' : ''}"
+          style="height:${altura}px" data-horas="${h}h"></div>
+        <span class="barra-col__label${i === hojeIdx ? ' hoje' : ''}">${nomes[i]}</span>
+      </div>`;
+  });
+}
+// ── SEQUÊNCIA DINÂMICA ─────────────────────────────────────────
+function renderSequencia() {
+  const agora    = new Date();
+  const ano      = agora.getFullYear();
+  const mes      = agora.getMonth();          // 0-indexado
+  const diaHoje  = agora.getDate();
+  const meses    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const diasSem  = ['D','S','T','Q','Q','S','S'];
+  const totalDias = new Date(ano, mes + 1, 0).getDate();
+  document.getElementById('mes-sequencia').textContent = `${meses[mes]} ${ano}`;
+  // Carrega dias feitos do localStorage (array de datas "YYYY-MM-DD")
+  let diasFeitos = [];
+  try {
+    diasFeitos = JSON.parse(localStorage.getItem('sf-dias-feitos') || '[]');
+  } catch { diasFeitos = []; }
+  // Fallback demo: marca dias anteriores ao hoje como feitos (exceto d%3==0)
+  if (diasFeitos.length === 0) {
+    for (let d = 1; d < diaHoje; d++) {
+      if (d % 3 !== 0) diasFeitos.push(`${ano}-${String(mes+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`);
+    }
+  }
+  const cont = document.getElementById('sequencia-dias');
+  cont.innerHTML = '';
+  for (let d = 1; d <= totalDias; d++) {
+    const chave   = `${ano}-${String(mes+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const nomeDia = diasSem[new Date(ano, mes, d).getDay()];
+    const el      = document.createElement('div');
+    el.className  = 'dia';
+    el.innerHTML  = `<span class="dia__num">${d}</span><span>${nomeDia}</span>`;
+    if (d === diaHoje)           el.classList.add('hoje');
+    else if (diasFeitos.includes(chave)) el.classList.add('feito');
+    else if (d < diaHoje)        el.classList.add('falhou');
+    cont.appendChild(el);
   }
 }
-// ── MODOS DO TIMER ─────────────────────────────────────────────
-const MODOS = {
-  'pomodoro':    { label: '🍅 Foco',       min: 25 },
-  'pausa-curta': { label: '☕ Pausa',       min: 5  },
-  'pausa-longa': { label: '🛋️ Pausa longa', min: 15 },
-};
-let modoAtual = 'pomodoro';
-// ── ESTADO DO TIMER ────────────────────────────────────────────
-const CIRCUNFERENCIA = 2 * Math.PI * 110; // ≈ 691
-let totalSegundos = 25 * 60;
-let segundosRestantes = totalSegundos;
-let rodando = false;
-let intervalo = null;
-let tarefaSelecionada = null;
-let pomodorosHoje = parseInt(localStorage.getItem('sf-pomodoros-hoje') || '0');
-let minutosHoje   = parseInt(localStorage.getItem('sf-minutos-hoje')   || '0');
-let historico     = [];
-try { historico = JSON.parse(localStorage.getItem('sf-historico') || '[]'); } catch {}
-// Reseta contadores se o dia mudou
-const hoje = new Date().toDateString();
-if (localStorage.getItem('sf-foco-dia') !== hoje) {
-  pomodorosHoje = 0; minutosHoje = 0; historico = [];
-  localStorage.setItem('sf-foco-dia', hoje);
-  localStorage.setItem('sf-pomodoros-hoje', '0');
-  localStorage.setItem('sf-minutos-hoje', '0');
-  localStorage.setItem('sf-historico', '[]');
-}
-// ── RENDER ANEL ────────────────────────────────────────────────
-function renderAnel() {
-  const pct    = segundosRestantes / totalSegundos;
-  const offset = CIRCUNFERENCIA * (1 - pct);
-  const anel   = document.getElementById('anel-prog');
-  anel.style.strokeDasharray  = CIRCUNFERENCIA;
-  anel.style.strokeDashoffset = offset;
-  anel.classList.toggle('pausa', modoAtual !== 'pomodoro');
-}
-function renderDisplay() {
-  const m = Math.floor(segundosRestantes / 60);
-  const s = segundosRestantes % 60;
-  document.getElementById('timer-display').textContent =
-    String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
-  document.getElementById('timer-modo-label').textContent = MODOS[modoAtual].label;
-  document.title = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} — StudyFlow`;
-}
-function renderStats() {
-  document.getElementById('s-pomodoros').textContent = pomodorosHoje;
-  document.getElementById('s-minutos').textContent   = minutosHoje;
-  document.getElementById('pomodoros-hoje').textContent = pomodorosHoje;
-  // Ícones de pomodoro (4 por ciclo)
-  const ciclo = pomodorosHoje % 4;
-  document.getElementById('pomodoros-icones').textContent =
-    '🍅'.repeat(ciclo) + '○'.repeat(4 - ciclo);
-}
-// ── RENDER HISTÓRICO ───────────────────────────────────────────
-function renderHistorico() {
-  const lista = document.getElementById('historico-lista');
-  if (historico.length === 0) {
-    lista.innerHTML = `<div class="estado-vazio">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <p>Nenhuma sessão ainda hoje</p></div>`;
+// ── RENDER DISCIPLINAS ─────────────────────────────────────────
+function renderDisciplinas(disciplinas) {
+  const lista = document.getElementById('disciplinas-lista');
+  lista.innerHTML = '';
+  // Estado vazio
+  if (disciplinas.length === 0) {
+    lista.innerHTML = `
+      <div class="estado-vazio">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <div class="estado-vazio__titulo">Nenhuma disciplina ainda</div>
+        <div class="estado-vazio__desc">Adicione suas matérias para acompanhar o progresso</div>
+      </div>`;
     return;
   }
-  lista.innerHTML = [...historico].reverse().slice(0, 6).map(h => `
-    <div class="sessao-hist">
-      <span class="sessao-hist__icone">${h.modo === 'pomodoro' ? '🍅' : '☕'}</span>
-      <div class="sessao-hist__info">
-        <div class="sessao-hist__nome">${h.tarefa || 'Sessão livre'}</div>
-        <div class="sessao-hist__meta">${h.hora} · ${h.minutos} min</div>
+  const maxH = Math.max(...disciplinas.map(d => d.horas), 1);
+  disciplinas.forEach((d, i) => {
+    const pct = Math.round((d.horas / maxH) * 100);
+    const el  = document.createElement('div');
+    el.className = 'disciplina-item';
+    el.innerHTML = `
+      <div class="disciplina-item__icone">${d.icone}</div>
+      <div class="disciplina-item__info">
+        <div class="disciplina-item__nome">${d.nome}</div>
+        <div class="disciplina-item__sub">Contabilizado pelo sistema</div>
       </div>
-      <span class="sessao-hist__dur">+${h.minutos}m</span>
-    </div>`).join('');
-}
-// ── TAREFAS DO DIA ─────────────────────────────────────────────
-function renderTarefasSeletor() {
-  const fmtHoje = new Date().toISOString().split('T')[0];
-  let tarefas = [];
-  try { tarefas = JSON.parse(localStorage.getItem('sf-tarefas') || '[]'); } catch {}
-  const do_dia = tarefas.filter(t => t.data === fmtHoje && !t.feita);
-  const seletor = document.getElementById('tarefa-seletor');
-  if (do_dia.length === 0) {
-    seletor.innerHTML = `<div class="estado-vazio">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <p>Nenhuma tarefa pendente hoje.<br><a href="cronograma.html" class="link-acento">Adicionar no Cronograma →</a></p></div>`;
-    return;
-  }
-  seletor.innerHTML = do_dia.map(t => `
-    <div class="tarefa-opcao${tarefaSelecionada === t.id ? ' selecionada' : ''}" data-id="${t.id}">
-      <div class="tarefa-opcao__check"></div>
-      <div>
-        <div class="tarefa-opcao__nome">${t.nome}</div>
-        <div class="tarefa-opcao__mat">${t.materia} · P = ${t.U * t.C}</div>
+      <div class="disciplina-item__barra-wrap">
+        <div class="disciplina-item__barra-track">
+          <div class="disciplina-item__barra-fill" style="width:${pct}%"></div>
+        </div>
       </div>
-    </div>`).join('');
-  seletor.querySelectorAll('.tarefa-opcao').forEach(el => {
-    el.addEventListener('click', () => {
-      tarefaSelecionada = parseInt(el.dataset.id);
-      const t = do_dia.find(x => x.id === tarefaSelecionada);
-      document.getElementById('sessao-atual-nome').textContent = t ? t.nome : 'Nenhuma tarefa selecionada';
-      renderTarefasSeletor();
+      <button class="btn-delete" data-index="${i}" title="Remover" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+          <path d="M10 11v6"/><path d="M14 11v6"/>
+          <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+        </svg>
+      </button>`;
+    lista.appendChild(el);
+  });
+  lista.querySelectorAll('.btn-delete').forEach(btn => {
+    btn.addEventListener('click', () => {
+      dados.disciplinas.splice(parseInt(btn.dataset.index), 1);
+      salvarDados(dados);
+      renderDisciplinas(dados.disciplinas);
+      mostrarToast('Disciplina removida');
     });
   });
 }
-// ── CONTROLE DO TIMER ──────────────────────────────────────────
-function iniciar() {
-  rodando = true;
-  document.getElementById('icone-play').outerHTML = `<rect id="icone-play" x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>`;
-  intervalo = setInterval(() => {
-    segundosRestantes--;
-    renderDisplay();
-    renderAnel();
-    if (segundosRestantes <= 0) concluirSessao();
-  }, 1000);
-  // Pede permissão de notificação
-  if (Notification.permission === 'default') Notification.requestPermission();
-}
-function pausar() {
-  rodando = false;
-  clearInterval(intervalo);
-  document.getElementById('btn-play').querySelector('rect,polygon,svg')?.remove();
-  document.getElementById('btn-play').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icone-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-}
-function concluirSessao() {
-  clearInterval(intervalo);
-  rodando = false;
-  if (modoAtual === 'pomodoro') {
-    pomodorosHoje++;
-    minutosHoje += MODOS[modoAtual].min;
-    localStorage.setItem('sf-pomodoros-hoje', pomodorosHoje);
-    localStorage.setItem('sf-minutos-hoje', minutosHoje);
-    // Registra no histórico
-    const hora = new Date().toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
-    const tarefa = (() => {
-      try {
-        const ts = JSON.parse(localStorage.getItem('sf-tarefas') || '[]');
-        const t  = ts.find(x => x.id === tarefaSelecionada);
-        return t ? t.nome : null;
-      } catch { return null; }
-    })();
-    historico.push({ modo: modoAtual, minutos: MODOS[modoAtual].min, hora, tarefa });
-    localStorage.setItem('sf-historico', JSON.stringify(historico));
-    notificar('🍅 Pomodoro concluído! Hora da pausa.');
-    toast('🎉 +' + MODOS[modoAtual].min + ' minutos de foco!');
-    renderStats();
-    renderHistorico();
-    // Sugere pausa automaticamente
-    const modo = pomodorosHoje % 4 === 0 ? 'pausa-longa' : 'pausa-curta';
-    setTimeout(() => trocarModo(modo), 800);
-  } else {
-    notificar('☕ Pausa concluída! Vamos focar.');
-    setTimeout(() => trocarModo('pomodoro'), 800);
-  }
-  // Reset botão play
-  document.getElementById('btn-play').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icone-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-}
-function trocarModo(modo) {
-  modoAtual = modo;
-  totalSegundos = MODOS[modo].min * 60;
-  segundosRestantes = totalSegundos;
-  rodando = false;
-  clearInterval(intervalo);
-  document.querySelectorAll('.modo-btn').forEach(b => b.classList.toggle('ativo', b.dataset.modo === modo));
-  document.getElementById('btn-play').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icone-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-  renderDisplay();
-  renderAnel();
-}
-// ── EVENTOS ────────────────────────────────────────────────────
-document.getElementById('btn-play').addEventListener('click', () => {
-  if (rodando) pausar(); else iniciar();
-});
-document.getElementById('btn-reiniciar').addEventListener('click', () => {
-  clearInterval(intervalo); rodando = false;
-  segundosRestantes = totalSegundos;
-  renderDisplay(); renderAnel();
-  document.getElementById('btn-play').innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round" id="icone-play"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
-});
-document.getElementById('btn-pular').addEventListener('click', () => {
-  clearInterval(intervalo); concluirSessao();
-});
-document.querySelectorAll('.modo-btn').forEach(btn => {
-  btn.addEventListener('click', () => trocarModo(btn.dataset.modo));
-});
 // ── INIT ───────────────────────────────────────────────────────
-renderDisplay();
-renderAnel();
-renderStats();
-renderHistorico();
-renderTarefasSeletor();
+let dados = carregarDados();
+renderPerfil(dados);
+renderGrafico();
+renderSequencia();
+renderDisciplinas(dados.disciplinas);
+// ── MODAL PERFIL ───────────────────────────────────────────────
+let avatarSel = dados.avatar;
+const modalOverlay = document.getElementById('modal-overlay');
+function abrirModal() {
+  document.getElementById('input-nome').value  = dados.nome;
+  document.getElementById('input-curso').value = dados.curso;
+  avatarSel = dados.avatar;
+  document.querySelectorAll('#avatar-grid .avatar-op').forEach(op =>
+    op.classList.toggle('selecionado', op.dataset.emoji === dados.avatar));
+  modalOverlay.classList.add('aberto');
+}
+const fecharModal = () => modalOverlay.classList.remove('aberto');
+document.getElementById('btn-editar').addEventListener('click', abrirModal);
+document.getElementById('modal-fechar').addEventListener('click', fecharModal);
+document.getElementById('btn-cancelar').addEventListener('click', fecharModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) fecharModal(); });
+document.getElementById('avatar-grid').addEventListener('click', e => {
+  const op = e.target.closest('.avatar-op'); if (!op) return;
+  document.querySelectorAll('#avatar-grid .avatar-op').forEach(a => a.classList.remove('selecionado'));
+  op.classList.add('selecionado'); avatarSel = op.dataset.emoji;
+});
+document.getElementById('btn-salvar').addEventListener('click', () => {
+  dados.avatar = avatarSel;
+  dados.nome   = document.getElementById('input-nome').value.trim()  || dados.nome;
+  dados.curso  = document.getElementById('input-curso').value.trim() || dados.curso;
+  salvarDados(dados);
+  renderPerfil(dados);
+  fecharModal();
+  mostrarToast('Perfil salvo com sucesso!');
+});
+// ── MODAL DISCIPLINA ───────────────────────────────────────────
+let discIconeSel = '📐';
+const modalDisc  = document.getElementById('modal-disciplina');
+document.getElementById('btn-add-disciplina').addEventListener('click', () => {
+  document.getElementById('disc-nome').value = '';
+  discIconeSel = '📐';
+  document.querySelectorAll('#disc-icone-grid .avatar-op').forEach((op, i) =>
+    op.classList.toggle('selecionado', i === 0));
+  modalDisc.classList.add('aberto');
+});
+const fecharModalDisc = () => modalDisc.classList.remove('aberto');
+document.getElementById('modal-disc-fechar').addEventListener('click', fecharModalDisc);
+document.getElementById('modal-disc-cancelar').addEventListener('click', fecharModalDisc);
+modalDisc.addEventListener('click', e => { if (e.target === modalDisc) fecharModalDisc(); });
+document.getElementById('disc-icone-grid').addEventListener('click', e => {
+  const op = e.target.closest('.avatar-op'); if (!op) return;
+  document.querySelectorAll('#disc-icone-grid .avatar-op').forEach(a => a.classList.remove('selecionado'));
+  op.classList.add('selecionado'); discIconeSel = op.dataset.emoji;
+});
+document.getElementById('modal-disc-salvar').addEventListener('click', () => {
+  const nome = document.getElementById('disc-nome').value.trim();
+  if (!nome) { mostrarToast('⚠️ Digite o nome da disciplina!'); return; }
+  dados.disciplinas.push({ icone: discIconeSel, nome, horas: 0 });
+  salvarDados(dados);
+  renderDisciplinas(dados.disciplinas);
+  fecharModalDisc();
+  mostrarToast('Disciplina adicionada!');
+});
 </script>
 </body>
 </html>
