@@ -4,28 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="StudyFlow — Gerencie seus estudos com inteligência. Cronograma automático, Pomodoro e gamificação.">
-  <meta name="theme-color" content="#0d1b2a">
-  <!-- Open Graph — aparece quando compartilhar o link no WhatsApp, Discord etc -->
+  <meta name="theme-color" content="#001433">
   <meta property="og:title" content="StudyFlow | Gestão Inteligente de Estudos">
   <meta property="og:description" content="Estude com inteligência, não com esforço. Cronograma automático e Pomodoro.">
   <meta property="og:type" content="website">
   <title>StudyFlow | Gestão Inteligente de Estudos</title>
-  <!-- preconnect avisa o browser para abrir conexão com Google Fonts antes de precisar -->
+
+  <!-- Favicon SVG inline via data URI -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230066FF'/%3E%3Ctext x='50%25' y='55%25' font-size='18' text-anchor='middle' dominant-baseline='middle'%3E🐱%3C/text%3E%3C/svg%3E">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Fonte importada no style.css via @import — não duplicar aqui -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Anti-FOUC: aplica tema salvo ANTES do body renderizar -->
+  <script>try{var t=localStorage.getItem("sf-tema");if(t)document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
 </head>
 <body>
-  <!-- Skip link: permite usuários de teclado/leitores de tela pular a navbar -->
   <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo</a>
+
   <header role="banner">
     <nav class="nav" id="nav-principal" aria-label="Menu Principal">
       <div class="nav__inner">
+
         <a href="index.html" class="nav__logo" aria-label="StudyFlow — página inicial">
-          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <!-- Mascote gato SVG -->
+          <svg class="cat-mascot" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect width="40" height="40" rx="10" fill="#0066FF"/>
+            <!-- orelhas -->
+            <path d="M8 14 L8 7 L14 12Z" fill="#3385FF"/>
+            <path d="M32 14 L32 7 L26 12Z" fill="#3385FF"/>
+            <!-- rosto -->
+            <ellipse cx="20" cy="22" rx="12" ry="11" fill="#CCE0FF"/>
+            <!-- olhos -->
+            <ellipse cx="15.5" cy="19" rx="2" ry="2.5" fill="#001433"/>
+            <ellipse cx="24.5" cy="19" rx="2" ry="2.5" fill="#001433"/>
+            <!-- brilho olhos -->
+            <circle cx="16.5" cy="18" r="0.7" fill="white"/>
+            <circle cx="25.5" cy="18" r="0.7" fill="white"/>
+            <!-- nariz -->
+            <ellipse cx="20" cy="23" rx="1.2" ry="0.8" fill="#0066FF"/>
+            <!-- boca -->
+            <path d="M17.5 25 Q20 27 22.5 25" stroke="#0052CC" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            <!-- bigodes -->
+            <line x1="8" y1="23" x2="16" y2="24" stroke="#0052CC" stroke-width="0.8" stroke-linecap="round"/>
+            <line x1="8" y1="25.5" x2="16" y2="25" stroke="#0052CC" stroke-width="0.8" stroke-linecap="round"/>
+            <line x1="32" y1="23" x2="24" y2="24" stroke="#0052CC" stroke-width="0.8" stroke-linecap="round"/>
+            <line x1="32" y1="25.5" x2="24" y2="25" stroke="#0052CC" stroke-width="0.8" stroke-linecap="round"/>
+          </svg>
           StudyFlow
         </a>
+
         <ul class="nav__links" id="nav-links" role="list">
           <li><a href="#hero" aria-current="page">Início</a></li>
           <li><a href="#funcionalidades">Funcionalidades</a></li>
@@ -33,6 +62,7 @@
           <li><a href="cronograma.html">Cronograma</a></li>
           <li><a href="foco.html">Modo Foco</a></li>
         </ul>
+
         <div class="nav__actions">
           <div class="toggle-tema" title="Alternar tema">
             <input type="checkbox" id="toggle-tema" class="toggle-tema__input"
@@ -42,9 +72,9 @@
             </label>
             <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
           </div>
-          <!-- href aponta para a seção de cadastro (a implementar) -->
-          <a href="#cadastro-tarefas" class="btn-nav">Começar grátis →</a>
+          <a href="#cadastro" class="btn-nav">Começar grátis →</a>
         </div>
+
         <button class="nav__toggle" id="nav-toggle" type="button"
           aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
           <span aria-hidden="true"></span>
@@ -54,42 +84,78 @@
       </div>
     </nav>
   </header>
+
   <main id="conteudo-principal" role="main">
+
     <!-- ── HERO ─────────────────────────────────────────────────── -->
     <section id="hero" class="hero" aria-labelledby="hero-titulo">
       <div class="hero__grid-bg" aria-hidden="true"></div>
       <div class="hero__inner">
+
         <div class="hero__content">
           <div class="hero__badge" aria-label="Versão atual">
             <span class="hero__badge-dot" aria-hidden="true"></span>
             Versão 1.0 disponível
           </div>
+
           <h1 class="hero__titulo" id="hero-titulo">
             Estude com<br>
             <span class="hero__titulo-gradiente">inteligência,</span><br>
             não com esforço.
           </h1>
+
           <p class="hero__subtitulo">
             O StudyFlow analisa seus hábitos, distribui suas tarefas e cria um
             cronograma personalizado — para você estudar menos tempo e aprender muito mais.
           </p>
+
           <div class="hero__ctas">
-            <a href="#cadastro-tarefas" class="btn-primario">🚀 Criar meu plano grátis</a>
+            <a href="#cadastro" class="btn-primario">🚀 Criar meu plano grátis</a>
             <a href="#funcionalidades" class="btn-secundario">▷ Ver como funciona</a>
           </div>
+
+          <!-- Avatares SVG reais — mais credíveis que emojis -->
           <div class="hero__social-proof" aria-label="Mais de 2400 estudantes usando o StudyFlow">
             <div class="hero__avatares" aria-hidden="true">
-              <div class="hero__avatar">🐱</div>
-              <div class="hero__avatar">📚</div>
-              <div class="hero__avatar">🎓</div>
-              <div class="hero__avatar">✏️</div>
+              <!-- Avatar 1 -->
+              <div class="hero__avatar">
+                <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="34" height="34" rx="17" fill="#3385FF"/>
+                  <circle cx="17" cy="13" r="6" fill="#CCE0FF"/>
+                  <ellipse cx="17" cy="28" rx="10" ry="7" fill="#CCE0FF"/>
+                </svg>
+              </div>
+              <!-- Avatar 2 -->
+              <div class="hero__avatar">
+                <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="34" height="34" rx="17" fill="#0052CC"/>
+                  <circle cx="17" cy="13" r="6" fill="#E5F0FF"/>
+                  <ellipse cx="17" cy="28" rx="10" ry="7" fill="#E5F0FF"/>
+                </svg>
+              </div>
+              <!-- Avatar 3 -->
+              <div class="hero__avatar">
+                <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="34" height="34" rx="17" fill="#001433"/>
+                  <circle cx="17" cy="13" r="6" fill="#99C2FF"/>
+                  <ellipse cx="17" cy="28" rx="10" ry="7" fill="#99C2FF"/>
+                </svg>
+              </div>
+              <!-- Avatar 4 -->
+              <div class="hero__avatar">
+                <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="34" height="34" rx="17" fill="#0066FF"/>
+                  <circle cx="17" cy="13" r="6" fill="#CCE0FF"/>
+                  <ellipse cx="17" cy="28" rx="10" ry="7" fill="#CCE0FF"/>
+                </svg>
+              </div>
             </div>
             <p class="hero__social-texto">
               <strong>+2.400 estudantes</strong> já organizam seus estudos
             </p>
           </div>
         </div>
-        <!-- aria-hidden: o card é decorativo, não precisa ser lido por leitores de tela -->
+
         <div class="hero__visual" aria-hidden="true">
           <div class="hero__deco hero__deco--1"></div>
           <div class="hero__deco hero__deco--2"></div>
@@ -129,8 +195,10 @@
             </div>
           </div>
         </div>
+
       </div>
     </section>
+
     <!-- ── FUNCIONALIDADES ───────────────────────────────────────── -->
     <section id="funcionalidades" class="features" aria-labelledby="features-titulo">
       <div class="features__header">
@@ -176,17 +244,38 @@
         </article>
       </div>
     </section>
+
+    <!-- ── CTA FINAL ─────────────────────────────────────────────── -->
+    <section id="cadastro" class="cta-final" aria-labelledby="cta-titulo">
+      <div class="cta-final__inner">
+        <span class="cta-final__icone" aria-hidden="true">🐱</span>
+        <h2 class="cta-final__titulo" id="cta-titulo">
+          Pronto para estudar com inteligência?
+        </h2>
+        <p class="cta-final__subtitulo">
+          Junte-se a mais de 2.400 estudantes que já organizam seus estudos com o StudyFlow.
+          Grátis para sempre — sem cartão de crédito.
+        </p>
+        <div class="cta-final__acoes">
+          <a href="inscricao.html" class="btn-primario">🚀 Criar conta grátis</a>
+          <a href="cronograma.html" class="btn-secundario">Ver demo</a>
+        </div>
+      </div>
+    </section>
+
   </main>
+
   <footer role="contentinfo">
     <p>
       © 2026 StudyFlow — Dados protegidos conforme a
       <abbr title="Lei Geral de Proteção de Dados">LGPD</abbr>
       · <a href="#">Privacidade</a> · <a href="#">Contato</a>
     </p>
-    <p class="footer__status"><small>Status: <strong class="footer__status-valor">🟢 Online</strong></small></p>
+    <p class="footer__status">
+      <small>Status: <strong class="footer__status-valor">🟢 Online</strong></small>
+    </p>
   </footer>
-  <!-- script.js carregado no final do body: garante que o DOM está
-       completamente parseado antes do JS tentar selecionar elementos -->
+
   <script src="script.js"></script>
 </body>
 </html>
