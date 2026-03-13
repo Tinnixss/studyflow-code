@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* ================================================================
    StudyFlow | style.css — COMPARTILHADO (index + perfil)
@@ -20,7 +20,7 @@
   --accent-glow:    rgba(56, 189, 248, 0.20);
   --text-primary:   #f0f8ff;
   --text-secondary: #94a3b8;
-  --font-display:   'DM Sans', sans-serif;
+  --font-display:   'Space Grotesk', sans-serif;
   --font-body:      'Inter', sans-serif;
   --s1:  8px; --s2: 16px; --s3: 24px; --s4: 32px;
   --s5: 48px; --s6: 64px; --s7: 80px;
@@ -44,9 +44,9 @@
 }
 
 /* No light mode, o gradiente claro fica invisível —
-   substituímos por azul sólido mais escuro e legível */
+   substituímos por azuis escuros e saturados */
 [data-tema="light"] .hero__titulo-gradiente {
-  background: linear-gradient(135deg, #0369a1 0%, #0284c7 60%, #0ea5e9 100%);
+  background: linear-gradient(135deg, #1d4ed8 0%, #0369a1 55%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -572,3 +572,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 /* ── Barras de progresso via data-w (sem style inline) ─────── */
 /* O JS em perfil.html aplica: el.style.width = el.dataset.w + '%' */
 [data-w] { width: 0; transition: width 0.8s ease; }
+
+/* ── Gradientes em light mode — páginas internas ────────────── */
+[data-tema="light"] .painel__titulo span,
+[data-tema="light"] .page-header__titulo span {
+  background: linear-gradient(135deg, #1d4ed8 0%, #0369a1 55%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
