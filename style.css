@@ -658,3 +658,121 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .feature-card__icone {
   transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), background 0.3s ease !important;
 }
+
+/* ====================== LOADING SCREEN ====================== */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-base);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  max-width: 320px;
+  text-align: center;
+}
+
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Animações do gato */
+.catbody .cat-fill { fill: var(--accent); }
+[data-tema="light"] .catbody .cat-fill { fill: #0052CC; }
+
+.tail .tail-fill { fill: var(--accent-hover); }
+[data-tema="light"] .tail .tail-fill { fill: #003D99; }
+
+.wall-stroke { stroke: rgba(51, 133, 255, 0.35); }
+[data-tema="light"] .wall-stroke { stroke: rgba(0, 82, 204, 0.35); }
+
+/* Rabo balançando */
+.tail {
+  position: absolute;
+  width: 17px;
+  top: 48%;
+  animation: tailSwing 0.8s ease-in-out infinite alternate;
+  transform-origin: top;
+}
+
+@keyframes tailSwing {
+  from { transform: rotate(55deg); }
+  to   { transform: rotate(-25deg); }
+}
+
+/* Zzz flutuando */
+.text {
+  position: absolute;
+  margin: 0 0 90px 125px;
+}
+
+.zzz, .bigzzz {
+  color: var(--text-primary);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  opacity: 0;
+  animation: zzzFloat linear infinite;
+}
+
+.bigzzz { font-size: 28px; animation-duration: 2.1s; }
+.zzz     { font-size: 18px; animation-duration: 1.7s; margin-left: 8px; }
+
+@keyframes zzzFloat {
+  0%   { opacity: 0; transform: translateY(8px); }
+  50%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-8px); }
+}
+
+/* Texto e barra de progresso */
+.loading-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.loading-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.loading-progress {
+  width: 240px;
+  height: 5px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.loading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  border-radius: 99px;
+  animation: loadingProgress 2.2s ease-in-out infinite;
+}
+
+@keyframes loadingProgress {
+  0%   { width: 0%;   margin-left: 0%; }
+  50%  { width: 65%;  margin-left: 15%; }
+  100% { width: 0%;   margin-left: 100%; }
+}
