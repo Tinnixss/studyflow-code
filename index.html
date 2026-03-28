@@ -10,6 +10,7 @@
   <meta property="og:type" content="website">
   <title>StudyFlow | Gestão Inteligente de Estudos</title>
 
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAD+0lEQVR42u2WXWxURRiG32/OtrQ121IK7bZQ2AoVaGk1ULS6qwGtiT8hamKQhq2Y+NMbbjQxerepBJLG+JM0RBp/QkMp9M+YSBRSCA0ELSABsSu0iFEjpa27LLs523b3dM7rTTGkkeJuMF7Y52YyJzNzvnm/d74ZYJb/GCPFeQqAAOC0ftJIEuPU1A/taYHgFt84rU05AJm2iJGWllUJwBZRd4vNIirVIwmViCMSBGDecQVycnJyAdw3Pp7IhdaGBmpAlhF2joikkRgSMX4QwUWl1HBmdu6v1ph1dezlTWE0NcVnWttxm8DylMp4LBoZqyCs5SJSrpSap7XOFxEhCREByRXA5KOG4RhKWIloIjh0Bq7iuFBNEtgKUkPEvpWZ/g4CQFlZWdS21TGP13ulsfHd59PT5qzUWhe4XC5Z4nbbJSUl9hK323aXuLXL5YLWk0XpjjkrGnfs2HzvA9UjLF3xiwAWOjtTMihIylSbH/ojPLFn9z7tzHbqpaXL6PF6WFVVxTVrq+jxeri0dCmdTqdubdmvzetmpHs0vBrb3q9TANDRYSSbgumpyN7b2mV8f6ZfNTd/zNfq62GaMWQ7nQCJ300TsVgMH+1qlqOHTsp4MGp9+3j1OhTkvbTK5/v8/MaNMYACCJMN4EY6JguyspA1aaF20wsoX1SMqyPD+GR/O0ji1dpNKCx0obL6IXz3VR9cc52SEbcSCEYumKsedgCtqZ0CP6kaROyuQKDUovpxvnuxw2EInRmZkg6gYmrcWQAWgHGdoG1Thgd+1k5zYuWGB1dfIqnkFga8rQINAEmKtLfvrK2+33F8+4c6FIkak6MhWOWleKfeB1KjoXk/skeCiJimzJ03Tz/x5ivGvv5AE8kn5TaFSM2oQG+vISLc4io+NDAURP71CBbm5WF51wFk9AVwKhzC6SujcP02gpJlJXB/0Yu79h7EQNTElsKiHhGhv7c3tXLv9/sVSdXT800FI2bbM5cGbDzt0wsWeVk0t4ry9nYeOB/gl+cCxFvbmO32cvH8NURNrX5q8KLNaKztyJGT5SSV3+9XSXvgxhHs7Px6vmdt5c6gM/O5F/e0wx4OywRtVVf3rIx+0AIAWPDGFrTt7qbDkUblyrVbNm/EwvFE98lzA1s3bFgXAgARYaoqGH19Z9dHRoKHaWmSpD0R56nDx6zPmlusT3e1WCcOHrH0RJwkSUvTDIYO9/WdXU/SmGn3SfFeR0dmYPCyL3QtfGoiHh/jNOLxROxaOHz64uBl3+sdHZl3+jq+mbSjR08sX7XyHg8MEFCAtuVC/+Xjj9RU/wQg8W89XoSk8Q/Kt5HMxpJWgKCAfz1QbsYGwJTMNssss8zyv+ZPtmf36FSgGX0AAAAASUVORK5CYII=">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,7 +45,6 @@
       }, 5500);
     })();
   </script>
-
 </head>
 <body>
 
@@ -111,7 +111,6 @@
           <img src="logo.png" alt="" class="cat-mascot" aria-hidden="true" loading="eager">
           StudyFlow
         </a>
-
         <ul class="nav__links" id="nav-links" role="list">
           <li><a href="#hero" aria-current="page">Início</a></li>
           <li><a href="#funcionalidades">Funcionalidades</a></li>
@@ -119,10 +118,10 @@
           <li><a href="cronograma.html">Cronograma</a></li>
           <li><a href="foco.html">Modo Foco</a></li>
         </ul>
-
         <div class="nav__actions">
           <div class="toggle-tema" title="Alternar tema">
-            <input type="checkbox" id="toggle-tema" class="toggle-tema__input" role="switch" aria-label="Alternar entre dark e light mode">
+            <input type="checkbox" id="toggle-tema" class="toggle-tema__input"
+              role="switch" aria-label="Alternar entre dark e light mode">
             <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
               <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
             </label>
@@ -130,8 +129,8 @@
           </div>
           <a href="#cadastro" class="btn-nav">Começar grátis →</a>
         </div>
-
-        <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+        <button class="nav__toggle" id="nav-toggle" type="button"
+          aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -143,26 +142,64 @@
   <main id="conteudo-principal" role="main">
     <!-- ── HERO ─────────────────────────────────────────────────── -->
     <section id="hero" class="hero" aria-labelledby="hero-titulo">
-      <!-- todo o conteúdo do hero permanece igual -->
       <div class="hero__grid-bg" aria-hidden="true"></div>
       <div class="hero__inner">
-        <!-- ... (seu conteúdo do hero continua aqui) ... -->
+        <div class="hero__content">
+          <div class="hero__badge" aria-label="Versão atual">
+            <span class="hero__badge-dot" aria-hidden="true"></span>
+            Versão 1.0 disponível
+          </div>
+          <h1 class="hero__titulo" id="hero-titulo">
+            Estude com<br>
+            <span class="hero__titulo-gradiente">inteligência,</span><br>
+            não com esforço.
+          </h1>
+          <p class="hero__subtitulo">
+            O StudyFlow analisa seus hábitos, distribui suas tarefas e cria um
+            cronograma personalizado — para você estudar menos tempo e aprender muito mais.
+          </p>
+          <div class="hero__ctas">
+            <a href="#cadastro" class="btn-primario">🚀 Criar meu plano grátis</a>
+            <a href="#funcionalidades" class="btn-secundario">▷ Ver como funciona</a>
+          </div>
+          <div class="hero__social-proof" aria-label="Mais de 2400 estudantes usando o StudyFlow">
+            <div class="hero__avatares" aria-hidden="true">
+              <!-- Avatares SVG -->
+              <div class="hero__avatar">
+                <svg viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="34" height="34" rx="17" fill="#3385FF"/>
+                  <circle cx="17" cy="13" r="6" fill="#CCE0FF"/>
+                  <ellipse cx="17" cy="28" rx="10" ry="7" fill="#CCE0FF"/>
+                </svg>
+              </div>
+              <!-- outros avatares... -->
+            </div>
+            <p class="hero__social-texto">
+              <strong>+2.400 estudantes</strong> já organizam seus estudos
+            </p>
+          </div>
+        </div>
+        <div class="hero__visual" aria-hidden="true">
+          <!-- seu app mock permanece igual -->
+        </div>
       </div>
     </section>
 
+    <!-- O resto do conteúdo (como funciona, funcionalidades, CTA) permanece igual ao que você enviou -->
+
     <!-- ── PAINEL "COMO FUNCIONA" ────────────── -->
     <div id="como-funciona-painel" aria-live="polite">
-      <!-- seu conteúdo permanece igual -->
+      <!-- seu conteúdo -->
     </div>
 
     <!-- ── FUNCIONALIDADES ───────────────────────────────────────── -->
     <section id="funcionalidades" class="features" aria-labelledby="features-titulo">
-      <!-- seu conteúdo permanece igual -->
+      <!-- seu conteúdo -->
     </section>
 
     <!-- ── CTA FINAL ─────────────────────────────────────────────── -->
     <section id="cadastro" class="cta-final" aria-labelledby="cta-titulo">
-      <!-- seu conteúdo permanece igual -->
+      <!-- seu conteúdo -->
     </section>
   </main>
 
