@@ -19,32 +19,7 @@
 
   <!-- Anti-FOUC: aplica tema salvo ANTES do body renderizar -->
   <script>try{var t=localStorage.getItem("sf-tema");if(t)document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
-  <!-- Controle da loading screen — roda antes do body renderizar -->
-  <script>
-    (function() {
-      // Se já visitou nessa sessão, esconde imediatamente via CSS
-      if (sessionStorage.getItem('sf-loaded')) {
-        document.addEventListener('DOMContentLoaded', function() {
-          var l = document.getElementById('loading-screen');
-          if (l) l.style.display = 'none';
-        });
-        return;
-      }
-      sessionStorage.setItem('sf-loaded', 'true');
-      // Esconde após página carregar completamente
-      window.addEventListener('load', function() {
-        setTimeout(function() {
-          var l = document.getElementById('loading-screen');
-          if (l) l.classList.add('hidden');
-        }, 2000);
-      });
-      // Segurança: esconde após 6s
-      setTimeout(function() {
-        var l = document.getElementById('loading-screen');
-        if (l && !l.classList.contains('hidden')) l.classList.add('hidden');
-      }, 6000);
-    })();
-  </script>
+
   <style>
     /* Loading screen — cores fixas, não depende de variáveis CSS */
     .loading-screen {
