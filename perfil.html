@@ -839,15 +839,17 @@ document.getElementById('modal-disc-salvar').addEventListener('click', () => {
   if (!loading) return;
 
   if (sessionStorage.getItem('sf-loaded')) {
-    // Já visitou antes → esconde na hora
     loading.style.display = 'none';
     return;
   }
-
-  // Primeira visita → mostra normalmente
   sessionStorage.setItem('sf-loaded', 'true');
-  window.addEventListener('load', () => {
-    setTimeout(() => loading.classList.add('hidden'), 1500);
+  function esconderLoading() {
+    setTimeout(() => loading.classList.add('hidden'), 1800);
+  }
+  if (document.readyState === 'complete') {
+    esconderLoading();
+  } else {
+    window.addEventListener('load', esconderLoading;
   });
   setTimeout(() => {
     if (!loading.classList.contains('hidden')) loading.classList.add('hidden');
