@@ -866,12 +866,17 @@ document.getElementById('modal-tarefa-salvar').addEventListener('click', () => {
     return;
   }
   sessionStorage.setItem('sf-loaded', 'true');
-  window.addEventListener('load', () => {
-    setTimeout(() => loading.classList.add('hidden'), 1500);
-  });
+  function esconderLoading() {
+    setTimeout(() => loading.classList.add('hidden'), 1800);
+  }
+  if (document.readyState === 'complete') {
+    esconderLoading();
+  } else {
+    window.addEventListener('load', esconderLoading);
+  }
   setTimeout(() => {
     if (!loading.classList.contains('hidden')) loading.classList.add('hidden');
-  }, 5000);
+  }, 6000);
 })();
 </script>
 </body>
