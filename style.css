@@ -776,3 +776,147 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   50%  { width: 65%;  margin-left: 15%; }
   100% { width: 0%;   margin-left: 100%; }
 }
+
+/* ================================================================
+   RADAR CHART - Desempenho por Habilidade (Digital Blue)
+   ================================================================ */
+
+.radar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s4);
+}
+
+.radar-chart {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-surface);
+  border-radius: var(--r-xl);
+  padding: var(--s3);
+  border: 1px solid var(--border);
+}
+
+#radar-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 20px rgba(0, 102, 255, 0.15));
+}
+
+/* Grid e Eixos */
+.radar-grid-line {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1.5;
+}
+
+.radar-axis {
+  stroke: var(--border-hover);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+
+/* Área preenchida */
+.radar-area {
+  fill: url(#radar-gradient);
+  stroke: none;
+  opacity: 0.75;
+  transition: opacity 0.4s ease;
+}
+
+.radar-area:hover {
+  opacity: 0.9;
+}
+
+/* Linha de contorno */
+.radar-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+/* Pontos */
+.radar-point {
+  fill: var(--accent);
+  stroke: var(--bg-surface);
+  stroke-width: 3.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.radar-point:hover {
+  fill: #3385FF;
+  stroke: var(--accent);
+  r: 9;
+  filter: drop-shadow(0 0 12px var(--accent-glow));
+}
+
+/* Labels */
+.radar-label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--text-primary);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  letter-spacing: 0.03em;
+}
+
+/* Stats */
+.radar-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s3);
+  width: 100%;
+  text-align: center;
+}
+
+.radar-stat {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--s3) var(--s2);
+}
+
+.radar-stat-value {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.radar-stat-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.radar-stat--melhor .radar-stat-value { color: var(--accent); }
+.radar-stat--atencao .radar-stat-value { color: #f59e0b; }
+
+/* Animações */
+@keyframes radarDraw {
+  from { stroke-dashoffset: 800; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.radar-line {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  animation: radarDraw 1.8s ease forwards;
+}
+
+/* Responsivo */
+@media (max-width: 700px) {
+  .radar-stats {
+    grid-template-columns: 1fr;
+    gap: var(--s2);
+  }
+}
