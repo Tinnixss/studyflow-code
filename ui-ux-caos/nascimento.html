@@ -3,38 +3,551 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudyFlow | UI/UX do Caos</title>
-  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAD+0lEQVR42u2WXWxURRiG32/OtrQ121IK7bZQ2AoVaGk1ULS6qwGtiT8hamKQhq2Y+NMbbjQxerepBJLG+JM0RBp/QkMp9M+YSBRSCA0ELSABsSu0iFEjpa27LLs523b3dM7rTTGkkeJuMF7Y52YyJzNzvnm/d74ZYJb/GCPFeQqAAOC0ftJIEuPU1A/taYHgFt84rU05AJm2iJGWllUJwBZRd4vNIirVIwmViCMSBGDecQVycnJyAdw3Pp7IhdaGBmpAlhF2joikkRgSMX4QwUWl1HBmdu6v1ph1dezlTWE0NcVnWttxm8DylMp4LBoZqyCs5SJSrpSap7XOFxEhCREByRXA5KOG4RhKWIloIjh0Bq7iuFBNEtgKUkPEvpWZ/g4CQFlZWdS21TGP13ulsfHd59PT5qzUWhe4XC5Z4nbbJSUl9hK323aXuLXL5YLWk0XpjjkrGnfs2HzvA9UjLF3xiwAWOjtTMihIylSbH/ojPLFn3z7tzHbqpaXL6PF6WFVVxTVrq+jxeri0dCmdTqdubdmvnetmpHs0vBrb3q9TANDRYSSbgumpyN7b2mV8f6ZfNTd/zNfq62GaMWQ7nQCJ300TsVgMH+1qlqOHTsp4MGp9+3j1OhTkvbTK5/v8/MaNMYACCJMN4EY6JguyspC1aaF20wsoX1SMqyPD+GR/O0ji1dpNKCx0obL6IXz3VR9cc52SEbcSCEYumKsedgCtqZ0CP6kaROyuQKDUovpxvnuxw2EInRmZkg6gYmrcWQAWgHGdoG1Thgd+2k5zYuWGB1dfIqnkFga8rQINAEmKtLfvrK2+33F8+4c6FIkak6MhWOWleKfeB1KjoXk/skeCiJimzJ03Tz/x5ivGvv5AE8kn5TaFSM2oQG+vISLc4io+NDAURP71CBbm5WF51wFk9AVwKhzC6SujcP02gpJlJXB/0Yu79h7EQNTElsKiHhGhv7c3tXLv9/sVSdXT800FI2bbM5cGbDzt0wsWeVk0t4ry9nYeOB/gl+cCxFvbmO32cvH8NURNrX5q8KLNaKztyJGT5SSV3+9XSXvgxhHs7Px6vmdt5c6gM/O5F/e0wx4OywRtVVf3rIx+0AIAWPDGFrTt7qbDkUblyrVbNm/EwvFE90lzA1s3bFgXAgARYaoqGH19Z9dHRoKHaWmSpD0R56nDx6zPmlusT3e1WCcOHrH0RJwkSUvTDIYO9/WdXU/SmGn3SfFeR0dmYPCyL3QtfGoiHh/jNOLxROxaOHz64uBl3+sdHZl3+jq+mbSjR08sX7XyHg8MEFCAtuVC/+Xjj9RU/wQg8W89XoSk8Q/Kt5HMxpJWgKCAfz1QbsYGwJTMNssss8zyv+ZPtmf36FSgGX0AAAAASUVORK5CYII=" alt="" class="cat-mascot" aria-hidden="true" loading="eager">
-          StudyFlow
-        </a>
-        <ul class="nav__links" id="nav-links" role="list">
-          <li><a href="#">Início</a></li>
-          <li><a href="#">Perfil</a></li>
-          <li><a href="#">Cronograma</a></li>
-          <li><a href="#">Modo Foco</a></li>
-        </ul>
-        <div class="nav__actions">
-          <div class="toggle-tema" title="Alternar tema">
-            <input type="checkbox" id="toggle-tema" class="toggle-tema__input" role="switch" aria-label="Alternar tema">
-            <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
-              <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
-            </label>
-            <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
-          </div>
-        </div>
-        <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
-          <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-        </button>
+  <title>UI/UX do Caos | A Pior Seleção de Data de Nascimento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & Variáveis ── */
+    :root {
+      --font-display: "Space Grotesk", sans-serif;
+      --font-body: "Inter", sans-serif;
+      --bg-base: #1a1a1a;
+      --bg-surface: #2a2a2a;
+      --text-primary: #e0e0e0;
+      --text-secondary: #a0a0a0;
+      --accent: #ff00ff;
+      --accent-hover: #cc00cc;
+      --accent-glow: rgba(255, 0, 255, 0.2);
+      --border: #444444;
+      --border-hover: #666666;
+      --red: #ff4444;
+      --red-glow: rgba(255, 68, 68, 0.2);
+      --green: #44ff44;
+      --green-glow: rgba(68, 255, 68, 0.2);
+      --amber: #ffcc00;
+      --amber-glow: rgba(255, 204, 0, 0.2);
+      --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+      --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+      --shadow-card: 0 4px 10px rgba(0,0,0,0.3);
+      --shadow-glow: 0 0 15px var(--accent-glow);
+    }
+
+    [data-tema="light"] {
+      --bg-base: #f0f0f0;
+      --bg-surface: #ffffff;
+      --text-primary: #333333;
+      --text-secondary: #666666;
+      --accent: #9900cc;
+      --accent-hover: #770099;
+      --accent-glow: rgba(153, 0, 204, 0.15);
+      --border: #cccccc;
+      --border-hover: #aaaaaa;
+      --red: #cc0000;
+      --red-glow: rgba(204, 0, 0, 0.1);
+      --green: #008800;
+      --green-glow: rgba(0, 136, 0, 0.1);
+      --amber: #cc7700;
+      --amber-glow: rgba(204, 119, 0, 0.1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-base);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* ── Header / Hero ── */
+    .site-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      padding: var(--s4) var(--s4) 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--s3);
+    }
+
+    .header-title {
+      font-family: var(--font-display);
+      font-size: clamp(14px, 3vw, 20px);
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .header-title span {
+      color: var(--text-secondary);
+      font-weight: 400;
+      font-size: 0.75em;
+      margin-left: 6px;
+    }
+
+    /* Theme toggle */
+    .toggle-tema { display: flex; align-items: center; gap: var(--s2); cursor: pointer; }
+    .toggle-tema__input { display: none; }
+    .toggle-tema__track {
+      width: 40px; height: 20px;
+      background: var(--border);
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.2s;
+    }
+    .toggle-tema__thumb {
+      position: absolute; top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      background: var(--bg-base);
+      border-radius: 50%;
+      transition: transform 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+    }
+    .toggle-tema__input:checked + .toggle-tema__track { background: var(--accent); }
+    .toggle-tema__input:checked + .toggle-tema__track .toggle-tema__thumb { transform: translateX(20px); }
+    .toggle-tema__label { font-size: 13px; color: var(--text-secondary); }
+
+    /* ── Hero banner ── */
+    .hero {
+      background: linear-gradient(135deg, var(--accent-glow) 0%, transparent 60%);
+      border-bottom: 1px solid var(--border);
+      padding: var(--s6) var(--s4);
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      border-radius: 99px;
+      padding: 3px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: var(--s3);
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 5vw, 38px);
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.15;
+      margin-bottom: var(--s3);
+      letter-spacing: -1px;
+    }
+
+    .hero h1 em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .hero-sub {
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ── Main layout ── */
+    .page-wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: var(--s5) var(--s4) var(--s6);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--s5);
+    }
+
+    /* ── Chaos card ── */
+    .nascimento-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: var(--s5) var(--s4);
+      width: 100%;
+      max-width: 600px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nascimento-card::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 40px; right: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+
+    .nascimento-titulo {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: var(--s2);
+      letter-spacing: -1px;
+      text-align: center;
+    }
+
+    .nascimento-subtitulo {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: var(--s4);
+      text-align: center;
+    }
+
+    /* Progress */
+    .steps-wrap { display: flex; gap: var(--s1); margin-bottom: var(--s4); width: 100%; }
+    .step-dot { flex: 1; height: 6px; border-radius: 99px; background: var(--border); transition: background 0.3s; }
+    .step-dot.ativo { background: var(--accent); }
+    .step-dot.feito { background: var(--green); }
+
+    .step-label {
+      font-size: 12px; font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: var(--s3); text-align: center;
+    }
+    .step-label span { color: var(--accent); }
+
+    /* Step panels */
+    .step-panel { display: none; }
+    .step-panel.ativo { display: block; }
+
+    /* Step 1 */
+    .click-area {
+      display: flex; flex-direction: column; align-items: center;
+      gap: var(--s3); padding: var(--s4) 0;
+    }
+    .click-counter {
+      font-family: var(--font-display);
+      font-size: 72px; font-weight: 800;
+      color: var(--accent); line-height: 1;
+      letter-spacing: -4px; transition: transform 0.1s;
+    }
+    .click-counter.bounce { transform: scale(1.2); }
+    .click-target {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background: var(--accent-glow);
+      border: 3px solid var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+      user-select: none;
+      animation: pulse 2s infinite alternate;
+    }
+    .click-target:hover { transform: scale(1.08); box-shadow: var(--shadow-glow); }
+    .click-target:active { transform: scale(0.95); background: var(--accent-hover); }
+    @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
+    .click-hint { font-size: 14px; color: var(--text-secondary); text-align: center; margin-top: var(--s2); }
+    .click-hint strong { color: var(--text-primary); }
+
+    /* Step 2 */
+    .slider-area { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s3) 0; }
+    .slider-mystery {
+      position: relative; padding: var(--s3);
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+    }
+    .slider-mystery label {
+      font-size: 12px; font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: var(--s2); display: block;
+    }
+    input[type="range"].mystery {
+      width: 100%; accent-color: var(--accent);
+      margin: var(--s2) 0;
+      -webkit-appearance: none; appearance: none;
+      height: 10px;
+      background: repeating-linear-gradient(45deg, var(--border), var(--border) 5px, var(--bg-base) 5px, var(--bg-base) 10px);
+      border-radius: 5px; outline: none; opacity: 0.7;
+    }
+    input[type="range"].mystery::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); cursor: grab;
+    }
+    input[type="range"].mystery::-moz-range-thumb {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--accent); cursor: grab;
+    }
+    .slider-val-display {
+      font-family: var(--font-display);
+      font-size: 36px; font-weight: 800;
+      color: var(--accent); text-align: center;
+      letter-spacing: 6px; min-height: 50px;
+      filter: blur(0); transition: filter 0.3s;
+    }
+    .slider-val-display.borrado { filter: blur(10px); }
+    .slider-hint { font-size: 12px; color: var(--text-secondary); text-align: center; margin-top: var(--s2); }
+    .btn-confirmar-wrap {
+      position: relative; height: 80px; margin-top: var(--s3);
+      border: 1px dashed var(--border-hover); border-radius: var(--r-md);
+    }
+    .btn-confirmar-slider {
+      position: absolute; padding: 12px 28px;
+      background: var(--accent); color: #fff;
+      border: none; border-radius: var(--r-sm);
+      font-family: var(--font-body); font-size: 15px; font-weight: 700;
+      cursor: pointer; white-space: nowrap;
+      transition: background 0.2s, left 0.3s, top 0.3s;
+    }
+    .btn-confirmar-slider:hover { background: var(--accent-hover); }
+
+    /* Step 3 */
+    .keyboard-area { display: flex; flex-direction: column; gap: var(--s3); padding: var(--s3) 0; }
+    .keyboard-display {
+      background: var(--bg-base); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: var(--s2) var(--s3);
+      font-family: var(--font-display); font-size: 40px; font-weight: 800;
+      letter-spacing: 10px; color: var(--text-primary);
+      text-align: center; min-height: 70px;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .keyboard-display .cursor {
+      display: inline-block; width: 4px; height: 45px;
+      background: var(--accent);
+      animation: blink 0.7s step-end infinite; margin-left: 6px;
+    }
+    @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+    .teclado-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: var(--s2); margin-top: var(--s3);
+    }
+    .tecla {
+      padding: 18px;
+      background: var(--bg-surface); border: 2px solid var(--border);
+      border-radius: var(--r-md);
+      font-family: var(--font-display); font-size: 24px; font-weight: 700;
+      color: var(--text-primary); cursor: pointer; text-align: center;
+      user-select: none; transition: background 0.1s, border-color 0.1s, transform 0.05s;
+    }
+    .tecla:hover { background: var(--bg-base); border-color: var(--accent); }
+    .tecla:active { transform: scale(0.9); }
+    .tecla.apagar {
+      background: var(--red-glow); border-color: var(--red);
+      color: var(--red); grid-column: span 3;
+    }
+    .tecla.apagar:hover { background: var(--red); color: #fff; }
+    .teclado-hint {
+      font-size: 13px; color: var(--amber);
+      text-align: center; padding: var(--s2);
+      background: var(--amber-glow); border: 1px solid var(--amber);
+      border-radius: var(--r-sm); margin-top: var(--s3);
+    }
+
+    /* Step 4 */
+    .resultado-area {
+      display: flex; flex-direction: column; align-items: center;
+      gap: var(--s3); padding: var(--s4) 0; text-align: center;
+    }
+    .resultado-data {
+      font-family: var(--font-display); font-size: 52px; font-weight: 800;
+      color: var(--green); letter-spacing: -3px; line-height: 1;
+    }
+    .resultado-label { font-size: 15px; color: var(--text-secondary); margin-top: var(--s1); }
+    .resultado-confete { font-size: 60px; animation: spin 0.7s ease-out; }
+    @keyframes spin { from { transform: rotate(-60deg) scale(0); } to { transform: rotate(0deg) scale(1); } }
+
+    .btn-salvar-data {
+      width: 100%; padding: 16px;
+      background: var(--green); color: #111;
+      border: none; border-radius: var(--r-md);
+      font-family: var(--font-body); font-size: 17px; font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: var(--s2);
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-salvar-data:hover { background: #33cc33; transform: translateY(-3px); }
+    .btn-salvar-data svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2.5; }
+
+    .salvo-banner {
+      display: none; align-items: center; gap: var(--s2);
+      background: var(--green-glow); border: 1px solid var(--green);
+      border-radius: var(--r-md); padding: var(--s3) var(--s4);
+      color: var(--green); font-weight: 600; font-size: 14px;
+      margin-top: var(--s3); text-align: center;
+    }
+    .salvo-banner.visivel { display: flex; }
+
+    /* Shared button */
+    button { font-family: var(--font-body); font-weight: 600; cursor: pointer; }
+    .btn-cancelar {
+      background: var(--border); color: var(--text-secondary);
+      border: none; border-radius: var(--r-sm);
+      padding: var(--s2) var(--s3);
+      transition: background 0.2s;
+    }
+    .btn-cancelar:hover { background: var(--border-hover); }
+
+    /* ── Contexto educacional ── */
+    .contexto-wrap {
+      width: 100%; max-width: 860px;
+      display: flex; flex-direction: column; gap: var(--s4);
+    }
+
+    .contexto-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: var(--s4) var(--s5);
+    }
+
+    .contexto-section-title {
+      font-family: var(--font-display);
+      font-size: 13px; font-weight: 800;
+      color: var(--accent);
+      text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: var(--s3);
+      display: flex; align-items: center; gap: var(--s2);
+    }
+
+    .contexto-section p {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: var(--s3);
+    }
+
+    .contexto-section p:last-child { margin-bottom: 0; }
+
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--s3);
+    }
+
+    .topic-chip {
+      background: var(--bg-base);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: var(--s3) var(--s4);
+    }
+
+    .topic-chip strong {
+      display: block;
+      color: var(--text-primary);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .topic-chip span {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .objectives-list, .steps-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: var(--s2);
+    }
+
+    .objectives-list li, .steps-list li {
+      font-size: 13px; color: var(--text-secondary);
+      display: flex; gap: var(--s2); align-items: flex-start;
+      line-height: 1.6;
+    }
+
+    .objectives-list li::before {
+      content: "✓";
+      color: var(--green);
+      font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+
+    .steps-list li::before {
+      content: "→";
+      color: var(--accent);
+      font-weight: 700; flex-shrink: 0; margin-top: 1px;
+    }
+
+    .steps-list li strong, .objectives-list li strong {
+      color: var(--text-primary);
+    }
+
+    .antipatterns-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--s3);
+      margin-top: var(--s2);
+    }
+
+    .antipattern-card {
+      background: var(--accent-glow);
+      border: 1px solid var(--accent);
+      border-radius: var(--r-md);
+      padding: var(--s3);
+      text-align: center;
+    }
+
+    .antipattern-card .icon { font-size: 28px; margin-bottom: var(--s1); }
+    .antipattern-card strong { display: block; font-size: 12px; color: var(--text-primary); margin-bottom: 4px; }
+    .antipattern-card span { font-size: 11px; color: var(--text-secondary); }
+
+    .ethics-banner {
+      background: var(--amber-glow);
+      border: 1px solid var(--amber);
+      border-radius: var(--r-md);
+      padding: var(--s3) var(--s4);
+      font-size: 13px;
+      color: var(--amber);
+      display: flex; gap: var(--s2); align-items: flex-start;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 22px; }
+      .header-title { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-title">
+        UI/UX do Caos
+        <span>Anti-Padrões de Usabilidade</span>
       </div>
-    </nav>
+      <div class="toggle-tema" title="Alternar tema">
+        <input type="checkbox" id="toggle-tema" class="toggle-tema__input" role="switch" aria-label="Alternar tema">
+        <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
+          <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
+        </label>
+        <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
+      </div>
+    </div>
   </header>
 
-  <main class="nascimento-page" role="main">
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-badge">Projeto Prático de UX</div>
+    <h1>A <em>Pior</em> Seleção de Data<br>de Nascimento com IndexedDB</h1>
+    <p class="hero-sub">
+      Um estudo prático de usabilidade criando <strong style="color:var(--text-primary)">propositalmente o cenário oposto ao ideal</strong>
+      — para entender a importância da acessibilidade e experiência do usuário através dos anti-padrões de UI/UX, manipulação avançada do DOM e persistência com IndexedDB.
+    </p>
+  </section>
 
-    <!-- Card principal da interface caótica -->
+  <main class="page-wrap">
+
+    <!-- ══ Card da interface caótica ══ -->
     <div class="nascimento-card">
-
-      <!-- Barra de progresso dos steps -->
       <div class="steps-wrap">
         <div class="step-dot ativo" id="dot-1"></div>
         <div class="step-dot" id="dot-2"></div>
@@ -42,10 +555,10 @@
         <div class="step-dot" id="dot-4"></div>
       </div>
 
-      <h1 class="nascimento-titulo">📅 Sua data de nascimento</h1>
+      <h2 class="nascimento-titulo">📅 Sua data de nascimento</h2>
       <p class="nascimento-subtitulo">Um processo simples e rápido. Confie em mim.</p>
 
-      <!-- ══ STEP 1: Dia por Cliques (O inferno dos cliques) ══ -->
+      <!-- Step 1 -->
       <div class="step-panel ativo" id="step-1">
         <div class="step-label">Passo <span>1 de 3</span> — Escolha o Dia</div>
         <div class="click-area">
@@ -53,20 +566,16 @@
           <div class="click-hint">
             Cada clique avança <strong>1 dia</strong>. Tente chegar ao seu dia de nascimento antes de desistir.
           </div>
-          <div class="click-target" id="click-target" role="button" tabindex="0" aria-label="Clicar para avançar dia">
-            😈
-          </div>
-          <div class="click-hint" id="click-progress-hint">
-            Clique <strong>1</strong> vez para ir ao dia 1
-          </div>
+          <div class="click-target" id="click-target" role="button" tabindex="0" aria-label="Clicar para avançar dia">😈</div>
+          <div class="click-hint" id="click-progress-hint">Clique <strong>1</strong> vez para ir ao dia 1</div>
         </div>
-        <button class="btn-salvar-data" id="btn-confirmar-dia" style="background:var(--accent)">
+        <button class="btn-salvar-data" id="btn-confirmar-dia" style="background:var(--accent);color:#fff">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           Confirmar dia <span id="dia-escolhido">01</span>
         </button>
       </div>
 
-      <!-- ══ STEP 2: Slider Misterioso + Botão Fugitivo (A dança da frustração) ══ -->
+      <!-- Step 2 -->
       <div class="step-panel" id="step-2">
         <div class="step-label">Passo <span>2 de 3</span> — Escolha o Mês</div>
         <div class="slider-area">
@@ -77,14 +586,12 @@
             <div class="slider-hint">⚠️ O valor só aparece quando você SOLTAR o mouse. Boa sorte!</div>
           </div>
           <div class="btn-confirmar-wrap">
-            <button class="btn-confirmar-slider" id="btn-confirmar-mes">
-              Confirmar mês 🏃💨
-            </button>
+            <button class="btn-confirmar-slider" id="btn-confirmar-mes">Confirmar mês 🏃💨</button>
           </div>
         </div>
       </div>
 
-      <!-- ══ STEP 3: Teclado Sabotador (A roleta russa dos dígitos) ══ -->
+      <!-- Step 3 -->
       <div class="step-panel" id="step-3">
         <div class="step-label">Passo <span>3 de 3</span> — Digite o Ano</div>
         <div class="keyboard-area">
@@ -94,16 +601,14 @@
           <div class="teclado-hint">
             ⚠️ As teclas digitam <strong>um dígito aleatório próximo</strong> ao número clicado. A precisão é opcional.
           </div>
-          <div class="teclado-grid" id="teclado-grid">
-            <!-- Botões gerados por JS -->
-          </div>
+          <div class="teclado-grid" id="teclado-grid"></div>
           <button class="btn-cancelar" id="btn-limpar-ano" type="button" style="align-self:flex-end;margin-top:var(--s2)">
             🗑️ Apagar tudo
           </button>
         </div>
       </div>
 
-      <!-- ══ STEP 4: Resultado e Salvar (A recompensa da persistência) ══ -->
+      <!-- Step 4 -->
       <div class="step-panel" id="step-4">
         <div class="resultado-area">
           <span class="resultado-confete">🥳</span>
@@ -119,44 +624,106 @@
           ✅ Data salva com sucesso no banco de dados local! (Por enquanto...)
         </div>
       </div>
-
     </div>
 
-    <!-- Painel educativo de contexto -->
-    <div class="contexto-card">
-      <div class="contexto-titulo">
-        🎓 O que você está praticando nessa página (e sofrendo)
+    <!-- ══ Painel Educacional ══ -->
+    <div class="contexto-wrap">
+
+      <!-- Tópicos abordados -->
+      <div class="contexto-section">
+        <div class="contexto-section-title">🎓 O que você está praticando (e sofrendo)</div>
+        <div class="topics-grid">
+          <div class="topic-chip">
+            <strong>Anti-Padrões de UI/UX</strong>
+            <span>O que torna uma interface terrível? Estudo prático criando o oposto do ideal para entender acessibilidade e UX.</span>
+          </div>
+          <div class="topic-chip">
+            <strong>Manipulação Avançada do DOM</strong>
+            <span>Uso intensivo de HTML e JS para criar comportamentos não convencionais — botões que fogem, sliders imprecisos, inputs sabotadores.</span>
+          </div>
+          <div class="topic-chip">
+            <strong>Gestão de Eventos</strong>
+            <span>Aprofundamento em Event Listeners: <code>mouseover</code>, <code>click</code>, <code>input</code>, <code>drag</code> para controlar o caos criado.</span>
+          </div>
+          <div class="topic-chip">
+            <strong>Persistência com IndexedDB</strong>
+            <span>Capturar o dado final e salvá-lo de forma estruturada e assíncrona no banco de dados local do navegador.</span>
+          </div>
+        </div>
       </div>
-      <ul class="contexto-lista">
-        <li><strong>Anti-padrões de UX</strong> — cada step viola uma regra básica de usabilidade</li>
-        <li><strong>Event Listeners</strong> — click, mouseover, input, mouseup, keydown para criar o caos</li>
-        <li><strong>Manipulação do DOM</strong> — querySelector, classList, textContent, style, innerHTML</li>
-        <li><strong>IndexedDB</strong> — persistência assíncrona com `db.js` e `controller.js`</li>
-        <li><strong>Lógica JS Avançada</strong> — contadores, aleatoriedade, posicionamento dinâmico, timers</li>
-        <li><strong>Resiliência e Paciência</strong> — habilidades essenciais para qualquer desenvolvedor!</li>
-      </ul>
-    </div>
 
+      <!-- Objetivos de aprendizagem -->
+      <div class="contexto-section">
+        <div class="contexto-section-title">🎯 Objetivos de Aprendizagem</div>
+        <ul class="objectives-list">
+          <li>Exercitar a <strong>lógica de programação</strong> e a manipulação avançada de elementos HTML e CSS através do JavaScript.</li>
+          <li>Compreender na prática o valor de uma <strong>boa Experiência do Usuário (UX)</strong>, sentindo a frustração de operar uma interface mal desenhada.</li>
+          <li>Consolidar o uso do <strong>IndexedDB</strong>, garantindo que mesmo os dados gerados pelas interfaces mais caóticas sejam validados e salvos corretamente no banco local.</li>
+          <li>Garantir a <strong>Ética no Desenvolvimento</strong>: aprender a ter liberdade criativa total dentro de limites profissionais (proibição estrita de conteúdos ilegais, ofensivos ou de cunho sexual).</li>
+        </ul>
+      </div>
+
+      <!-- Anti-padrões implementados -->
+      <div class="contexto-section">
+        <div class="contexto-section-title">📉 Os Anti-Padrões Implementados</div>
+        <div class="antipatterns-grid">
+          <div class="antipattern-card">
+            <div class="icon">👆</div>
+            <strong>Passo 1 — O Inferno dos Cliques</strong>
+            <span>Esforço excessivo para tarefa simples. Cada clique = 1 dia. Precisa de até 31 cliques.</span>
+          </div>
+          <div class="antipattern-card">
+            <div class="icon">🏃</div>
+            <strong>Passo 2 — A Dança da Frustração</strong>
+            <span>Slider com valor oculto durante o arraste. Botão que foge do cursor ao ser aproximado.</span>
+          </div>
+          <div class="antipattern-card">
+            <div class="icon">🎲</div>
+            <strong>Passo 3 — A Roleta dos Dígitos</strong>
+            <span>60% de chance de digitar um número adjacente ao clicado. Precisão é opcional.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atividades práticas -->
+      <div class="contexto-section">
+        <div class="contexto-section-title">🚀 Atividades Práticas</div>
+        <ul class="steps-list">
+          <li>
+            <span><strong>Brainstorming do Caos:</strong> planejem qual será a "pior maneira de inserir uma data de nascimento". Regra de ouro: criatividade livre, desde que o conteúdo seja 100% apropriado. Exemplos: botão que precisa de 2.000 cliques para o ano 2000, slider com números invisíveis, teclado que digita aleatoriamente.</span>
+          </li>
+          <li>
+            <span><strong>Construção da Interface (HTML/CSS/JS):</strong> no <code>index.html</code> e <code>style.css</code>, construam a interface. No <code>controller.js</code>, programem os eventos usando JS. Use a IA para criar funções mirabolantes — ex: "como faço um botão mudar de posição toda vez que o mouse passar por cima?"</span>
+          </li>
+          <li>
+            <span><strong>A Recompensa — Salvando no IndexedDB:</strong> após o usuário "sofrer" para inserir a data, criem um botão "Salvar Data" que captura o valor final, monta o objeto e chama a função de adicionar ao banco do <code>db.js</code>.</span>
+          </li>
+          <li>
+            <span><strong>Mão na Massa e Versionamento:</strong> testem abrindo o <code>index.html</code> <em>diretamente</em> no navegador — sem Live Server, para evitar erros de CORS. Mantenham o Console (<kbd>F12</kbd>) e a aba <em>Application &gt; IndexedDB</em> abertos para verificar se os dados foram salvos. Quando funcionar, façam o commit e subam para o GitHub.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Aviso ético -->
+      <div class="ethics-banner">
+        <span>⚠️</span>
+        <span><strong>Ética no Desenvolvimento:</strong> A liberdade criativa aqui é total, mas dentro de limites profissionais e éticos. É estritamente proibido criar conteúdos ilegais, ofensivos, preconceituosos ou de cunho sexual — mesmo que "apenas para fins didáticos". O caos é bem-vindo; o desrespeito, nunca.</span>
+      </div>
+
+    </div>
   </main>
 
-  <!-- Scripts - ordem importa: db.js → controller.js → lógica da página -->
   <script type="module" src="db.js"></script>
   <script type="module" src="controller.js"></script>
   <script type="module">
     import { irParaStep, setupDiaPorCliques, setupSliderMisterioso, setupTecladoSabotador, mostrarResultado, setupSalvarDados, estado, MESES } from './controller.js';
 
-    // ════════════════════════════════════════════════════════
-    // TEMA + NAV (padrão do StudyFlow)
-    // ════════════════════════════════════════════════════════
+    // Tema
     const htmlEl    = document.documentElement;
     const inputTema = document.getElementById("toggle-tema");
     const labelTema = document.getElementById("label-tema");
     const iconeTema = document.getElementById("icone-tema");
-    const navEl     = document.getElementById("nav-principal");
-    const navToggle = document.getElementById("nav-toggle");
-    const navLinks  = document.getElementById("nav-links");
 
-    // Carrega o tema salvo no localStorage
     if (localStorage.getItem("sf-tema") === "light") {
       inputTema.checked = true;
       htmlEl.setAttribute("data-tema", "light");
@@ -164,7 +731,6 @@
       iconeTema.textContent = "☀️";
     }
 
-    // Listener para alternar o tema
     inputTema?.addEventListener("change", () => {
       const isLight = inputTema.checked;
       htmlEl.setAttribute("data-tema", isLight ? "light" : "dark");
@@ -173,31 +739,16 @@
       localStorage.setItem("sf-tema", isLight ? "light" : "dark");
     });
 
-    // Efeito de scroll na navegação
-    window.addEventListener("scroll", () =>
-      navEl?.classList.toggle("rolado", window.scrollY > 20), { passive: true });
-
-    // Toggle do menu mobile
-    navToggle?.addEventListener("click", () => {
-      const isOpen = navToggle.classList.toggle("aberto");
-      navLinks?.classList.toggle("aberto");
-      navToggle.setAttribute("aria-expanded", isOpen);
-    });
-
-    // ════════════════════════════════════════════════════════
-    // INICIALIZAÇÃO DOS STEPS (Chamadas das funções do controller.js)
-    // ════════════════════════════════════════════════════════
+    // Steps
     document.addEventListener("DOMContentLoaded", () => {
-      irParaStep(1); // Começa no primeiro step
+      irParaStep(1);
       setupDiaPorCliques();
       setupSliderMisterioso();
       setupTecladoSabotador();
       setupSalvarDados();
     });
 
-    // Expor funções e estado para debug no console (opcional)
-    window.StudyFlowCaos = { estado, MESES, irParaStep, iniciarBanco, adicionarItem };
-
+    window.StudyFlowCaos = { estado, MESES, irParaStep };
   </script>
 
 </body>
