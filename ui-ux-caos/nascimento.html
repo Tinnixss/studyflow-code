@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="top-bar">
-        <marquee behavior="scroll" direction="left">BEM-VINDO AO PIOR FORMULÁRIO DA INTERNET!!! NÃO CLIQUE EM TUDO AO MESMO TEMPO!!!</marquee>
+        <marquee behavior="scroll" direction="left">BEM-VINDO AO PIOR FORMULÁRIO DE DATA DE NASCIMENTO DA INTERNET!!! NÃO CLIQUE EM TUDO AO MESMO TEMPO!!!</marquee>
     </div>
 
     <table width="820" align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#000033">
@@ -34,10 +34,10 @@
 
                     <!-- STEP 1 -->
                     <div class="step ativo" id="step-1">
-                        <p class="label">Escolha o DIA clicando até cansar (ou desistir)</p>
+                        <p class="label">Escolha o DIA clicando até cansar</p>
                         <div id="click-counter" class="counter">01</div>
                         <button id="click-target" class="big-button">CLIQUE AQUI PARA AVANÇAR O DIA</button>
-                        <button id="btn-confirmar-dia" class="btn">✅ CONFIRMAR DIA</button>
+                        <button id="btn-confirmar-dia" class="btn">CONFIRMAR DIA</button>
                     </div>
 
                     <!-- STEP 2 -->
@@ -45,4 +45,37 @@
                         <p class="label">Arraste o slider para o mês (ele muda sozinho às vezes)</p>
                         <input type="range" id="slider-mes" min="1" max="12" value="6" style="width:100%;">
                         <div id="slider-val" class="val">???</div>
-                        <button id="btn-confirmar-mes" class="btn fugitivo">CONFIRMAR MÊS</
+                        <button id="btn-confirmar-mes" class="btn fugitivo">CONFIRMAR MÊS</button>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div class="step" id="step-3">
+                        <p class="label">Digite o ANO (o teclado mente pra você)</p>
+                        <div id="keyboard-display" class="display">____</div>
+                        <div id="teclado-grid" class="teclado"></div>
+                        <button id="btn-limpar-ano" class="btn cancel">APAGAR TUDO</button>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div class="step" id="step-4">
+                        <p class="label blink">PARABÉNS!!! Você sobreviveu ao caos!!!</p>
+                        <div id="resultado-data-display" class="final-data">--/--/----</div>
+                        <button id="btn-salvar-indexeddb" class="btn salvar">SALVAR NO INDEXEDDB</button>
+                        <div id="salvo-banner" class="banner" style="display:none;">
+                            SALVO COM SUCESSO!!! (ou não... rs)
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center" style="padding:12px; background:#330066; color:#ffccff; font-size:12px;">
+                © 2003-2026 Minha Página Ruim™ • Best viewed in Internet Explorer 6
+            </td>
+        </tr>
+    </table>
+
+    <script type="module" src="db.js"></script>
+    <script type="module" src="controller.js"></script>
+</body>
+</html>
