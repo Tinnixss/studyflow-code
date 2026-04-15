@@ -561,35 +561,6 @@ function carregarDados() {
   } catch { return { ...DEFAULTS }; }
 }
 
-// ── TEMA ───────────────────────────────────────────────────────
-const inputTema = document.getElementById('toggle-tema');
-const labelTema = document.getElementById('label-tema');
-const iconeTema = document.getElementById('icone-tema');
-const htmlEl    = document.documentElement;
-if (localStorage.getItem('sf-tema') === 'light') {
-  inputTema.checked = true; htmlEl.setAttribute('data-tema','light');
-  labelTema.textContent = 'Light'; iconeTema.textContent = '☀️';
-}
-inputTema.addEventListener('change', () => {
-  const light = inputTema.checked;
-  htmlEl.setAttribute('data-tema', light ? 'light' : 'dark');
-  labelTema.textContent = light ? 'Light' : 'Dark';
-  iconeTema.textContent = light ? '☀️' : '🌙';
-  localStorage.setItem('sf-tema', light ? 'light' : 'dark');
-});
-
-// ── NAV ────────────────────────────────────────────────────────
-const nav = document.getElementById('nav-principal');
-window.addEventListener('scroll', () => nav.classList.toggle('rolado', window.scrollY > 20), { passive: true });
-const navToggle = document.getElementById('nav-toggle');
-const navLinks  = document.getElementById('nav-links');
-navToggle.addEventListener('click', () => {
-  const ab = navToggle.classList.toggle('aberto');
-  navLinks.classList.toggle('aberto');
-  navToggle.setAttribute('aria-expanded', ab);
-  navToggle.setAttribute('aria-label', ab ? 'Fechar menu' : 'Abrir menu');
-});
-
 // ── TOAST ──────────────────────────────────────────────────────
 function mostrarToast(msg) {
   document.getElementById('toast-msg').textContent = msg;
@@ -828,27 +799,9 @@ document.getElementById('modal-disc-salvar').addEventListener('click', () => {
     requestAnimationFrame(() => { el.style.width = el.dataset.w + '%'; });
   });
 
-// Loading screen — aparece só na primeira visita da sessão
-(function() {
-  const loading = document.getElementById('loading-screen');
-  if (!loading) return;
-
-  if (sessionStorage.getItem('sf-loaded')) {
-    // Já visitou antes → esconde na hora
-    loading.style.display = 'none';
-    return;
-  }
-
-  // Primeira visita → mostra normalmente
-  sessionStorage.setItem('sf-loaded', 'true');
-  window.addEventListener('load', () => {
-    setTimeout(() => loading.classList.add('hidden'), 1500);
-  });
-  setTimeout(() => {
-    if (!loading.classList.contains('hidden')) loading.classList.add('hidden');
-  }, 5000);
-})();
-
 </script>
+<script src="core.js"></script>
+<script src="db.js"></script>
+<script src="controller.js"></script>
 </body>
 </html>
