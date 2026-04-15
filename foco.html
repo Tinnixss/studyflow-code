@@ -322,34 +322,6 @@
 </div>
 
 <script>
-// ── TEMA ──────────────────────────────────────────────────────
-const inputTema = document.getElementById('toggle-tema');
-const labelTema = document.getElementById('label-tema');
-const iconeTema = document.getElementById('icone-tema');
-const htmlEl    = document.documentElement;
-if (localStorage.getItem('sf-tema') === 'light') {
-  inputTema.checked = true; htmlEl.setAttribute('data-tema','light');
-  labelTema.textContent = 'Light'; iconeTema.textContent = '☀️';
-}
-inputTema.addEventListener('change', () => {
-  const l = inputTema.checked;
-  htmlEl.setAttribute('data-tema', l ? 'light' : 'dark');
-  labelTema.textContent = l ? 'Light' : 'Dark';
-  iconeTema.textContent = l ? '☀️' : '🌙';
-  localStorage.setItem('sf-tema', l ? 'light' : 'dark');
-});
-
-// ── NAV ───────────────────────────────────────────────────────
-const nav = document.getElementById('nav-principal');
-window.addEventListener('scroll', () => nav.classList.toggle('rolado', window.scrollY > 20), { passive: true });
-const navToggle = document.getElementById('nav-toggle');
-const navLinks  = document.getElementById('nav-links');
-navToggle.addEventListener('click', () => {
-  const ab = navToggle.classList.toggle('aberto');
-  navLinks.classList.toggle('aberto');
-  navToggle.setAttribute('aria-expanded', ab);
-});
-
 // ── TOAST ─────────────────────────────────────────────────────
 function toast(msg) {
   document.getElementById('toast-msg').textContent = msg;
@@ -577,23 +549,9 @@ renderStats();
 renderHistorico();
 renderTarefasSeletor();
 
-// ── LOADING SCREEN ────────────────────────────────────────────
-(function() {
-  const loading = document.getElementById('loading-screen');
-  if (!loading) return;
-  if (sessionStorage.getItem('sf-loaded')) {
-    loading.style.display = 'none';
-    return;
-  }
-  sessionStorage.setItem('sf-loaded', 'true');
-  window.addEventListener('load', () => {
-    setTimeout(() => loading.classList.add('hidden'), 1500);
-  });
-  setTimeout(() => {
-    if (!loading.classList.contains('hidden')) loading.classList.add('hidden');
-  }, 5000);
-})();
-
 </script>
+<script src="core.js"></script>
+<script src="db.js"></script>
+<script src="controller.js"></script>
 </body>
 </html>
