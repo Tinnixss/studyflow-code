@@ -323,7 +323,7 @@
 
 <script>
 // ── TOAST ─────────────────────────────────────────────────────
-function toast(msg) {
+function showToast(msg, 'info') {
   document.getElementById('toast-msg').textContent = msg;
   const t = document.getElementById('toast');
   t.classList.add('visivel');
@@ -497,7 +497,7 @@ function concluirSessao() {
     localStorage.setItem('sf-historico', JSON.stringify(historico));
 
     notificar('🍅 Pomodoro concluído! Hora da pausa.');
-    toast('🎉 +' + MODOS[modoAtual].min + ' minutos de foco!');
+    showToast('+' + MODOS[modoAtual].min + ' minutos de foco!', 'sucesso');
     renderStats();
     renderHistorico();
 
