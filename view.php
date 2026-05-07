@@ -1,15 +1,18 @@
 <?php
-// REMOVEMOS o 'new StudyFlowService' daqui. 
-// As variáveis $objetivos e $msg agora vêm "de fora" (do Router/Controller)
+// view.php
 $objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
 $msg = $GLOBALS['mensagem_feedback'] ?? null;
 ?>
 <!DOCTYPE html>
-<html lang="pt-BR" data-tema="dark">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyFlow | Cadastro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --bg-base: #0f172a;
@@ -23,9 +26,12 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             --accent-glow: rgba(99, 102, 241, 0.2);
             --r-xl: 1rem; --r-lg: 0.75rem; --r-md: 0.5rem;
             --s1: 0.25rem; --s2: 0.5rem; --s3: 0.75rem; --s4: 1rem; --s6: 1.5rem; --s8: 2rem;
-            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-sans: 'Inter', sans-serif;
             --font-display: 'Plus Jakarta Sans', sans-serif;
         }
+
+        /* RESET CRÍTICO: Garante que o preenchimento não aumente o tamanho dos elementos */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             background-color: var(--bg-base);
@@ -33,9 +39,9 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
             font-family: var(--font-sans);
             color: var(--text-primary);
+            padding: var(--s4);
         }
 
         .form-card {
@@ -51,10 +57,9 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
 
         .form-card h2 {
             font-family: var(--font-display);
-            color: var(--text-primary);
             font-size: 28px;
             margin-bottom: var(--s2);
-            letter-spacing: -0.5px;
+            color: var(--text-primary);
         }
 
         .form-card p {
@@ -88,6 +93,12 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             transition: all 0.2s ease;
         }
 
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-glow);
+        }
+
         .btn-submit {
             background: var(--accent);
             color: white;
@@ -99,8 +110,13 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             font-size: 16px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: var(--s4);
+            margin-top: var(--s2);
             transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
         }
 
         .alert {
@@ -109,9 +125,10 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             margin-bottom: var(--s6);
             font-size: 14px;
             font-weight: 500;
+            border: 1px solid transparent;
         }
-        .alert-success { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid #059669; }
-        .alert-error { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid #dc2626; }
+        .alert-success { background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: rgba(16, 185, 129, 0.2); }
+        .alert-error { background: rgba(239, 68, 68, 0.1); color: #f87171; border-color: rgba(239, 68, 68, 0.2); }
     </style>
 </head>
 <body>
