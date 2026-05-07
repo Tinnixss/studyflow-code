@@ -7,7 +7,6 @@ require_once 'BusinessRuleException.php';
 class EstudanteController {
     private StudyFlowService $service;
 
-    // Injeção de Dependência: o service já vem pronto do index.php
     public function __construct(StudyFlowService $service) {
         $this->service = $service;
     }
@@ -16,14 +15,17 @@ class EstudanteController {
         try {
             // Delegamos a tarefa para o Service
             $this->service->registrarEstudante($dados);
-            return "✅ Perfil criado com sucesso!";
+            
+            // --- ALTERAÇÃO AQUI ---
+            // Redireciona o usuário de volta para o site principal (porta 5500)
+            header("Location: http://127.0.0.1:5500/cronograma.html");
+            exit; // Importante para parar a execução do script após o redirecionamento
+            // -----------------------
             
         } catch (BusinessRuleException $e) {
-            // Erros de regra de negócio (ex: idade menor que 12)
             return "⚠️ " . $e->getMessage();
             
         } catch (Exception $e) {
-            // Erros técnicos inesperados (ex: banco fora do ar)
             return "❌ Erro inesperado no servidor.";
         }
     }
