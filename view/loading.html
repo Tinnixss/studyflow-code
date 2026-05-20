@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carregando... | StudyFlow</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
   <style>
     /* Loading Screen Styles */
     .loading-screen {
@@ -225,12 +225,16 @@
     </div>
   </div>
 
-  <script>
-    // Esconde o loading apos 2.5 segundos (ou quando a pagina carregar)
+ <script>
+    // Espera a página carregar, conta 2.5 segundos e redireciona para a página principal
     window.addEventListener('load', function() {
       setTimeout(function() {
+        // Adiciona o efeito visual de sumir
         document.getElementById('loading-screen').classList.add('hidden');
-      }, 2500);
+        
+        // MÁGICA: Como o index.html está na mesma pasta (view/), basta chamá-lo direto:
+        window.location.href = 'index.html';
+      }, 2500); // 2500 milissegundos = 2.5 segundos
     });
   </script>
 </body>
