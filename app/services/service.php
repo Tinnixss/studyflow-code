@@ -1,9 +1,6 @@
 <?php
 // service.php
 
-require_once 'BusinessRuleException.php';
-require_once 'model.php'; // IMPORTANTE: Faltava o model para criar o objeto EstudanteModel
-
 class StudyFlowService {
     private IEstudanteRepository $repository;
 

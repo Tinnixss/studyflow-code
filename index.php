@@ -1,12 +1,10 @@
 <?php
 
-// 1. Liga o carregador automático que acabámos de criar
+// 1. Liga o carregador automático inteligente (Linha 4)
 require_once __DIR__ . '/autoload.php';
 
-// 2. Importa os ficheiros estruturais de rotas e inicialização que estão dentro de app
-require_once 'app/services/service.php';
-require_once 'app/controller/controller.php';
-require_once 'app/router/router.php';
+// O Autoload agora vai carregar o EstudanteRepository, StudyFlowService,
+// EstudanteController e Router sozinho assim que eles forem chamados abaixo!
 
 // Cria as dependências de baixo para cima
 $repository = new EstudanteRepository();
