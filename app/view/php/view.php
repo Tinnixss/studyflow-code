@@ -31,9 +31,9 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
         }
 
         <?php
-<?php
-<?php
-// view.php
+
+
+
 $objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
 $msg = $GLOBALS['mensagem_feedback'] ?? null;
 ?>
@@ -89,18 +89,18 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             text-align: center;
         }
 
-        /* --- AJUSTE DO TÍTULO COM A LOGO --- */
+        /* --- DESIGN DO HEADER ALINHADO --- */
         .brand-header {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px; /* Espaço entre o gatinho e o texto */
+            gap: 12px;
             margin-bottom: var(--s2);
         }
 
         .brand-logo {
-            width: 32px;  /* Altura e largura ideais para alinhar com o texto */
-            height: 32px;
+            width: 36px; /* Tamanho para alinhar certinho com o título */
+            height: 36px;
             object-fit: contain;
         }
 
@@ -131,7 +131,6 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             margin-left: 4px;
         }
 
-        /* Estilização unificada dos campos */
         input[type="text"], 
         input[type="number"], 
         select {
@@ -146,7 +145,6 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             transition: all 0.2s ease;
         }
 
-        /* Melhoria exclusiva da seletora */
         select {
             -webkit-appearance: none;
             -moz-appearance: none;
@@ -172,7 +170,6 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             background-size: contain;
             background-repeat: no-repeat;
             pointer-events: none;
-            transition: transform 0.2s ease;
         }
 
         input:focus, select:focus {
@@ -232,7 +229,7 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
     <div class="form-card">
         
         <div class="brand-header">
-            <img src="../img/logo.png" alt="StudyFlow Logo" class="brand-logo">
+            <img src="app/view/img/logo.png" alt="StudyFlow Logo" class="brand-logo">
             <h2>StudyFlow</h2>
         </div>
         <p>Crie o seu perfil para começar a estudar com inteligência.</p>
