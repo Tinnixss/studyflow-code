@@ -1080,7 +1080,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 
 /* Base dos avatares circulares */
 .avatar-item {
- width: 72px;
+  width: 72px;
   height: 72px;
   border-radius: 50%;
   background: var(--bg-base);
@@ -1088,28 +1088,31 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   cursor: pointer;
   position: absolute;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  transform: scale(0.6) translateX(0);
   z-index: 1;
   overflow: hidden;
-  
-  /* Centraliza perfeitamente o Emoji dentro da bola */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem; /* Define um tamanho visível para o emoji */
   user-select: none;
+
+  /* ESSENCIAIS PARA 20 AVATARES: Esconde os outros 17 itens da fila */
+  opacity: 0;
+  pointer-events: none; 
+  transform: scale(0.6) translateX(0);
 }
 
+/* Modificado para que as IMAGENS preencham o círculo perfeitamente */
 .avatar-item img {
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Faz a imagem cobrir a bola sem distorcer */
+  pointer-events: none;
 }
 
 /* Posição da ESQUERDA (Anterior) */
 .avatar-item.left {
   opacity: 0.4;
+  pointer-events: auto; /* Libera o clique apenas no visível */
   transform: translateX(-85px) scale(0.85);
   z-index: 2;
 }
@@ -1117,6 +1120,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 /* Posição do CENTRO (Selecionado Atual) */
 .avatar-item.center {
   opacity: 1;
+  pointer-events: auto; /* Libera o clique apenas no visível */
   width: 96px;
   height: 96px;
   transform: translateX(0) scale(1.1);
@@ -1128,6 +1132,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 /* Posição da DIREITA (Próximo) */
 .avatar-item.right {
   opacity: 0.4;
+  pointer-events: auto; /* Libera o clique apenas no visível */
   transform: translateX(85px) scale(0.85);
   z-index: 2;
 }
