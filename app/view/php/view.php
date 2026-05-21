@@ -31,6 +31,8 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
         }
 
         <?php
+<?php
+<?php
 // view.php
 $objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
 $msg = $GLOBALS['mensagem_feedback'] ?? null;
@@ -87,11 +89,26 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             text-align: center;
         }
 
+        /* --- AJUSTE DO TÍTULO COM A LOGO --- */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px; /* Espaço entre o gatinho e o texto */
+            margin-bottom: var(--s2);
+        }
+
+        .brand-logo {
+            width: 32px;  /* Altura e largura ideais para alinhar com o texto */
+            height: 32px;
+            object-fit: contain;
+        }
+
         .form-card h2 {
             font-family: var(--font-display);
             font-size: 28px;
-            margin-bottom: var(--s2);
             color: var(--text-primary);
+            line-height: 1;
         }
 
         .form-card p {
@@ -103,7 +120,6 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
         .input-wrapper {
             text-align: left;
             margin-bottom: var(--s4);
-            position: relative; /* Necessário para posicionar a nova setinha */
         }
 
         .input-wrapper label {
@@ -130,16 +146,15 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             transition: all 0.2s ease;
         }
 
-        /* --- MELHORIA EXCLUSIVA DA SELETORA --- */
+        /* Melhoria exclusiva da seletora */
         select {
-            -webkit-appearance: none; /* Remove a seta padrão do Chrome/Safari */
-            -moz-appearance: none;    /* Remove a seta padrão do Firefox */
-            appearance: none;         /* Remove a seta padrão geral */
-            padding-right: 40px;      /* Garante que o texto não sobreponha a nova seta */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            padding-right: 40px;
             cursor: pointer;
         }
 
-        /* Cria uma setinha moderna customizada usando SVG embutido no CSS */
         .select-container {
             position: relative;
             width: 100%;
@@ -156,24 +171,21 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
             background-size: contain;
             background-repeat: no-repeat;
-            pointer-events: none; /* Permite clicar através da setinha */
+            pointer-events: none;
             transition: transform 0.2s ease;
         }
 
-        /* Efeito visual ao focar nos campos */
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px var(--accent-glow);
         }
 
-        /* Altera a cor das opções internas no dropdown do sistema */
         select option {
             background-color: var(--bg-surface);
             color: var(--text-primary);
         }
 
-        /* Oculta seletores numéricos nativos */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -218,7 +230,11 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
 <body>
 
     <div class="form-card">
-        <h2>🚀 StudyFlow</h2>
+        
+        <div class="brand-header">
+            <img src="../img/logo.png" alt="StudyFlow Logo" class="brand-logo">
+            <h2>StudyFlow</h2>
+        </div>
         <p>Crie o seu perfil para começar a estudar com inteligência.</p>
 
         <?php if ($msg): ?>
