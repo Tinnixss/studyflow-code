@@ -1,7 +1,7 @@
 <?php
 
 spl_autoload_register(function ($classe) {
-    // Lista de todas as subpastas dentro de 'app' onde podem existir classes
+    // Lista de todas as subpastas dentro de 'app'
     $diretorios = [
         __DIR__ . '/app/services/',
         __DIR__ . '/app/controller/',
@@ -11,17 +11,29 @@ spl_autoload_register(function ($classe) {
         __DIR__ . '/app/'
     ];
 
-    // Procura o ficheiro da classe em cada uma das pastas listadas
+    // Cria uma lista de tentativas para o nome do arquivo
+    $tentativas = [$classe];
+
+    // Se o PHP pedir a classe com maiúscula, tentamos procurar o arquivo em minúsculo também
+    if ($classe === 'StudyFlowService') {
+        $tentativas[] = 'service';
+    }
+    if ($classe === 'EstudanteController') {
+        $tentativas[] = 'controller';
+    }
+
+    // Varre as pastas procurando por qualquer uma das combinações
     foreach ($diretorios as $diretorio) {
-        $arquivo = $diretorio . $classe . '.php';
-        
-        if (file_exists($arquivo)) {
-            require_once $arquivo;
-            return; // Encontrou o ficheiro, para o loop
+        foreach ($tentativas as $nomeArquivo) {
+            $arquivo = $diretorio . $nomeArquivo . '.php';
+            if (file_exists($arquivo)) {
+                require_once $arquivo;
+                return;
+            }
         }
     }
 
-    // Caso a classe esteja solta diretamente na raiz do projeto (como a BusinessRuleException)
+    // Fallback para arquivos soltos na raiz (como BusinessRuleException)
     $arquivoRaiz = __DIR__ . '/' . $classe . '.php';
     if (file_exists($arquivoRaiz)) {
         require_once $arquivoRaiz;
