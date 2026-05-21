@@ -30,7 +30,37 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             --font-display: 'Plus Jakarta Sans', sans-serif;
         }
 
-        /* RESET CRÍTICO: Garante que o preenchimento não aumente o tamanho dos elementos */
+        $objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
+$msg = $GLOBALS['mensagem_feedback'] ?? null;
+?>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyFlow | Cadastro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-base: #0f172a;
+            --bg-surface: #1e293b;
+            --bg-input: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-glow: rgba(99, 102, 241, 0.2);
+            --r-xl: 1rem; --r-lg: 0.75rem; --r-md: 0.5rem;
+            --s1: 0.25rem; --s2: 0.5rem; --s3: 0.75rem; --s4: 1rem; --s6: 1.5rem; --s8: 2rem;
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* RESET CRÍTICO */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -82,7 +112,11 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             margin-left: 4px;
         }
 
-        input, select {
+        /* --- MELHORIA AQUI --- */
+        /* Estiliza uniformemente todas as caixas de entrada incluindo a de número */
+        input[type="text"], 
+        input[type="number"], 
+        select {
             width: 100%;
             background: var(--bg-input);
             border: 1px solid var(--border);
@@ -90,6 +124,7 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             padding: var(--s3) var(--s4);
             border-radius: var(--r-lg);
             font-size: 15px;
+            height: 46px; /* Garante tamanho idêntico em todos os campos */
             transition: all 0.2s ease;
         }
 
@@ -98,6 +133,17 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px var(--accent-glow);
         }
+
+        /* Some com as setinhas nativas do campo numérico */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        /* --------------------- */
 
         .btn-submit {
             background: var(--accent);
@@ -143,7 +189,7 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="index.php">
+        <form method="POST" action="">
             <div class="input-wrapper">
                 <label>Como quer ser chamado?</label>
                 <input type="text" name="nome" placeholder="Digite seu nome..." required>

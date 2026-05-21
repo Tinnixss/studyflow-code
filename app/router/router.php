@@ -3,7 +3,6 @@
 class Router {
     private EstudanteController $controller;
 
-    // O construtor recebe o controller montado (Injeção de Dependência)
     public function __construct(EstudanteController $controller) {
         $this->controller = $controller;
     }
@@ -11,16 +10,26 @@ class Router {
     public function handle() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                // Chama o Middleware para sanitizar os dados automaticamente via Autoload
-                $dadosLimpos = Middleware::sanitizar($_POST);
+                // Sanitização manual segura caso a classe Middleware falhe
+                $dadosLimpos = [
+                    'nome'     => htmlspecialchars(trim($_POST['nome'] ?? '')),
+                    'idade'    => (int)($_POST['idade'] ?? 0),
+                    'objetivo' => htmlspecialchars(trim($_POST['objetivo'] ?? ''))
+                ];
 
-                // Passa os dados limpos para o Controller
                 $GLOBALS['mensagem_feedback'] = $this->controller->store($dadosLimpos);
             } catch (Exception $e) {
                 $GLOBALS['mensagem_feedback'] = '❌ ' . $e->getMessage();
             }
         }
 
-        require_once __DIR__ . '/../view/php/view.php';
+        // Caminho absoluto correto para renderizar o HTML da view
+        $viewPath = dirname(__DIR__) . '/view/php/view.php';
+        if (file_exists($viewPath)) {
+            require_once $viewPath;
+        } else {
+            // Fallback direto para o HTML caso o view.php não responda
+            require_once dirname(__DIR__) . '/view/html/index.html';
+        }
     }
 }
