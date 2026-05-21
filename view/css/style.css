@@ -1210,6 +1210,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  display: block;
 }
 
 /* Garante o formato e tamanho correto para as imagens do carrossel */
