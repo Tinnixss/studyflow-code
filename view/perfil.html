@@ -464,81 +464,49 @@
 </main>
 
 <!-- MODAL EDITAR PERFIL -->
-<div class="modal__corpo">
-  <label class="modal__label">Selecione seu Avatar</label>
-  
-  <div class="avatar-carousel-container">
-    <div class="carousel-wrapper">
-      
-      <button type="button" id="prev-avatar" class="carousel-btn" aria-label="Avatar anterior">‹</button>
-      
-      <div id="avatar-carousel" class="avatar-carousel">
-        <div class="avatar-item" data-emoji="🐱">🐱</div>
-        <div class="avatar-item" data-emoji="🦊">🦊</div>
-        <div class="avatar-item" data-emoji="🐼">🐼</div>
-        <div class="avatar-item" data-emoji="🦁">🦁</div>
-        <div class="avatar-item" data-emoji="🐸">🐸</div>
-        <div class="avatar-item" data-emoji="🐧">🐧</div>
-        <div class="avatar-item" data-emoji="🦄">🦄</div>
-        <div class="avatar-item" data-emoji="🐲">🐲</div>
-      </div>
-      
-      <button type="button" id="next-avatar" class="carousel-btn" aria-label="Próximo avatar">›</button>
-      
+<div class="modal" id="modal-overlay">
+  <div class="modal__conteudo"> <div class="modal__cabecalho">
+      <h2>Editar Perfil</h2>
     </div>
-  </div>
-</div>
-    <div class="form-grupo">
-      <label for="input-nome">Nome</label>
-      <input type="text" id="input-nome" placeholder="Seu nome">
-    </div>
-    <div class="form-grupo">
-      <label for="input-curso">Curso / Área</label>
-      <input type="text" id="input-curso" placeholder="Ex: Medicina, Engenharia...">
-    </div>
-    <div class="modal__acoes">
-      <button class="btn-cancelar" id="btn-cancelar" type="button">Cancelar</button>
-      <button class="btn-salvar" id="btn-salvar" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Salvar
-      </button>
-    </div>
-  </div>
-</div>
 
-<!-- MODAL ADICIONAR DISCIPLINA -->
-<div class="modal-overlay" id="modal-disciplina" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="modal__titulo">
-      Nova Disciplina
-      <button class="modal__fechar" id="modal-disc-fechar" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <div class="form-grupo">
-      <label>Ícone</label>
-      <div class="avatar-grid" id="disc-icone-grid">
-        <div class="avatar-op selecionado" data-emoji="📐">📐</div>
-        <div class="avatar-op" data-emoji="💻">💻</div>
-        <div class="avatar-op" data-emoji="⚡">⚡</div>
-        <div class="avatar-op" data-emoji="🧬">🧬</div>
-        <div class="avatar-op" data-emoji="📖">📖</div>
-        <div class="avatar-op" data-emoji="🔬">🔬</div>
-        <div class="avatar-op" data-emoji="🎨">🎨</div>
-        <div class="avatar-op" data-emoji="🌍">🌍</div>
+    <div class="modal__corpo">
+      <label>Selecione seu Avatar</label>
+      
+      <div class="avatar-carousel-container">
+        <div class="carousel-wrapper">
+          <button type="button" id="prev-avatar" class="carousel-btn">‹</button>
+          
+          <div id="avatar-carousel" class="avatar-carousel">
+            <div class="avatar-item" data-emoji="🐱">🐱</div>
+            <div class="avatar-item" data-emoji="🦊">🦊</div>
+            <div class="avatar-item" data-emoji="🐼">🐼</div>
+            <div class="avatar-item" data-emoji="🦁">🦁</div>
+            <div class="avatar-item" data-emoji="🐸">🐸</div>
+            <div class="avatar-item" data-emoji="🐧">🐧</div>
+            <div class="avatar-item" data-emoji="🦄">🦄</div>
+            <div class="avatar-item" data-emoji="🐲">🐲</div>
+          </div>
+          
+          <button type="button" id="next-avatar" class="carousel-btn">›</button>
+        </div>
+      </div>
+
+      <div class="form-grupo">
+        <label for="input-nome">Nome</label>
+        <input type="text" id="input-nome" placeholder="Seu nome">
+      </div>
+      
+      <div class="form-grupo">
+        <label for="input-curso">Curso / Área</label>
+        <input type="text" id="input-curso" placeholder="Ex: Informática">
       </div>
     </div>
-    <div class="form-grupo">
-      <label for="disc-nome">Nome da disciplina</label>
-      <input type="text" id="disc-nome" placeholder="Ex: Cálculo, Direito Penal...">
-    </div>
+
     <div class="modal__acoes">
-      <button class="btn-cancelar" id="modal-disc-cancelar" type="button">Cancelar</button>
-      <button class="btn-salvar" id="modal-disc-salvar" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Adicionar
-      </button>
+      <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+      <button type="button" id="btn-salvar" class="btn-salvar">💾 Salvar</button>
     </div>
+
   </div>
 </div>
 
