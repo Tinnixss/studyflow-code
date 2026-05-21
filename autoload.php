@@ -21,6 +21,9 @@ spl_autoload_register(function ($classe) {
     if ($classe === 'EstudanteController') {
         $tentativas[] = 'controller';
     }
+    if ($classe === 'Router') {
+        $tentativas[] = 'router'; // <-- Adicionado para resolver a linha 14!
+    }
 
     // Varre as pastas procurando por qualquer uma das combinações
     foreach ($diretorios as $diretorio) {
