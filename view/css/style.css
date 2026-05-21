@@ -1075,7 +1075,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 
 /* Base dos avatares circulares */
 .avatar-item {
-  width: 72px;
+ width: 72px;
   height: 72px;
   border-radius: 50%;
   background: var(--bg-base);
@@ -1087,9 +1087,12 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   transform: scale(0.6) translateX(0);
   z-index: 1;
   overflow: hidden;
+  
+  /* Centraliza perfeitamente o Emoji dentro da bola */
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 2rem; /* Define um tamanho visível para o emoji */
   user-select: none;
 }
 
