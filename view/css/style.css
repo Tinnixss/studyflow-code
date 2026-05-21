@@ -1204,9 +1204,18 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   to { transform: scale(1); opacity: 1; }
 }
 
-<div class="card">
-  <div class="card__img"><div class="card__img-grid"></div></div>
-  
-  <div class="card__avatar">
-    <img id="avatar-display" src="img/avatares/avatar1.png" alt="Avatar Atual">
-  </div>
+/* Força a imagem a preencher a bola do perfil sem distorcer */
+.card__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Garante o formato e tamanho correto para as imagens do carrossel */
+.avatar-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
