@@ -1052,6 +1052,9 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   margin-bottom: var(--s3);
   text-align: center;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .carousel-wrapper {
@@ -1059,9 +1062,10 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   align-items: center;
   justify-content: center;
   position: relative;
-  height: 140px;
+  height: 140px; /* IMPORTANTE: Dá o tamanho vertical para o modal não encolher */
   margin-top: var(--s2);
-  perspective: 1000px; /* Efeito de profundidade para o giro 3D */
+  perspective: 1000px;
+  width: 100%;
 }
 
 .avatar-carousel {
@@ -1071,6 +1075,7 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
   width: 260px;
   height: 100%;
   position: relative;
+  overflow: visible; /* Permite que os avatares laterais apareçam */
 }
 
 /* Base dos avatares circulares */
