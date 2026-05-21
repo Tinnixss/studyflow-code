@@ -726,30 +726,84 @@ renderGrafico();
 renderSequencia();
 renderDisciplinas(dados.disciplinas);
 
-// ── MODAL PERFIL ───────────────────────────────────────────────
+// ── MODAL PERFIL (AGORA COM CARROSSEL 3D) ──────────────────────
 let avatarSel = dados.avatar;
 const modalOverlay = document.getElementById('modal-overlay');
+const avatarCarousel = document.getElementById('avatar-carousel');
+
+// Lista ordenada dos avatares para mapear o carrossel
+const itensAvatar = Array.from(avatarCarousel.querySelectorAll('.avatar-item'));
+let currentIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
+if (currentIndex === -1) currentIndex = 0;
+
+// Atualiza as posições 3D e classes do carrossel baseado no índice atual
+function updateCarousel() {
+  itensAvatar.forEach((item, index) => {
+    // Remove todas as classes de posicionamento estrutural
+    item.className = 'avatar-item';
+    
+    // Calcula o offset circular
+    let offset = index - currentIndex;
+    
+    // Tratamento para comportamento infinito do carrossel
+    if (offset < -1 && currentIndex === itensAvatar.length - 1) offset = 1;
+    if (offset > 1 && currentIndex === 0) offset = -1;
+
+    // Distribui as classes baseadas no deslocamento
+    if (offset === 0) {
+      item.classList.add('center');
+      avatarSel = item.dataset.emoji; // Define o avatar ativo selecionado
+    } else if (offset === 1 || offset === -(itensAvatar.length - 1)) {
+      item.classList.add('right');
+    } else if (offset === -1 || offset === (itensAvatar.length - 1)) {
+      item.classList.add('left');
+    }
+  });
+}
+
+// Navegação do Carrossel
+document.getElementById('prev-avatar').addEventListener('click', (e) => {
+  e.preventDefault();
+  currentIndex = (currentIndex - 1 + itensAvatar.length) % itensAvatar.length;
+  updateCarousel();
+});
+
+document.getElementById('next-avatar').addEventListener('click', (e) => {
+  e.preventDefault();
+  currentIndex = (currentIndex + 1) % itensAvatar.length;
+  updateCarousel();
+});
+
+// Permite selecionar clicando diretamente nos avatares laterais
+avatarCarousel.addEventListener('click', e => {
+  const targetItem = e.target.closest('.avatar-item');
+  if (!targetItem) return;
+  const targetIndex = itensAvatar.indexOf(targetItem);
+  if (targetIndex !== -1 && targetIndex !== currentIndex) {
+    currentIndex = targetIndex;
+    updateCarousel();
+  }
+});
 
 function abrirModal() {
   document.getElementById('input-nome').value  = dados.nome;
   document.getElementById('input-curso').value = dados.curso;
   avatarSel = dados.avatar;
-  document.querySelectorAll('#avatar-grid .avatar-op').forEach(op =>
-    op.classList.toggle('selecionado', op.dataset.emoji === dados.avatar));
+  
+  // Sincroniza o índice do carrossel com o avatar atualmente salvo
+  const savedIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
+  if (savedIndex !== -1) currentIndex = savedIndex;
+  
+  updateCarousel();
   modalOverlay.classList.add('aberto');
 }
+
 const fecharModal = () => modalOverlay.classList.remove('aberto');
 
 document.getElementById('btn-editar').addEventListener('click', abrirModal);
 document.getElementById('modal-fechar').addEventListener('click', fecharModal);
 document.getElementById('btn-cancelar').addEventListener('click', fecharModal);
 modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) fecharModal(); });
-
-document.getElementById('avatar-grid').addEventListener('click', e => {
-  const op = e.target.closest('.avatar-op'); if (!op) return;
-  document.querySelectorAll('#avatar-grid .avatar-op').forEach(a => a.classList.remove('selecionado'));
-  op.classList.add('selecionado'); avatarSel = op.dataset.emoji;
-});
 
 document.getElementById('btn-salvar').addEventListener('click', () => {
   dados.avatar = avatarSel;
@@ -794,15 +848,7 @@ document.getElementById('modal-disc-salvar').addEventListener('click', () => {
   mostrarToast('Disciplina adicionada!');
 });
 
-  // Aplica data-w como width (substitui style inline por data-attribute)
-  document.querySelectorAll('[data-w]').forEach(el => {
-    requestAnimationFrame(() => { el.style.width = el.dataset.w + '%'; });
-  });
-
-</script>
-<script src="../core.js"></script>
-<script src="../db.js"></script>
-<script src="js/script.js"></script>
-<script src="../app/controller/controller.js"></script>
-</body>
-</html>
+// Aplica data-w como width (substitui style inline por data-attribute)
+document.querySelectorAll('[data-w]').forEach(el => {
+  requestAnimationFrame(() => { el.style.width = el.dataset.w + '%'; });
+});
