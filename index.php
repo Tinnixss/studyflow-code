@@ -1,13 +1,17 @@
 <?php
-require_once 'EstudanteRepository.php';
-require_once 'service.php';
-require_once 'controller.php';
-require_once 'router.php';
 
-// Aqui criamos as dependências "de baixo para cima" (Passo 5)
+// 1. Liga o carregador automático que acabámos de criar
+require_once __DIR__ . '/autoload.php';
+
+// 2. Importa os ficheiros estruturais de rotas e inicialização que estão dentro de app
+require_once 'app/services/service.php';
+require_once 'app/controller/controller.php';
+require_once 'app/router/router.php';
+
+// Cria as dependências de baixo para cima
 $repository = new EstudanteRepository();
-$service    = new StudyFlowService($repository); // Injetamos o repositório no service
-$controller = new EstudanteController($service);  // Injetamos o service no controller
+$service = new StudyFlowService($repository);
+$controller = new EstudanteController($service);
 
 // Passamos o controlador pronto para o Router
 $router = new Router($controller);
