@@ -21,6 +21,6 @@ class Router {
                 $GLOBALS['mensagem_feedback'] = "❌ " . $e->getMessage();
             }
         }
-        require 'view.php';
+        require_once __DIR__ . '/../view/php/view.php';
     }
 }
