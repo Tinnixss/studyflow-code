@@ -30,7 +30,9 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             --font-display: 'Plus Jakarta Sans', sans-serif;
         }
 
-        $objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
+        <?php
+// view.php
+$objetivos = ["Vestibular", "Concursos", "Faculdade", "Autoaprendizado"];
 $msg = $GLOBALS['mensagem_feedback'] ?? null;
 ?>
 <!DOCTYPE html>
@@ -101,6 +103,7 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
         .input-wrapper {
             text-align: left;
             margin-bottom: var(--s4);
+            position: relative; /* Necessário para posicionar a nova setinha */
         }
 
         .input-wrapper label {
@@ -112,8 +115,7 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             margin-left: 4px;
         }
 
-        /* --- MELHORIA AQUI --- */
-        /* Estiliza uniformemente todas as caixas de entrada incluindo a de número */
+        /* Estilização unificada dos campos */
         input[type="text"], 
         input[type="number"], 
         select {
@@ -124,26 +126,62 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
             padding: var(--s3) var(--s4);
             border-radius: var(--r-lg);
             font-size: 15px;
-            height: 46px; /* Garante tamanho idêntico em todos os campos */
+            height: 46px;
             transition: all 0.2s ease;
         }
 
+        /* --- MELHORIA EXCLUSIVA DA SELETORA --- */
+        select {
+            -webkit-appearance: none; /* Remove a seta padrão do Chrome/Safari */
+            -moz-appearance: none;    /* Remove a seta padrão do Firefox */
+            appearance: none;         /* Remove a seta padrão geral */
+            padding-right: 40px;      /* Garante que o texto não sobreponha a nova seta */
+            cursor: pointer;
+        }
+
+        /* Cria uma setinha moderna customizada usando SVG embutido no CSS */
+        .select-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-container::after {
+            content: "";
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none; /* Permite clicar através da setinha */
+            transition: transform 0.2s ease;
+        }
+
+        /* Efeito visual ao focar nos campos */
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 4px var(--accent-glow);
         }
 
-        /* Some com as setinhas nativas do campo numérico */
+        /* Altera a cor das opções internas no dropdown do sistema */
+        select option {
+            background-color: var(--bg-surface);
+            color: var(--text-primary);
+        }
+
+        /* Oculta seletores numéricos nativos */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
         input[type="number"] {
-            -moz-appearance: textfield; /* Firefox */
+            -moz-appearance: textfield;
         }
-        /* --------------------- */
 
         .btn-submit {
             background: var(--accent);
@@ -202,11 +240,13 @@ $msg = $GLOBALS['mensagem_feedback'] ?? null;
 
             <div class="input-wrapper">
                 <label>Qual seu foco?</label>
-                <select name="objetivo">
-                    <?php foreach ($objetivos as $obj): ?>
-                        <option value="<?= $obj ?>"><?= $obj ?></option>
-                    <?php endforeach; ?>
-                </select>
+                <div class="select-container">
+                    <select name="objetivo">
+                        <?php foreach ($objetivos as $obj): ?>
+                            <option value="<?= $obj ?>"><?= $obj ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
 
             <button type="submit" class="btn-submit">Criar meu Plano →</button>
