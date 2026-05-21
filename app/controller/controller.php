@@ -1,9 +1,6 @@
 <?php
 // controller.php
 
-require_once 'service.php';
-require_once 'BusinessRuleException.php';
-
 class EstudanteController {
     private StudyFlowService $service;
 

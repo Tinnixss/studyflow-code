@@ -1,12 +1,10 @@
 <?php
-require_once 'Database.php';
-require_once 'IEstudanteRepository.php';
-require_once 'model.php';
 
 class EstudanteRepository implements IEstudanteRepository {
     private PDO $pdo;
 
     public function __construct() {
+        // O Autoload vai carregar a classe Database automaticamente aqui!
         $this->pdo = Database::getConnection();
     }
 
