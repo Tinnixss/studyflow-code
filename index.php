@@ -8,8 +8,8 @@ require_once __DIR__ . '/autoload.php';
 
 // Cria as dependências de baixo para cima
 $repository = new EstudanteRepository();
-$service = new StudyFlowService($repository);
-$controller = new EstudanteController($service);
+$service = new service($repository);
+$controller = new controller($service);
 
 // Passamos o controlador pronto para o Router
 $router = new Router($controller);
