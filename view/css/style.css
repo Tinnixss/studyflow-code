@@ -1160,3 +1160,46 @@ input[type="range"] { width: 100%; accent-color: var(--accent); }
 .carousel-btn:focus-visible {
   outline: 2px solid var(--accent);
 }
+
+/* ── CONTROLE DE EXIBIÇÃO DO MODAL DE PERFIL ── */
+
+/* Esconde o modal por padrão e cria a cortina escura de fundo */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6); /* Cortina escura translúcida */
+  backdrop-filter: blur(4px);    /* Efeito de desfoque ao fundo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;                 /* Garante que fica por cima de tudo */
+  opacity: 0;
+  pointer-events: none;          /* Fica invisível e não clicável */
+  transition: opacity 0.3s ease;
+}
+
+/* Classe ativada pelo JavaScript para fazer o quadrado aparecer */
+.modal-overlay.aberto {
+  opacity: 1;
+  pointer-events: auto;          /* Torna visível e interativo */
+}
+
+/* Estilização da caixinha azul interna do modal */
+.modal__conteudo {
+  background: var(--bg-surface, #111a2e); /* Ajusta para a cor azul do seu tema */
+  border: 1px solid var(--border, #22345e);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;              /* Largura ideal para o quadrado */
+  padding: var(--s3, 24px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: modalEntrada 0.3s ease forwards;
+}
+
+@keyframes modalEntrada {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
