@@ -1,5 +1,4 @@
 <?php
-require_once 'middleware.php';
 
 class Router {
     private EstudanteController $controller;
@@ -12,15 +11,16 @@ class Router {
     public function handle() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                // Chama o Middleware para sanitizar os dados
+                // Chama o Middleware para sanitizar os dados automaticamente via Autoload
                 $dadosLimpos = Middleware::sanitizar($_POST);
-                
+
                 // Passa os dados limpos para o Controller
                 $GLOBALS['mensagem_feedback'] = $this->controller->store($dadosLimpos);
             } catch (Exception $e) {
-                $GLOBALS['mensagem_feedback'] = "❌ " . $e->getMessage();
+                $GLOBALS['mensagem_feedback'] = '❌ ' . $e->getMessage();
             }
         }
+
         require_once __DIR__ . '/../view/php/view.php';
     }
 }
