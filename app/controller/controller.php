@@ -15,7 +15,7 @@ class EstudanteController {
             
             // --- ALTERAÇÃO AQUI ---
             // Redireciona o usuário de volta para o site principal (porta 5500)
-            header("Location: http://127.0.0.1:5500/cronograma.html");
+            header("Location: /app/view/html/cronograma.html");
             exit; // Importante para parar a execução do script após o redirecionamento
             // -----------------------
             
