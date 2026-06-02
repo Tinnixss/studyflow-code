@@ -4,20 +4,21 @@ spl_autoload_register(function ($classe) {
     // Lista com os nomes exatos das suas pastas reais (no singular e minúsculo)
     $diretorios = [
         __DIR__ . '/app/services/',
-        __DIR__ . '/app/controller/',  // <-- Configurado exatamente como a sua pasta real
-        __DIR__ . '/app/model/',
-        __DIR__ . '/app/router/',     // <-- Configurado como o padrão da sua estrutura
+        __DIR__ . '/app/controller/',  
+        __DIR__ . '/app/model/',       // Pasta do modelo
+        __DIR__ . '/app/router/',     
         __DIR__ . '/app/middleware/',
         __DIR__ . '/app/repository/',
         __DIR__ . '/app/'
     ];
 
-    // Mapeamento explícito de nomes de classes para os seus arquivos em minúsculo
+    // Mapeamento explícito de nomes de classes para os seus arquivos físicos correspondentes
     $mapeamentoEspecial = [
         'StudyFlowService'    => 'service',    // Procura service.php
         'EstudanteController' => 'controller', // Procura controller.php
         'Router'              => 'router',     // Procura router.php
-        'IEstudanteRepository'=> 'IEstudanteRepository'
+        'IEstudanteRepository'=> 'IEstudanteRepository',
+        'EstudanteModel'      => 'model'       // <-- CORRIGIDO: Mapeia EstudanteModel para model.php!
     ];
 
     $tentativas = [$classe];
