@@ -1,5 +1,9 @@
 <?php
 
+// Importa a interface e a classe do repositório para o roteador conhecê-las
+require_once __DIR__ . '/../repository/IEstudanteRepository.php';
+require_once __DIR__ . '/../repository/EstudanteRepository.php';
+
 class Router {
     private EstudanteController $controller;
 
@@ -10,7 +14,7 @@ class Router {
     public function handle() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
-                // Sanitização manual segura caso a classe Middleware falhe
+                // Sanitização manual segura dos dados recebidos
                 $dadosLimpos = [
                     'nome'     => htmlspecialchars(trim($_POST['nome'] ?? '')),
                     'idade'    => (int)($_POST['idade'] ?? 0),
@@ -28,7 +32,6 @@ class Router {
         if (file_exists($viewPath)) {
             require_once $viewPath;
         } else {
-            // Fallback direto para o HTML caso o view.php não responda
             require_once dirname(__DIR__) . '/view/html/index.html';
         }
     }
