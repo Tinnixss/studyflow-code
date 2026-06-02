@@ -5,8 +5,9 @@ class EstudanteRepository implements IEstudanteRepository {
 
     public function __construct() {
         try {
-            // Caminho absoluto seguro usando o __DIR__ para achar o seu banco de dados
-            $caminhoBanco = __DIR__ . '/../../database.db';
+            // MUDANÇA AQUI: Alterado de 'database.db' para 'database.sqlite'
+            // para usar o banco correto onde a tabela já existe!
+            $caminhoBanco = __DIR__ . '/../../database.sqlite';
             
             $this->pdo = new PDO("sqlite:" . $caminhoBanco);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
