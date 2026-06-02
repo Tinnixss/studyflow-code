@@ -5,8 +5,8 @@ class EstudanteRepository implements IEstudanteRepository {
 
     public function __construct() {
         try {
-            // Caminho exato apontando para onde a migração criou o banco!
-            $caminhoBanco = __DIR__ . '/../migration/database.sqlite';
+            // Caminho absoluto fixado no local exato onde sua migração criou a tabela!
+            $caminhoBanco = '/home/tinnixs/Área de trabalho/studyflow-code/studyflow-code-1/app/migration/database.sqlite';
             
             $this->pdo = new PDO("sqlite:" . $caminhoBanco);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
