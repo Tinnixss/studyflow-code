@@ -5,7 +5,7 @@ class EstudanteRepository implements IEstudanteRepository {
 
     public function __construct() {
         try {
-            // Como o database.sqlite está solto na raiz, subimos duas pastas para achá-lo
+            // Como o database.sqlite está solto na raiz do projeto, subimos duas pastas
             $caminhoBanco = __DIR__ . '/../../database.sqlite';
             
             $this->pdo = new PDO("sqlite:" . $caminhoBanco);
