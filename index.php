@@ -3,14 +3,12 @@
 // 1. Liga o carregador automático inteligente
 require_once __DIR__ . '/autoload.php';
 
-// 2. FORÇAR CAMINHOS MANUAIS (Corrigidos com base na sua árvore de arquivos)
+// 2. AJUDA MANUAL PARA AS EXCEÇÕES:
+// O Autoload não adivinha o arquivo 'service.php' e ignora interfaces. Forçamos aqui:
 require_once __DIR__ . '/app/repository/IEstudanteRepository.php';
-require_once __DIR__ . '/app/repository/EstudanteRepository.php';
-require_once __DIR__ . '/app/services/service.php'; // <-- Corrigido para carregar seu arquivo 'service.php'
-require_once __DIR__ . '/app/controllers/EstudanteController.php';
-require_once __DIR__ . '/app/routes/router.php';
+require_once __DIR__ . '/app/services/service.php';
 
-// Cria as dependências de baixo para cima perfeitamente
+// 3. O Autoload carrega o restante sozinho assim que forem chamadas!
 $repository = new EstudanteRepository();
 $service = new StudyFlowService($repository);
 $controller = new EstudanteController($service);
