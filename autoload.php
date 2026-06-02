@@ -1,31 +1,31 @@
 <?php
 
 spl_autoload_register(function ($classe) {
-    // Lista de todas as subpastas dentro de 'app'
+    // Lista corrigida com os nomes exatos das suas pastas no plural dentro de 'app'
     $diretorios = [
         __DIR__ . '/app/services/',
-        __DIR__ . '/app/controller/',
+        __DIR__ . '/app/controllers/', 
         __DIR__ . '/app/model/',
-        __DIR__ . '/app/router/',
+        __DIR__ . '/app/routes/',      
         __DIR__ . '/app/middleware/',
+        __DIR__ . '/app/repository/',
         __DIR__ . '/app/'
     ];
 
-    // Cria uma lista de tentativas para o nome do arquivo
+    // Mapeamento exato de classes para arquivos com nomes diferentes
+    $mapeamentoEspecial = [
+        'StudyFlowService'    => 'service',
+        'EstudanteController' => 'controller',
+        'Router'              => 'router',
+        'IEstudanteRepository'=> 'IEstudanteRepository'
+    ];
+
     $tentativas = [$classe];
-
-    // Se o PHP pedir a classe com maiúscula, tentamos procurar o arquivo em minúsculo também
-    if ($classe === 'StudyFlowService') {
-        $tentativas[] = 'service';
-    }
-    if ($classe === 'EstudanteController') {
-        $tentativas[] = 'controller';
-    }
-    if ($classe === 'Router') {
-        $tentativas[] = 'router'; // <-- Adicionado para resolver a linha 14!
+    if (isset($mapeamentoEspecial[$classe])) {
+        $tentativas[] = $mapeamentoEspecial[$classe];
     }
 
-    // Varre as pastas procurando por qualquer uma das combinações
+    // 1. Tenta procurar dentro das pastas da estrutura 'app'
     foreach ($diretorios as $diretorio) {
         foreach ($tentativas as $nomeArquivo) {
             $arquivo = $diretorio . $nomeArquivo . '.php';
@@ -36,9 +36,12 @@ spl_autoload_register(function ($classe) {
         }
     }
 
-    // Fallback para arquivos soltos na raiz (como BusinessRuleException)
-    $arquivoRaiz = __DIR__ . '/' . $classe . '.php';
-    if (file_exists($arquivoRaiz)) {
-        require_once $arquivoRaiz;
+    // 2. Tenta procurar o arquivo solto diretamente na raiz do projeto (Ex: IEstudanteRepository.php)
+    foreach ($tentativas as $nomeArquivo) {
+        $arquivoRaiz = __DIR__ . '/' . $nomeArquivo . '.php';
+        if (file_exists($arquivoRaiz)) {
+            require_once $arquivoRaiz;
+            return;
+        }
     }
 });
