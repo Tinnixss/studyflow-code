@@ -3,10 +3,10 @@
 // 1. Liga o carregador automático inteligente
 require_once __DIR__ . '/autoload.php';
 
-// 2. FORÇAR CAMINHOS MANUAIS (Garante que o PHP ache todas as classes sem depender do Autoload)
+// 2. FORÇAR CAMINHOS MANUAIS (Corrigidos com base na sua árvore de arquivos)
 require_once __DIR__ . '/app/repository/IEstudanteRepository.php';
 require_once __DIR__ . '/app/repository/EstudanteRepository.php';
-require_once __DIR__ . '/app/services/StudyFlowService.php'; // <-- Linha mágica adicionada!
+require_once __DIR__ . '/app/services/service.php'; // <-- Corrigido para carregar seu arquivo 'service.php'
 require_once __DIR__ . '/app/controllers/EstudanteController.php';
 require_once __DIR__ . '/app/routes/router.php';
 
