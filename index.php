@@ -3,8 +3,8 @@
 // 1. Liga o carregador automático inteligente
 require_once __DIR__ . '/autoload.php';
 
-// 2. AJUDA MANUAL PARA AS EXCEÇÕES:
-// O Autoload não adivinha o arquivo 'service.php' e ignora interfaces. Forçamos aqui:
+// 2. AJUDA MANUAL PARA AS EXCEÇÕES (Pastas e arquivos que o Autoload não mapeia sozinho)
+require_once __DIR__ . '/app/model/Database.php';           // <-- Linha mágica adicionada!
 require_once __DIR__ . '/app/repository/IEstudanteRepository.php';
 require_once __DIR__ . '/app/services/service.php';
 
