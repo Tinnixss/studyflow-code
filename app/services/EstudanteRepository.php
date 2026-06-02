@@ -5,8 +5,8 @@ class EstudanteRepository implements IEstudanteRepository {
 
     public function __construct() {
         try {
-            // Como o database.sqlite está solto na raiz do projeto, subimos duas pastas
-            $caminhoBanco = __DIR__ . '/../../database.sqlite';
+            // Caminho exato apontando para onde a migração criou o banco!
+            $caminhoBanco = __DIR__ . '/../migration/database.sqlite';
             
             $this->pdo = new PDO("sqlite:" . $caminhoBanco);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
