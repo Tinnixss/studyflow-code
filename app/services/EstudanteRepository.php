@@ -5,8 +5,7 @@ class EstudanteRepository implements IEstudanteRepository {
 
     public function __construct() {
         try {
-            // MUDANÇA AQUI: Alterado de 'database.db' para 'database.sqlite'
-            // para usar o banco correto onde a tabela já existe!
+            // Como o database.sqlite está fora da pasta app, subimos até a raiz:
             $caminhoBanco = __DIR__ . '/../../database.sqlite';
             
             $this->pdo = new PDO("sqlite:" . $caminhoBanco);
