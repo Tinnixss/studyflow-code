@@ -4,8 +4,16 @@ class EstudanteRepository implements IEstudanteRepository {
     private PDO $pdo;
 
     public function __construct() {
-        // O Autoload vai carregar a classe Database automaticamente aqui!
-        $this->pdo = Database::getConnection();
+        try {
+            // Caminho absoluto seguro usando o __DIR__ para achar o seu banco de dados
+            $caminhoBanco = __DIR__ . '/../../database.db';
+            
+            $this->pdo = new PDO("sqlite:" . $caminhoBanco);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            echo "Cannot connect to the SQLite database: " . $e->getMessage();
+            exit;
+        }
     }
 
     public function save(EstudanteModel $estudante): bool {
