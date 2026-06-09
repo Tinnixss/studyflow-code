@@ -1,3 +1,7 @@
+// ============================================================
+// StudyFlow | perfil.js — Módulo do Perfil (CORRIGIDO)
+// ============================================================
+
 // ── CONFIGURAÇÕES E BANCO DE DADOS LOCAL (localStorage) ────────
 const DEFAULTS = {
   avatar: '🐱', 
@@ -22,15 +26,18 @@ function carregarDados() {
   }
 }
 
-// ── SISTEMA DE TOAST (NOTIFICAÇÕES FLUTUANTES) ──────────────────
-function mostrarToast(msg) {
-  const t = document.getElementById('toast');
-  const msgEl = document.getElementById('toast-msg');
-  if (!t || !msgEl) return;
-  
-  msgEl.textContent = msg;
-  t.classList.add('visivel');
-  setTimeout(() => t.classList.remove('visivel'), 2500);
+// ── ADAPTAÇÃO DO TOAST (Usa o do core.js se disponível) ────────
+function mostrarToast(msg, tipo = 'info') {
+  if (typeof showToast === 'function') {
+    showToast(msg, tipo);
+  } else {
+    const t = document.getElementById('toast');
+    const msgEl = document.getElementById('toast-msg');
+    if (!t || !msgEl) return;
+    msgEl.textContent = msg;
+    t.classList.add('visivel');
+    setTimeout(() => t.classList.remove('visivel'), 2500);
+  }
 }
 
 // ── SISTEMA DE PROGRESSÃO: XP E NÍVEL ──────────────────────────
@@ -46,10 +53,8 @@ function calcularNivel(h) {
 
 // ── RENDERIZAÇÃO DO PERFIL E STATUS PRINCIPAIS ─────────────────
 function renderPerfil(d) {
-  // CORREÇÃO: Cláusula de salvaguarda. Evita quebrar se não estiver na página de perfil
   if (!document.getElementById('avatar-display')) {
-    console.log('[StudyFlow] Ignorando renderPerfil: Elementos de perfil não encontrados nesta tela.');
-    return;
+    return; // Cláusula de salvaguarda: encerra silenciosamente se não estiver na página de perfil
   }
 
   document.getElementById('avatar-display').textContent  = d.avatar;
@@ -76,10 +81,7 @@ function renderPerfil(d) {
 // ── RENDERIZAÇÃO DO GRÁFICO SEMANAL ────────────────────────────
 function renderGrafico() {
   const cont = document.getElementById('grafico-barras');
-  if (!cont) {
-    console.log('[StudyFlow] Ignorando renderGrafico: Gráfico não existente nesta tela.');
-    return;
-  }
+  if (!cont) return;
 
   let horasPorDia;
   try {
@@ -90,7 +92,7 @@ function renderGrafico() {
   }
 
   const nomes   = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
-  const hojeIdx = (new Date().getDay() + 6) % 7; // Ajusta para Segunda ser 0
+  const hojeIdx = (new Date().getDay() + 6) % 7; 
   const maxH    = Math.max(...horasPorDia, 0.1);
   
   cont.innerHTML = '';
@@ -108,10 +110,7 @@ function renderGrafico() {
 // ── CALENDÁRIO DINÂMICO DE SEQUÊNCIA (OFENSIVA) ───────────────
 function renderSequencia() {
   const cont = document.getElementById('sequencia-dias');
-  if (!cont) {
-    console.log('[StudyFlow] Ignorando renderSequencia: Calendário não existente nesta tela.');
-    return;
-  }
+  if (!cont) return;
 
   const agora    = new Date();
   const ano      = agora.getFullYear();
@@ -160,10 +159,7 @@ function renderSequencia() {
 // ── CONTROLE E RENDERIZAÇÃO DAS DISCIPLINAS ────────────────────
 function renderDisciplinas(disciplinas) {
   const lista = document.getElementById('disciplinas-lista');
-  if (!lista) {
-    console.log('[StudyFlow] Ignorando renderDisciplinas: Lista não existente nesta tela.');
-    return;
-  }
+  if (!lista) return;
   lista.innerHTML = '';
 
   if (disciplinas.length === 0) {
@@ -209,140 +205,150 @@ function renderDisciplinas(disciplinas) {
       dados.disciplinas.splice(parseInt(btn.dataset.index), 1);
       salvarDados(dados);
       renderDisciplinas(dados.disciplinas);
-      mostrarToast('Disciplina removida');
+      mostrarToast('Disciplina removida', 'aviso');
     });
   });
 }
 
-// ── INICIALIZAÇÃO SEGURA DA PÁGINA ──────────────────────────────
+// ── INICIALIZAÇÃO CONTROLADA DA PÁGINA ──────────────────────────────
 let dados = carregarDados();
-renderPerfil(dados);
-renderGrafico();
-renderSequencia();
-renderDisciplinas(dados.disciplinas);
 
-// ── LOGICA DO MODAL DE PERFIL COM CARROSSEL 3D ─────────────────
-let avatarSel = dados.avatar;
-const modalOverlay = document.getElementById('modal-overlay');
-const avatarCarousel = document.getElementById('avatar-carousel');
+document.addEventListener('DOMContentLoaded', () => {
+  renderPerfil(dados);
+  renderGrafico();
+  renderSequencia();
+  renderDisciplinas(dados.disciplinas);
 
-if (avatarCarousel) {
-  const itensAvatar = Array.from(avatarCarousel.querySelectorAll('.avatar-item'));
-  let currentIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
-  if (currentIndex === -1) currentIndex = 0;
+  // ── LOGICA DO MODAL DE PERFIL COM CARROSSEL 3D ─────────────────
+  let avatarSel = dados.avatar;
+  const modalOverlay = document.getElementById('modal-overlay');
+  const avatarCarousel = document.getElementById('avatar-carousel');
 
-  function updateCarousel() {
-    itensAvatar.forEach((item, index) => {
-      item.className = 'avatar-item';
-      let offset = index - currentIndex;
-      
-      if (offset < -1 && currentIndex === itensAvatar.length - 1) offset = 1;
-      if (offset > 1 && currentIndex === 0) offset = -1;
+  if (avatarCarousel && modalOverlay) {
+    const itensAvatar = Array.from(avatarCarousel.querySelectorAll('.avatar-item'));
+    let currentIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
+    if (currentIndex === -1) currentIndex = 0;
 
-      if (offset === 0) {
-        item.classList.add('center');
-        avatarSel = item.dataset.emoji;
-      } else if (offset === 1 || offset === -(itensAvatar.length - 1)) {
-        item.classList.add('right');
-      } else if (offset === -1 || offset === (itensAvatar.length - 1)) {
-        item.classList.add('left');
+    function updateCarousel() {
+      itensAvatar.forEach((item, index) => {
+        item.className = 'avatar-item';
+        let offset = index - currentIndex;
+        
+        if (offset < -1 && currentIndex === itensAvatar.length - 1) offset = 1;
+        if (offset > 1 && currentIndex === 0) offset = -1;
+
+        if (offset === 0) {
+          item.classList.add('center');
+          avatarSel = item.dataset.emoji;
+        } else if (offset === 1 || offset === -(itensAvatar.length - 1)) {
+          item.classList.add('right');
+        } else if (offset === -1 || offset === (itensAvatar.length - 1)) {
+          item.classList.add('left');
+        }
+      });
+    }
+
+    document.getElementById('prev-avatar')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentIndex = (currentIndex - 1 + itensAvatar.length) % itensAvatar.length;
+      updateCarousel();
+    });
+
+    document.getElementById('next-avatar')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      currentIndex = (currentIndex + 1) % itensAvatar.length;
+      updateCarousel();
+    });
+
+    avatarCarousel.addEventListener('click', e => {
+      const targetItem = e.target.closest('.avatar-item');
+      if (!targetItem) return;
+      const targetIndex = itensAvatar.indexOf(targetItem);
+      if (targetIndex !== -1 && targetIndex !== currentIndex) {
+        currentIndex = targetIndex;
+        updateCarousel();
       }
     });
-  }
 
-  document.getElementById('prev-avatar')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentIndex = (currentIndex - 1 + itensAvatar.length) % itensAvatar.length;
-    updateCarousel();
-  });
-
-  document.getElementById('next-avatar')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentIndex = (currentIndex + 1) % itensAvatar.length;
-    updateCarousel();
-  });
-
-  avatarCarousel.addEventListener('click', e => {
-    const targetItem = e.target.closest('.avatar-item');
-    if (!targetItem) return;
-    const targetIndex = itensAvatar.indexOf(targetItem);
-    if (targetIndex !== -1 && targetIndex !== currentIndex) {
-      currentIndex = targetIndex;
+    function abrirModal() {
+      const inputNome = document.getElementById('input-nome');
+      const inputCurso = document.getElementById('input-curso');
+      if(inputNome) inputNome.value = dados.nome;
+      if(inputCurso) inputCurso.value = dados.curso;
+      avatarSel = dados.avatar;
+      
+      const savedIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
+      if (savedIndex !== -1) currentIndex = savedIndex;
+      
       updateCarousel();
+      modalOverlay.classList.add('aberto');
     }
-  });
 
-  function abrirModal() {
-    const inputNome = document.getElementById('input-nome');
-    const inputCurso = document.getElementById('input-curso');
-    if(inputNome) inputNome.value = dados.nome;
-    if(inputCurso) inputCurso.value = dados.curso;
-    avatarSel = dados.avatar;
-    
-    const savedIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
-    if (savedIndex !== -1) currentIndex = savedIndex;
-    
-    updateCarousel();
-    modalOverlay.classList.add('aberto');
+    const fecharModal = () => modalOverlay.classList.remove('aberto');
+
+    document.getElementById('btn-editar')?.addEventListener('click', abrirModal);
+    document.getElementById('modal-fechar')?.addEventListener('click', fecharModal);
+    document.getElementById('btn-cancelar')?.addEventListener('click', fecharModal);
+    modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) fecharModal(); });
+
+    document.getElementById('btn-salvar')?.addEventListener('click', () => {
+      dados.avatar = avatarSel;
+      const inputNome = document.getElementById('input-nome');
+      const inputCurso = document.getElementById('input-curso');
+      dados.nome   = inputNome ? inputNome.value.trim() || dados.nome : dados.nome;
+      dados.curso  = inputCurso ? inputCurso.value.trim() || dados.curso : dados.curso;
+      salvarDados(dados);
+      renderPerfil(dados);
+      fecharModal();
+      mostrarToast('Perfil salvo com sucesso!', 'sucesso');
+      
+      // Sincroniza dinamicamente a navbar após salvar
+      const navUserNome = document.querySelector('.nav-user__nome');
+      const navUserAvatar = document.querySelector('.nav-user__avatar');
+      if (navUserNome) navUserNome.textContent = dados.nome;
+      if (navUserAvatar) navUserAvatar.textContent = dados.avatar;
+    });
   }
 
-  const fecharModal = () => modalOverlay.classList.remove('aberto');
+  // ── LOGICA DO MODAL DE ADICIONAR DISCIPLINAS ──────────────────
+  let discIconeSel = '📐';
+  const modalDisc  = document.getElementById('modal-disciplina');
 
-  document.getElementById('btn-editar')?.addEventListener('click', abrirModal);
-  document.getElementById('modal-fechar')?.addEventListener('click', fecharModal);
-  document.getElementById('btn-cancelar')?.addEventListener('click', fecharModal);
-  modalOverlay?.addEventListener('click', e => { if (e.target === modalOverlay) fecharModal(); });
-
-  document.getElementById('btn-salvar')?.addEventListener('click', () => {
-    dados.avatar = avatarSel;
-    const inputNome = document.getElementById('input-nome');
-    const inputCurso = document.getElementById('input-curso');
-    dados.nome   = inputNome ? inputNome.value.trim() || dados.nome : dados.nome;
-    dados.curso  = inputCurso ? inputCurso.value.trim() || dados.curso : dados.curso;
-    salvarDados(dados);
-    renderPerfil(dados);
-    fecharModal();
-    mostrarToast('Perfil salvo com sucesso!');
+  document.getElementById('btn-add-disciplina')?.addEventListener('click', () => {
+    if (!modalDisc) return;
+    const discNome = document.getElementById('disc-nome');
+    if (discNome) discNome.value = '';
+    discIconeSel = '📐';
+    document.querySelectorAll('#disc-icone-grid .avatar-op').forEach((op, i) =>
+      op.classList.toggle('selecionado', i === 0));
+    modalDisc.classList.add('aberto');
   });
-}
 
-// ── LOGICA DO MODAL DE ADICIONAR DISCIPLINAS ──────────────────
-let discIconeSel = '📐';
-const modalDisc  = document.getElementById('modal-disciplina');
+  const fecharModalDisc = () => modalDisc?.classList.remove('aberto');
+  document.getElementById('modal-disc-fechar')?.addEventListener('click', fecharModalDisc);
+  document.getElementById('modal-disc-cancelar')?.addEventListener('click', fecharModalDisc);
+  modalDisc?.addEventListener('click', e => { if (e.target === modalDisc) fecharModalDisc(); });
 
-document.getElementById('btn-add-disciplina')?.addEventListener('click', () => {
-  const discNome = document.getElementById('disc-nome');
-  if (discNome) discNome.value = '';
-  discIconeSel = '📐';
-  document.querySelectorAll('#disc-icone-grid .avatar-op').forEach((op, i) =>
-    op.classList.toggle('selecionado', i === 0));
-  modalDisc.classList.add('aberto');
-});
+  document.getElementById('disc-icone-grid')?.addEventListener('click', e => {
+    const op = e.target.closest('.avatar-op'); if (!op) return;
+    document.querySelectorAll('#disc-icone-grid .avatar-op').forEach(a => a.classList.remove('selecionado'));
+    op.classList.add('selecionado'); 
+    discIconeSel = op.dataset.emoji;
+  });
 
-const fecharModalDisc = () => modalDisc.classList.remove('aberto');
-document.getElementById('modal-disc-fechar')?.addEventListener('click', fecharModalDisc);
-document.getElementById('modal-disc-cancelar')?.addEventListener('click', fecharModalDisc);
-modalDisc?.addEventListener('click', e => { if (e.target === modalDisc) fecharModalDisc(); });
+  document.getElementById('modal-disc-salvar')?.addEventListener('click', () => {
+    const discNome = document.getElementById('disc-nome');
+    const nome = discNome ? discNome.value.trim() : '';
+    if (!nome) { mostrarToast('⚠️ Digite o nome da disciplina!', 'erro'); return; }
+    dados.disciplinas.push({ icone: discIconeSel, nome, horas: 0 });
+    salvarDados(dados);
+    renderDisciplinas(dados.disciplinas);
+    fecharModalDisc();
+    mostrarToast('Disciplina adicionada!', 'sucesso');
+  });
 
-document.getElementById('disc-icone-grid')?.addEventListener('click', e => {
-  const op = e.target.closest('.avatar-op'); if (!op) return;
-  document.querySelectorAll('#disc-icone-grid .avatar-op').forEach(a => a.classList.remove('selecionado'));
-  op.classList.add('selecionado'); 
-  discIconeSel = op.dataset.emoji;
-});
-
-document.getElementById('modal-disc-salvar')?.addEventListener('click', () => {
-  const discNome = document.getElementById('disc-nome');
-  const nome = discNome ? discNome.value.trim() : '';
-  if (!nome) { mostrarToast('⚠️ Digite o nome da disciplina!'); return; }
-  dados.disciplinas.push({ icone: discIconeSel, nome, horas: 0 });
-  salvarDados(dados);
-  renderDisciplinas(dados.disciplinas);
-  fecharModalDisc();
-  mostrarToast('Disciplina adicionada!');
-});
-
-// Aplica propriedades de renderização e carregamento dinâmico
-document.querySelectorAll('[data-w]').forEach(el => {
-  requestAnimationFrame(() => { el.style.width = el.dataset.w + '%'; });
+  // Aplica propriedades de animação de largura
+  document.querySelectorAll('[data-w]').forEach(el => {
+    requestAnimationFrame(() => { el.style.width = el.dataset.w + '%'; });
+  });
 });
