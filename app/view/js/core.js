@@ -17,27 +17,25 @@
   function initTheme() {
     const htmlEl = document.documentElement;
     
-    // CORREÇÃO: Procura pelo ID padrão ou por classes comuns de alternar tema do projeto
-    const elementoTema = document.getElementById('toggle-tema') || document.querySelector('.toggle-tema, .theme-btn');
-    const labelTema = document.getElementById('label-tema');
-    const iconeTema = document.getElementById('icone-tema');
+    // Procura pelo ID novo ou pelo ID antigo usado no HTML (theme-toggle)
+    const elementoTema = document.getElementById('toggle-tema') || document.getElementById('theme-toggle') || document.querySelector('.theme-toggle');
+    const labelTema = document.getElementById('label-tema') || document.querySelector('.sr-only');
+    const iconeTema = document.getElementById('icone-tema') || document.querySelector('.theme-toggle__icon');
 
     // Força a aplicação do tema salvo imediatamente no carregamento
     const temaSalvo = lsGet('sf-tema') || 'dark';
     htmlEl.setAttribute('data-tema', temaSalvo);
 
-    if (!elementoTema) return; // Se o botão não existir nesta página, sai sem quebrar
+    if (!elementoTema) return; 
 
-    // Atualiza os textos/ícones visuais do botão
     function aplicarVisualTema(tema) {
       htmlEl.setAttribute('data-tema', tema);
-      if (labelTema) labelTema.textContent = tema === 'light' ? 'Light' : 'Dark';
+      if (labelTema) labelTema.textContent = tema === 'light' ? 'Modo Claro' : 'Modo Escuro';
       if (iconeTema) iconeTema.textContent = tema === 'light' ? '☀️' : '🌙';
     }
 
     aplicarVisualTema(temaSalvo);
 
-    // Remove qualquer listener antigo e adiciona o clique definitivo
     elementoTema.onclick = function(e) {
       e.preventDefault();
       const temaAtual = htmlEl.getAttribute('data-tema') || 'dark';
@@ -50,8 +48,10 @@
   // ── CONTROLE DA NAVBAR E INTERAÇÃO DAS ABAS ──────────────────
   function initNavigation() {
     const navEl     = document.getElementById('nav-principal') || document.querySelector('.navbar');
-    const navToggle = document.getElementById('nav-toggle') || document.querySelector('.navbar__toggle');
-    const navLinks  = document.getElementById('nav-links') || document.querySelector('.navbar__links, .nav-links');
+    // Aceita tanto nav-toggle quanto menu-toggle
+    const navToggle = document.getElementById('nav-toggle') || document.getElementById('menu-toggle') || document.querySelector('.navbar__toggle');
+    // Aceita nav-links quanto navbar-links
+    const navLinks  = document.getElementById('nav-links') || document.getElementById('navbar-links') || document.querySelector('.navbar__menu');
 
     if (navEl) {
       window.addEventListener('scroll', () => {
@@ -59,64 +59,33 @@
       }, { passive: true });
     }
 
-    // ── CORREÇÃO 1: Clique na logo "StudyFlow" direciona para o Início/Topo
-    const brandLogo = document.querySelector('.navbar__brand, .brand-header, .logo');
+    // Clique na logo direciona para o Início
+    const brandLogo = document.querySelector('.navbar__brand');
     if (brandLogo) {
       brandLogo.style.cursor = 'pointer';
       brandLogo.onclick = function(e) {
         e.preventDefault();
-        // Se houver a seção de funcionalidades na página, rola pro topo de forma suave
-        if (document.getElementById('funcionalidades')) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        } else {
-          // Se estiver nas páginas PHP ou em cronograma.html, volta para a home
-          window.location.href = 'index.html';
-        }
+        window.location.href = '../../../index.html';
       };
     }
 
-    // ── CORREÇÃO 2: Faz as abas conversarem (Scroll suave ou Redirecionamento se estiver fora da home)
-    const linksMenu = document.querySelectorAll('nav a[href^="#"], .navbar a[href^="#"], #nav-links a[href^="#"]');
-    
+    // Links de ancoragem
+    const linksMenu = document.querySelectorAll('.navbar__links a');
     linksMenu.forEach(link => {
       link.onclick = function(e) {
-        const targetId = this.getAttribute('href');
-        
-        if (targetId === '#') return; // Ignora links vazios
-
-        // Procura se a seção/ancora existe na página atual (Ex: #funcionalidades na index.html)
-        const targetElement = document.querySelector(targetId === '#inicio' ? 'body' : targetId);
-        
-        if (targetElement) {
-          e.preventDefault();
-          
-          // Rola suavemente até o elemento
-          if (targetId === '#inicio') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const href = this.getAttribute('href');
+        if (href.startsWith('#')) {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
           }
-
-          // Fecha o menu mobile automaticamente se ele estiver aberto
-          if (navLinks) {
-            navLinks.classList.remove('aberto');
-            if (navToggle) {
-              navToggle.classList.remove('aberto');
-              navToggle.setAttribute('aria-expanded', 'false');
-            }
-          }
-        } else {
-          // Se o elemento NÃO existe (ex: você está em cronograma.html e clica em "Funcionalidades")
-          // Redireciona o usuário para a página principal injetando o ID na URL
-          e.preventDefault();
-          window.location.href = 'index.html' + targetId;
         }
       };
     });
 
     if (!navToggle || !navLinks) return;
 
-    // Configura o clique do menu mobile isolando o evento
     navToggle.onclick = function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -125,7 +94,6 @@
       navToggle.setAttribute('aria-expanded', String(aberto));
     };
 
-    // Fecha o menu ao clicar fora dele
     document.addEventListener('click', function(e) {
       if (!navLinks.contains(e.target) && e.target !== navToggle) {
         navLinks.classList.remove('aberto');
@@ -144,12 +112,9 @@
       
       if (navUserNome && dadosPerfil.nome) navUserNome.textContent = dadosPerfil.nome;
       if (navUserAvatar && dadosPerfil.avatar) navUserAvatar.textContent = dadosPerfil.avatar;
-    } catch (e) {
-      // Ignora silenciosamente para não travar o resto do script
-    }
+    } catch (e) {}
   }
 
-  // EXECUÇÃO IMEDIATA E SEGURA
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       initTheme();
@@ -162,7 +127,7 @@
     sincronizarNavbar();
   }
 
-  // Expõe a função global do Toast para que os outros scripts usem sem quebrar
+  // Sistema de Toast unificado e global para substituir os alerts()
   window.showToast = function(mensagem, tipo = 'info', duracao = 3500) {
     let container = document.getElementById('sf-toast-container');
     if (!container) {
