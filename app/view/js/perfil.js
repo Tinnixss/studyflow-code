@@ -46,6 +46,12 @@ function calcularNivel(h) {
 
 // ── RENDERIZAÇÃO DO PERFIL E STATUS PRINCIPAIS ─────────────────
 function renderPerfil(d) {
+  // CORREÇÃO: Cláusula de salvaguarda. Evita quebrar se não estiver na página de perfil
+  if (!document.getElementById('avatar-display')) {
+    console.log('[StudyFlow] Ignorando renderPerfil: Elementos de perfil não encontrados nesta tela.');
+    return;
+  }
+
   document.getElementById('avatar-display').textContent  = d.avatar;
   document.getElementById('nome-display').textContent    = d.nome || 'Estudante';
   document.getElementById('curso-display').textContent   = d.curso || 'Não informado';
@@ -56,19 +62,25 @@ function renderPerfil(d) {
   const n   = calcularNivel(d.horas);
   const pct = Math.min(100, Math.round((n.xp / n.max) * 100));
   
-  document.getElementById('nivel-display').textContent   = `⚡ Nível ${n.nivel} — ${n.titulo}`;
-  document.getElementById('xp-label').textContent        = `XP: ${n.xp.toLocaleString()} / ${n.max.toLocaleString()}`;
-  document.getElementById('xp-pct').textContent          = pct + '%';
-  document.getElementById('xp-fill').style.width         = pct + '%';
+  if (document.getElementById('nivel-display')) document.getElementById('nivel-display').textContent   = `⚡ Nível ${n.nivel} — ${n.titulo}`;
+  if (document.getElementById('xp-label')) document.getElementById('xp-label').textContent        = `XP: ${n.xp.toLocaleString()} / ${n.max.toLocaleString()}`;
+  if (document.getElementById('xp-pct')) document.getElementById('xp-pct').textContent          = pct + '%';
+  if (document.getElementById('xp-fill')) document.getElementById('xp-fill').style.width         = pct + '%';
   
   const hora = new Date().getHours();
   const saud = hora < 12 ? 'Bom dia' : hora < 18 ? 'Boa tarde' : 'Boa noite';
   const primeiroNome = d.nome ? d.nome.split(' ')[0] : 'Estudante';
-  document.getElementById('saudacao').textContent = `${saud}, ${primeiroNome}!`;
+  if (document.getElementById('saudacao')) document.getElementById('saudacao').textContent = `${saud}, ${primeiroNome}!`;
 }
 
 // ── RENDERIZAÇÃO DO GRÁFICO SEMANAL ────────────────────────────
 function renderGrafico() {
+  const cont = document.getElementById('grafico-barras');
+  if (!cont) {
+    console.log('[StudyFlow] Ignorando renderGrafico: Gráfico não existente nesta tela.');
+    return;
+  }
+
   let horasPorDia;
   try {
     const raw = localStorage.getItem('sf-horas-semana');
@@ -80,8 +92,6 @@ function renderGrafico() {
   const nomes   = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
   const hojeIdx = (new Date().getDay() + 6) % 7; // Ajusta para Segunda ser 0
   const maxH    = Math.max(...horasPorDia, 0.1);
-  const cont    = document.getElementById('grafico-barras');
-  if (!cont) return;
   
   cont.innerHTML = '';
   horasPorDia.forEach((h, i) => {
@@ -97,6 +107,12 @@ function renderGrafico() {
 
 // ── CALENDÁRIO DINÂMICO DE SEQUÊNCIA (OFENSIVA) ───────────────
 function renderSequencia() {
+  const cont = document.getElementById('sequencia-dias');
+  if (!cont) {
+    console.log('[StudyFlow] Ignorando renderSequencia: Calendário não existente nesta tela.');
+    return;
+  }
+
   const agora    = new Date();
   const ano      = agora.getFullYear();
   const mes      = agora.getMonth();
@@ -116,7 +132,6 @@ function renderSequencia() {
     diasFeitos = []; 
   }
 
-  // Geração Mock demonstrativa caso esteja vazio
   if (diasFeitos.length === 0) {
     for (let d = 1; d < diaHoje; d++) {
       if (d % 3 !== 0) {
@@ -125,8 +140,6 @@ function renderSequencia() {
     }
   }
 
-  const cont = document.getElementById('sequencia-dias');
-  if (!cont) return;
   cont.innerHTML = '';
   
   for (let d = 1; d <= totalDias; d++) {
@@ -147,7 +160,10 @@ function renderSequencia() {
 // ── CONTROLE E RENDERIZAÇÃO DAS DISCIPLINAS ────────────────────
 function renderDisciplinas(disciplinas) {
   const lista = document.getElementById('disciplinas-lista');
-  if (!lista) return;
+  if (!lista) {
+    console.log('[StudyFlow] Ignorando renderDisciplinas: Lista não existente nesta tela.');
+    return;
+  }
   lista.innerHTML = '';
 
   if (disciplinas.length === 0) {
@@ -198,7 +214,7 @@ function renderDisciplinas(disciplinas) {
   });
 }
 
-// ── INICIALIZAÇÃO DA PÁGINA ────────────────────────────────────
+// ── INICIALIZAÇÃO SEGURA DA PÁGINA ──────────────────────────────
 let dados = carregarDados();
 renderPerfil(dados);
 renderGrafico();
@@ -215,19 +231,17 @@ if (avatarCarousel) {
   let currentIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
   if (currentIndex === -1) currentIndex = 0;
 
-  // Renderiza a rotação tridimensional das classes baseadas no índice ativo
   function updateCarousel() {
     itensAvatar.forEach((item, index) => {
       item.className = 'avatar-item';
       let offset = index - currentIndex;
       
-      // Tratamento cíclico infinito para bordas extremas do carrossel
       if (offset < -1 && currentIndex === itensAvatar.length - 1) offset = 1;
       if (offset > 1 && currentIndex === 0) offset = -1;
 
       if (offset === 0) {
         item.classList.add('center');
-        avatarSel = item.dataset.emoji; // Vincula ao coletor de dados de salvamento
+        avatarSel = item.dataset.emoji;
       } else if (offset === 1 || offset === -(itensAvatar.length - 1)) {
         item.classList.add('right');
       } else if (offset === -1 || offset === (itensAvatar.length - 1)) {
@@ -236,7 +250,6 @@ if (avatarCarousel) {
     });
   }
 
-  // Eventos das Setas Laterais
   document.getElementById('prev-avatar')?.addEventListener('click', (e) => {
     e.preventDefault();
     currentIndex = (currentIndex - 1 + itensAvatar.length) % itensAvatar.length;
@@ -249,7 +262,6 @@ if (avatarCarousel) {
     updateCarousel();
   });
 
-  // Evento ao clicar direto em um elemento do carrossel lateral
   avatarCarousel.addEventListener('click', e => {
     const targetItem = e.target.closest('.avatar-item');
     if (!targetItem) return;
@@ -260,10 +272,11 @@ if (avatarCarousel) {
     }
   });
 
-  // Centraliza e prepara a visualização do modal ao abrir
   function abrirModal() {
-    document.getElementById('input-nome').value  = dados.nome;
-    document.getElementById('input-curso').value = dados.curso;
+    const inputNome = document.getElementById('input-nome');
+    const inputCurso = document.getElementById('input-curso');
+    if(inputNome) inputNome.value = dados.nome;
+    if(inputCurso) inputCurso.value = dados.curso;
     avatarSel = dados.avatar;
     
     const savedIndex = itensAvatar.findIndex(item => item.dataset.emoji === dados.avatar);
@@ -282,8 +295,10 @@ if (avatarCarousel) {
 
   document.getElementById('btn-salvar')?.addEventListener('click', () => {
     dados.avatar = avatarSel;
-    dados.nome   = document.getElementById('input-nome').value.trim()  || dados.nome;
-    dados.curso  = document.getElementById('input-curso').value.trim() || dados.curso;
+    const inputNome = document.getElementById('input-nome');
+    const inputCurso = document.getElementById('input-curso');
+    dados.nome   = inputNome ? inputNome.value.trim() || dados.nome : dados.nome;
+    dados.curso  = inputCurso ? inputCurso.value.trim() || dados.curso : dados.curso;
     salvarDados(dados);
     renderPerfil(dados);
     fecharModal();
@@ -296,7 +311,8 @@ let discIconeSel = '📐';
 const modalDisc  = document.getElementById('modal-disciplina');
 
 document.getElementById('btn-add-disciplina')?.addEventListener('click', () => {
-  document.getElementById('disc-nome').value = '';
+  const discNome = document.getElementById('disc-nome');
+  if (discNome) discNome.value = '';
   discIconeSel = '📐';
   document.querySelectorAll('#disc-icone-grid .avatar-op').forEach((op, i) =>
     op.classList.toggle('selecionado', i === 0));
@@ -316,7 +332,8 @@ document.getElementById('disc-icone-grid')?.addEventListener('click', e => {
 });
 
 document.getElementById('modal-disc-salvar')?.addEventListener('click', () => {
-  const nome = document.getElementById('disc-nome').value.trim();
+  const discNome = document.getElementById('disc-nome');
+  const nome = discNome ? discNome.value.trim() : '';
   if (!nome) { mostrarToast('⚠️ Digite o nome da disciplina!'); return; }
   dados.disciplinas.push({ icone: discIconeSel, nome, horas: 0 });
   salvarDados(dados);
