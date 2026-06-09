@@ -4,6 +4,7 @@
 // Versão revisada — Code Review Técnico
 //
 // MUDANÇAS vs versão anterior:
+//   - Verificação segura de funções globais (iniciarBanco)
 //   - Selectors específicos (não mais tentativa/erro com 3 IDs)
 //   - Integrado ao design system real do StudyFlow
 //   - Funções de sincronização entre localStorage ↔ IndexedDB
@@ -12,10 +13,17 @@
 // ============================================================
 
 // ── Inicialização ───────────────────────────────────────────
-// Roda quando o DOM estiver pronto em qualquer página
+// Roda quando o DOM estiver pronto e todas as dependências carregadas
 document.addEventListener('DOMContentLoaded', async function() {
   try {
-    await iniciarBanco();
+    // CORREÇÃO CRUCIAL: Verifica se a função existe no escopo global antes de chamá-la
+    if (typeof iniciarBanco === 'function') {
+      await iniciarBanco();
+    } else {
+      console.warn('[StudyFlow] Função "iniciarBanco" não foi encontrada no escopo global. Verifique se o arquivo db.js ou core.js foi carregado corretamente.');
+      // Lança erro controlado para cair no bloco catch e usar o localStorage como fallback
+      throw new Error('iniciarBanco não definido');
+    }
 
     // Detecta em qual página estamos e inicializa o que for necessário
     const pagina = detectarPagina();
@@ -53,14 +61,20 @@ async function sincronizarTarefasComIndexedDB() {
     if (!raw) return;
 
     const tarefasLS  = JSON.parse(raw);
+    
+    // CORREÇÃO DE SEGURANÇA: Garante que a função buscarItens existe antes de rodar
+    if (typeof buscarItens !== 'function') return;
+    
     const tarefasDB  = await buscarItens('tarefas');
     const idsNoDB    = new Set(tarefasDB.map(t => t.id));
 
     // Adiciona apenas as tarefas que ainda não estão no IndexedDB
     const novas = tarefasLS.filter(t => !idsNoDB.has(t.id));
     for (const tarefa of novas) {
-      // Usa put em vez de add para evitar conflito de IDs
-      await atualizarItem(tarefa, 'tarefas');
+      if (typeof atualizarItem === 'function') {
+        // Usa put/atualizar em vez de add para evitar conflito de IDs
+        await atualizarItem(tarefa, 'tarefas');
+      }
     }
 
   } catch (e) {
@@ -74,10 +88,12 @@ async function sincronizarPerfilComIndexedDB() {
     const raw = localStorage.getItem('sf-perfil');
     if (!raw) return;
 
-    await atualizarItem(
-      { chave: 'dados', valor: JSON.parse(raw), sincronizadoEm: new Date().toISOString() },
-      'perfil'
-    );
+    if (typeof atualizarItem === 'function') {
+      await atualizarItem(
+        { chave: 'dados', valor: JSON.parse(raw), sincronizadoEm: new Date().toISOString() },
+        'perfil'
+      );
+    }
   } catch (e) {
     console.error('[StudyFlow] Erro ao sincronizar perfil:', e.message);
   }
@@ -94,7 +110,9 @@ async function salvarTarefaComIndexedDB(tarefa) {
     localStorage.setItem('sf-tarefas', JSON.stringify(tarefas));
 
     // 2. Replica no IndexedDB (persistência secundária)
-    await adicionarItem(tarefa, 'tarefas');
+    if (typeof adicionarItem === 'function') {
+      await adicionarItem(tarefa, 'tarefas');
+    }
 
     return true;
   } catch (e) {
@@ -107,10 +125,12 @@ async function salvarTarefaComIndexedDB(tarefa) {
 // Chamada pelo foco.html ao concluir um pomodoro
 async function salvarSessaoPomodoro(sessao) {
   try {
-    await adicionarItem({
-      ...sessao,
-      data: new Date().toISOString().split('T')[0]
-    }, 'sessoes');
+    if (typeof adicionarItem === 'function') {
+      await adicionarItem({
+        ...sessao,
+        data: new Date().toISOString().split('T')[0]
+      }, 'sessoes');
+    }
   } catch (e) {
     console.error('[StudyFlow] Erro ao salvar sessão:', e.message);
   }
@@ -119,6 +139,8 @@ async function salvarSessaoPomodoro(sessao) {
 // ── Exporta dados completos (para backup/debug) ─────────────
 async function exportarDados() {
   try {
+    if (typeof buscarItens !== 'function') return null;
+
     const [tarefas, sessoes] = await Promise.all([
       buscarItens('tarefas'),
       buscarItens('sessoes'),
