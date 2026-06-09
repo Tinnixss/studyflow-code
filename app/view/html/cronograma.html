@@ -6,859 +6,308 @@
   <meta name="description" content="StudyFlow — Organize suas tarefas com o algoritmo P = U × C. Cronograma automático e inteligente.">
   <meta name="theme-color" content="#0d1b2a">
   <title>StudyFlow | Cronograma</title>
-  <link rel="icon" type="image/png" href="data:image/png;base64,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">
-  <link rel="stylesheet" href="../css/style.css">
-  <style>
-/* ── LAYOUT ──────────────────────────────────────────────────── */
-.pagina {
-  max-width: 1100px; margin: 0 auto;
-  padding: calc(68px + var(--s4)) var(--s4) var(--s7);
-  display: flex; flex-direction: column; gap: var(--s4);
-}
-
-/* ── CABEÇALHO ───────────────────────────────────────────────── */
-.page-header { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: var(--s3); }
-.page-header__titulo {
-  font-family: var(--font-display); font-size: clamp(26px, 3.5vw, 38px);
-  font-weight: 800; letter-spacing: -1.5px; line-height: 1.1;
-}
-.page-header__titulo span {
-  background: linear-gradient(135deg, var(--accent) 0%, #7dd3fc 60%, #bae6fd 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.page-header__sub { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-
-
-/* ── ALGORITMO INFO ──────────────────────────────────────────── */
-.algo-banner {
-  background: var(--accent-glow); border: 1px solid var(--border-hover);
-  border-radius: var(--r-lg); padding: var(--s3);
-  display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap;
-}
-.algo-banner__icone {
-  width: 48px; height: 48px; background: var(--bg-surface); border-radius: var(--r-md);
-  border: 1px solid var(--border-hover); display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.algo-banner__icone svg { width: 22px; height: 22px; stroke: var(--accent); stroke-width: 2; }
-.algo-banner__texto { flex: 1; }
-.algo-banner__titulo { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--accent); }
-.algo-banner__desc { font-size: 13px; color: var(--text-secondary); margin-top: 2px; line-height: 1.5; }
-.algo-banner__formula {
-  font-family: var(--font-display); font-size: 18px; font-weight: 800;
-  color: var(--accent); background: var(--bg-surface); border: 1px solid var(--border-hover);
-  padding: 8px 18px; border-radius: var(--r-md); white-space: nowrap;
-}
-
-/* ── GRID PRINCIPAL ──────────────────────────────────────────── */
-.cronograma-grid { display: grid; grid-template-columns: 1fr 340px; gap: var(--s4); align-items: start; }
-
-/* ── CALENDÁRIO SEMANAL ──────────────────────────────────────── */
-.semana-wrap {
-  background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: var(--r-lg); overflow: hidden;
-  transition: background 0.4s ease, border-color 0.4s ease;
-}
-.semana-nav {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: var(--s2) var(--s3); border-bottom: 1px solid var(--border);
-}
-.semana-nav__titulo { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text-primary); }
-.btn-nav-seta {
-  background: none; border: 1px solid var(--border); border-radius: var(--r-sm);
-  color: var(--text-secondary); cursor: pointer; padding: 5px 8px;
-  display: flex; align-items: center; transition: border-color 0.2s, color 0.2s;
-}
-.btn-nav-seta:hover { border-color: var(--accent); color: var(--accent); }
-.btn-nav-seta svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2.5; }
-
-.semana-header {
-  display: grid; grid-template-columns: repeat(7, 1fr);
-  border-bottom: 1px solid var(--border);
-}
-.semana-header__dia {
-  padding: 10px 4px; text-align: center; font-size: 11px; font-weight: 700;
-  color: var(--text-secondary); text-transform: uppercase; letter-spacing: .06em;
-}
-.semana-header__dia.hoje { color: var(--accent); }
-
-.semana-corpo { display: grid; grid-template-columns: repeat(7, 1fr); min-height: 320px; }
-.dia-col {
-  border-right: 1px solid var(--border); padding: var(--s1);
-  display: flex; flex-direction: column; gap: 4px; min-height: 320px;
-}
-.dia-col:last-child { border-right: none; }
-.dia-col.hoje { background: rgba(56,189,248,.03); }
-
-.tarefa-bloco {
-  border-radius: 6px; padding: 5px 7px; font-size: 11px; font-weight: 600;
-  cursor: pointer; transition: opacity 0.2s ease, transform 0.15s ease;
-  border-left: 3px solid transparent; line-height: 1.35; position: relative;
-}
-.tarefa-bloco:hover { opacity: 0.85; transform: translateY(-1px); }
-.tarefa-bloco.feita { opacity: 0.45; text-decoration: line-through; }
-.tarefa-bloco--alta   { background: rgba(239,68,68,.15);   border-color: #ef4444; color: #fca5a5; }
-.tarefa-bloco--media  { background: rgba(251,191,36,.15);  border-color: #f59e0b; color: #fcd34d; }
-.tarefa-bloco--baixa  { background: rgba(34,197,94,.15);   border-color: #22c55e; color: #86efac; }
-.tarefa-bloco--estudo { background: rgba(56,189,248,.15);  border-color: var(--accent); color: #7dd3fc; }
-[data-tema="light"] .tarefa-bloco--alta   { color: #b91c1c; }
-[data-tema="light"] .tarefa-bloco--media  { color: #92400e; }
-[data-tema="light"] .tarefa-bloco--baixa  { color: #166534; }
-[data-tema="light"] .tarefa-bloco--estudo { color: #0369a1; }
-.tarefa-bloco__nome { display: block; }
-.tarefa-bloco__materia { display: block; font-weight: 400; opacity: 0.75; font-size: 10px; margin-top: 1px; }
-
-/* ── PAINEL LATERAL ──────────────────────────────────────────── */
-.painel-lateral { display: flex; flex-direction: column; gap: var(--s3); }
-.secao {
-  background: var(--bg-surface); border: 1px solid var(--border);
-  border-radius: var(--r-lg); padding: var(--s3);
-  transition: background 0.4s ease, border-color 0.4s ease;
-}
-.secao__titulo {
-  font-family: var(--font-display); font-size: 14px; font-weight: 700;
-  color: var(--text-primary); margin-bottom: var(--s2);
-  display: flex; align-items: center; gap: 8px;
-}
-.secao__titulo svg { width: 15px; height: 15px; stroke: var(--accent); stroke-width: 2.5; flex-shrink: 0; }
-
-.resumo-hoje { display: flex; flex-direction: column; gap: 8px; }
-.resumo-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 10px; background: var(--bg-base); border-radius: var(--r-sm);
-  border: 1px solid var(--border); font-size: 13px;
-}
-.resumo-item__label { color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
-.resumo-item__label svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; }
-.resumo-item__valor { font-weight: 700; color: var(--accent); font-family: var(--font-display); }
-
-.prog-item { margin-bottom: 10px; }
-.prog-item:last-child { margin-bottom: 0; }
-.prog-item__header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px; }
-.prog-item__nome { font-weight: 600; color: var(--text-primary); }
-.prog-item__pct { color: var(--text-secondary); }
-.prog-track { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
-.prog-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--accent), #7dd3fc); transition: width 0.6s ease; }
-
-/* ── CHECKLIST ANIMADO — Tarefas de Hoje ────────────────────── */
-.tarefa-pendente {
-  display: grid;
-  grid-template-columns: 20px 1fr auto;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-.tarefa-pendente:last-child { border-bottom: none; padding-bottom: 0; }
-
-/* Checkbox invisível mas funcional */
-.tarefa-pendente__checkbox {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  position: relative;
-  height: 16px;
-  width: 16px;
-  outline: none;
-  border: 0;
-  margin: 0;
-  cursor: pointer;
-  background: transparent;
-  display: grid;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-/* As duas hastes do checkmark */
-.tarefa-pendente__checkbox::before,
-.tarefa-pendente__checkbox::after {
-  content: "";
-  position: absolute;
-  height: 2px;
-  top: auto;
-  background: var(--accent);
-  border-radius: 2px;
-}
-.tarefa-pendente__checkbox::before {
-  width: 0px; right: 60%; transform-origin: right bottom;
-}
-.tarefa-pendente__checkbox::after {
-  width: 0px; left: 40%; transform-origin: left bottom;
-}
-
-/* Animação do checkmark ao marcar */
-.tarefa-pendente__checkbox:checked::before {
-  animation: sf-check-01 0.4s ease forwards;
-}
-.tarefa-pendente__checkbox:checked::after {
-  animation: sf-check-02 0.4s ease forwards;
-}
-
-/* Label — nome da tarefa */
-.tarefa-pendente__label {
-  color: var(--text-primary);
-  font-size: 13px;
-  font-weight: 600;
-  position: relative;
-  cursor: pointer;
-  display: grid;
-  align-items: center;
-  width: fit-content;
-  transition: color 0.3s ease;
-}
-
-/* Linha de tachado animada — começa invisível */
-.tarefa-pendente__label::before {
-  content: "";
-  position: absolute;
-  height: 2px;
-  width: 0;
-  left: -2px;
-  background: var(--accent);
-  border-radius: 2px;
-  transition: background 0.3s ease;
-}
-
-/* Ponto para fogos de artifício */
-.tarefa-pendente__label::after {
-  content: "";
-  position: absolute;
-  height: 4px;
-  width: 4px;
-  top: 8px;
-  left: 0px;
-  border-radius: 50%;
-}
-
-/* Estado: concluída */
-.tarefa-pendente__checkbox:checked + .tarefa-pendente__label {
-  color: var(--text-secondary);
-  animation: sf-move 0.3s ease 0.1s forwards;
-}
-.tarefa-pendente__checkbox:checked + .tarefa-pendente__label::before {
-  background: var(--text-secondary);
-  animation: sf-slice 0.4s ease forwards;
-}
-.tarefa-pendente__checkbox:checked + .tarefa-pendente__label::after {
-  animation: sf-firework 0.5s ease forwards 0.1s;
-}
-
-/* Light mode */
-[data-tema="light"] .tarefa-pendente__checkbox::before,
-[data-tema="light"] .tarefa-pendente__checkbox::after { background: var(--accent); }
-[data-tema="light"] .tarefa-pendente__checkbox:checked + .tarefa-pendente__label { color: var(--text-secondary); }
-[data-tema="light"] .tarefa-pendente__checkbox:checked + .tarefa-pendente__label::before { background: var(--text-secondary); }
-
-/* Meta info */
-.tarefa-pendente__info { min-width: 0; }
-.tarefa-pendente__meta { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
-
-/* Tags de prioridade */
-.tag-prioridade {
-  font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px; flex-shrink: 0;
-}
-.tag-prioridade--alta  { background: rgba(239,68,68,.15);  color: #ef4444; }
-.tag-prioridade--media { background: rgba(251,191,36,.15); color: #f59e0b; }
-.tag-prioridade--baixa { background: rgba(34,197,94,.15);  color: #22c55e; }
-[data-tema="light"] .tag-prioridade--alta  { color: #b91c1c; }
-[data-tema="light"] .tag-prioridade--media { color: #92400e; }
-[data-tema="light"] .tag-prioridade--baixa { color: #166534; }
-
-/* Estado vazio */
-.estado-vazio {
-  display: flex; flex-direction: column; align-items: center;
-  padding: var(--s4) var(--s3); gap: var(--s2); text-align: center;
-}
-.estado-vazio svg { width: 36px; height: 36px; stroke: var(--border-hover); stroke-width: 1.5; }
-.estado-vazio p { font-size: 13px; color: var(--text-secondary); }
-
-/* ── Keyframes do checklist ─────────────────────────────────── */
-@keyframes sf-move {
-  50%  { padding-left: 8px; padding-right: 0px; }
-  100% { padding-right: 4px; }
-}
-@keyframes sf-slice {
-  60%  { width: 100%; left: 4px; }
-  100% { width: 100%; left: -2px; padding-left: 0; }
-}
-@keyframes sf-check-01 {
-  0%   { width: 4px; top: auto; transform: rotate(0); }
-  50%  { width: 0px; top: auto; transform: rotate(0); }
-  51%  { width: 0px; top: 8px;  transform: rotate(45deg); }
-  100% { width: 5px; top: 8px;  transform: rotate(45deg); }
-}
-@keyframes sf-check-02 {
-  0%   { width: 4px;  top: auto; transform: rotate(0); }
-  50%  { width: 0px;  top: auto; transform: rotate(0); }
-  51%  { width: 0px;  top: 8px;  transform: rotate(-45deg); }
-  100% { width: 10px; top: 8px;  transform: rotate(-45deg); }
-}
-@keyframes sf-firework {
-  0% {
-    opacity: 1;
-    box-shadow:
-      0 0 0 -2px var(--accent), 0 0 0 -2px var(--accent),
-      0 0 0 -2px var(--accent), 0 0 0 -2px var(--accent),
-      0 0 0 -2px var(--accent), 0 0 0 -2px var(--accent);
-  }
-  30% { opacity: 1; }
-  100% {
-    opacity: 0;
-    box-shadow:
-       0  -15px 0 0px var(--accent),
-       14px  -8px 0 0px var(--accent),
-       14px   8px 0 0px var(--accent),
-       0   15px 0 0px var(--accent),
-      -14px   8px 0 0px var(--accent),
-      -14px  -8px 0 0px var(--accent);
-  }
-}
-
-/* ── RESPONSIVO ──────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .cronograma-grid { grid-template-columns: 1fr; }
-  .semana-header__dia { font-size: 10px; }
-}
-@media (max-width: 600px) {
-  .algo-banner { flex-direction: column; }
-  .algo-banner__formula { align-self: flex-start; }
-  .tarefa-bloco__materia { display: none; }
-}
-  </style>
-  <script>try{var t=localStorage.getItem("sf-tema");if(t)document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
+  <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAHDElEQVR42sWXa2xUxxXHfzP33t31PrzG7Bp71+ZRWwVDCQnpi7RVmqRECYE2VE0pISmVg0Dqh7ZqpDZNvqRSlNJGaqn6pYiHEtJUoQkpDS1qokpplZTyqCBWCkkwkQsYYzB+rPfau3fvvTP9sLv22rsG1C+50urMzpyZOfd/z/9/ZkTLvBVaaD62R36cmwPIckOLalurr9Jeb+xm55vlRhmJmbb2WHlQlPp0yYqbnH8dBGaPWBetEAhhgDBQWuFrVfwvDRCi9Ob6plGpQqDc1mLKSiQIQIOvXVxvAq1dfDUBSAwZQggLy+eUjgAAAABJRU5ErkJggg==">
+  <link rel="stylesheet" href="../../../css/style.css">
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
-<div class="loading-screen" id="loading-screen">
-  <div class="loading-container">
-    <div class="loader">
-      <div class="wrapper">
-        <div class="catContainer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 733 673" class="catbody">
-            <path class="cat-fill" d="M111.002 139.5C270.502 -24.5001 471.503 2.4997 621.002 139.5C770.501 276.5 768.504 627.5 621.002 649.5C473.5 671.5 246 687.5 111.002 649.5C-23.9964 611.5 -48.4982 303.5 111.002 139.5Z"></path>
-            <path class="cat-fill" d="M184 9L270.603 159H97.3975L184 9Z"></path>
-            <path class="cat-fill" d="M541 0L627.603 150H454.397L541 0Z"></path>
-          </svg>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 158 564" class="tail">
-            <path class="tail-fill" d="M5.97602 76.066C-11.1099 41.6747 12.9018 0 51.3036 0V0C71.5336 0 89.8636 12.2558 97.2565 31.0866C173.697 225.792 180.478 345.852 97.0691 536.666C89.7636 553.378 73.0672 564 54.8273 564V564C16.9427 564 -5.4224 521.149 13.0712 488.085C90.2225 350.15 87.9612 241.089 5.97602 76.066Z"></path>
-          </svg>
-          <div class="text">
-            <span class="bigzzz">Z</span>
-            <span class="zzz">Z</span>
-          </div>
-        </div>
-        <div class="wallContainer">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 500 126" class="wall">
-            <line stroke-width="6" class="wall-stroke" y2="3" x2="450" y1="3" x1="50"></line>
-            <line stroke-width="6" class="wall-stroke" y2="85" x2="400" y1="85" x1="100"></line>
-            <line stroke-width="6" class="wall-stroke" y2="122" x2="375" y1="122" x1="125"></line>
-            <line stroke-width="6" class="wall-stroke" y2="43" x2="500" y1="43"></line>
-            <line stroke-width="6" class="wall-stroke" y2="1.99391" x2="115.5" y1="43.0061" x1="115.5"></line>
-            <line stroke-width="6" class="wall-stroke" y2="2.00002" x2="189" y1="43.0122" x1="189"></line>
-            <line stroke-width="6" class="wall-stroke" y2="2.00612" x2="262.5" y1="43.0183" x1="262.5"></line>
-            <line stroke-width="6" class="wall-stroke" y2="2.01222" x2="336" y1="43.0244" x1="336"></line>
-            <line stroke-width="6" class="wall-stroke" y2="2.01833" x2="409.5" y1="43.0305" x1="409.5"></line>
-            <line stroke-width="6" class="wall-stroke" y2="43" x2="153" y1="84.0122" x1="153"></line>
-            <line stroke-width="6" class="wall-stroke" y2="43" x2="228" y1="84.0122" x1="228"></line>
-            <line stroke-width="6" class="wall-stroke" y2="43" x2="303" y1="84.0122" x1="303"></line>
-            <line stroke-width="6" class="wall-stroke" y2="43" x2="378" y1="84.0122" x1="378"></line>
-            <line stroke-width="6" class="wall-stroke" y2="84" x2="192" y1="125.012" x1="192"></line>
-            <line stroke-width="6" class="wall-stroke" y2="84" x2="267" y1="125.012" x1="267"></line>
-            <line stroke-width="6" class="wall-stroke" y2="84" x2="342" y1="125.012" x1="342"></line>
-          </svg>
-        </div>
+  <header class="navbar" id="nav-principal">
+    <div class="navbar__container">
+      <div class="navbar__brand" tabindex="0">
+        <svg class="navbar__logo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <span class="navbar__title">StudyFlow</span>
       </div>
-    </div>
-    <div class="loading-text">
-      <h2 class="loading-title">Preparando seus estudos...</h2>
-      <p class="loading-subtitle">O gatinho esta descansando enquanto carrega</p>
-    </div>
-    <div class="loading-progress">
-      <div class="loading-progress-bar"></div>
-    </div>
-  </div>
-</div>
 
-<header role="banner">
-<nav class="nav" id="nav-principal" aria-label="Menu Principal">
-  <div class="nav__inner">
-    <a href="index.html" class="nav__logo">
-      <img src="../img/logo.png" alt="" class="cat-mascot" aria-hidden="true" loading="eager">
-      StudyFlow
-    </a>
-    <ul class="nav__links" id="nav-links" role="list">
-      <li><a href="index.html">Início</a></li>
-      <li><a href="index.html#funcionalidades">Funcionalidades</a></li>
-      <li><a href="perfil.html">Perfil</a></li>
-      <li><a href="cronograma.html" aria-current="page">Cronograma</a></li>
-      <li><a href="foco.html">Modo Foco</a></li>
-    </ul>
-    <div class="nav__actions">
-      <div class="toggle-tema" title="Alternar tema">
-        <input type="checkbox" id="toggle-tema" class="toggle-tema__input" role="switch" aria-label="Alternar tema">
-        <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
-          <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
-        </label>
-        <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
-      </div>
-      <a href="inscricao.html" class="btn-nav">Começar grátis →</a>
-    </div>
-    <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">
-      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
-    </button>
-  </div>
-</nav>
-</header>
+      <nav class="navbar__menu" id="nav-links" aria-label="Menu principal">
+        <ul class="navbar__links">
+          <li>
+            <a href="cronograma.html" class="navbar__link ativo" aria-current="page">
+              <span>📅</span> Cronograma
+            </a>
+          </li>
+          <li>
+            <a href="foco.html" class="navbar__link">
+              <span>⏱️</span> Modo Foco
+            </a>
+          </li>
+          <li>
+            <a href="perfil.html" class="navbar__link">
+              <span>🐱</span> Meu Perfil
+            </a>
+          </li>
+        </ul>
+      </nav>
 
-<main class="pagina" role="main" aria-label="Cronograma de estudos">
-
-  <div class="page-header">
-    <div>
-      <h1 class="page-header__titulo">Meu <span>Cronograma</span></h1>
-      <p class="page-header__sub" id="data-hoje">Carregando...</p>
-    </div>
-    <button class="btn-primario-sm" id="btn-nova-tarefa" type="button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Nova tarefa
-    </button>
-  </div>
-
-  <div class="algo-banner">
-    <div class="algo-banner__icone">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
-    </div>
-    <div class="algo-banner__texto">
-      <div class="algo-banner__titulo">Algoritmo P = U × C ativo</div>
-      <div class="algo-banner__desc">As tarefas são distribuídas automaticamente por <strong>Urgência</strong> (prazo) × <strong>Complexidade</strong> (dificuldade). Maior pontuação = maior prioridade na semana.</div>
-    </div>
-    <div class="algo-banner__formula">P = U × C</div>
-  </div>
-
-  <div class="cronograma-grid">
-
-    <div class="semana-wrap">
-      <div class="semana-nav">
-        <button class="btn-nav-seta" id="btn-semana-ant" type="button" title="Semana anterior">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <div class="navbar__actions">
+        <button class="theme-toggle" id="toggle-tema" aria-label="Alternar tema visual">
+          <span id="icone-tema" class="theme-toggle__icon" aria-hidden="true">🌙</span>
+          <span id="label-tema" class="sr-only">Modo Escuro</span>
         </button>
-        <span class="semana-nav__titulo" id="semana-titulo">Semana atual</span>
-        <button class="btn-nav-seta" id="btn-semana-prox" type="button" title="Próxima semana">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+
+        <div class="nav-user" onclick="window.location.href='perfil.html'" role="button" aria-label="Acessar perfil de usuário">
+          <span class="nav-user__avatar" aria-hidden="true">🐱</span>
+          <span class="nav-user__nome">Estudante</span>
+        </div>
+
+        <button class="navbar__toggle" id="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Abrir menu de navigation">
+          <span class="navbar__toggle-bar"></span>
+          <span class="navbar__toggle-bar"></span>
+          <span class="navbar__toggle-bar"></span>
         </button>
       </div>
-      <div class="semana-header" id="semana-header"></div>
-      <div class="semana-corpo" id="semana-corpo"></div>
     </div>
+  </header>
 
-    <div class="painel-lateral">
-
-      <div class="secao">
-        <div class="secao__titulo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          Resumo de Hoje
-        </div>
-        <div class="resumo-hoje">
-          <div class="resumo-item">
-            <span class="resumo-item__label">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              Tarefas concluídas
-            </span>
-            <span class="resumo-item__valor" id="res-concluidas">0 / 0</span>
-          </div>
-          <div class="resumo-item">
-            <span class="resumo-item__label">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              Horas planejadas
-            </span>
-            <span class="resumo-item__valor" id="res-horas">0h</span>
-          </div>
-          <div class="resumo-item">
-            <span class="resumo-item__label">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
-              Sequência atual
-            </span>
-            <span class="resumo-item__valor" id="res-sequencia">0 dias 🔥</span>
-          </div>
-        </div>
+  <main class="dashboard container">
+    <div class="dashboard__header">
+      <div>
+        <h1 class="dashboard__titulo">Minha Jornada</h1>
+        <p class="dashboard__subtitulo" id="data-hoje">Carregando data...</p>
       </div>
-
-      <div class="secao">
-        <div class="secao__titulo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-          Progresso da Semana
-        </div>
-        <div id="progresso-wrap"></div>
-      </div>
-
-      <div class="secao">
-        <div class="secao__titulo">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          Tarefas de Hoje
-        </div>
-        <div id="lista-hoje"></div>
-      </div>
-
-    </div>
-  </div>
-</main>
-
-<!-- MODAL NOVA TAREFA -->
-<div class="modal-overlay" id="modal-tarefa" role="dialog" aria-modal="true">
-  <div class="modal">
-    <div class="modal__titulo">
-      Nova Tarefa
-      <button class="modal__fechar" id="modal-tarefa-fechar" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      <button id="btn-nova-tarefa" class="btn-primario" aria-haspopup="dialog">
+        <span>➕</span> Nova Tarefa
       </button>
     </div>
-    <div class="form-grupo">
-      <label for="t-nome">Nome da tarefa</label>
-      <input type="text" id="t-nome" placeholder="Ex: Estudar Cálculo — Integrais">
-    </div>
-    <div class="form-grupo">
-      <label for="t-materia">Disciplina</label>
-      <input type="text" id="t-materia" placeholder="Ex: Cálculo, Física...">
-    </div>
-    <div class="form-grupo">
-      <label for="t-data">Data</label>
-      <input type="date" id="t-data">
-    </div>
-    <div class="form-grupo">
-      <label for="t-horas">Horas estimadas</label>
-      <input type="number" id="t-horas" min="0.5" max="12" step="0.5" placeholder="Ex: 2">
-    </div>
-    <div class="form-grupo">
-      <label for="t-urgencia">Urgência (U) — 1 a 5</label>
-      <input type="range" id="t-urgencia" min="1" max="5" value="3">
-      <div class="range-wrap">
-        <span>Baixa</span><span id="t-urgencia-val" class="range-val">3</span><span>Alta</span>
+
+    <section class="crono-grid">
+      <div class="crono-painel">
+        <h2 class="painel-titulo">📋 Fila de Execução</h2>
+        <div id="lista-tarefas" class="tarefas-feed"></div>
       </div>
-    </div>
-    <div class="form-grupo">
-      <label for="t-complexidade">Complexidade (C) — 1 a 5</label>
-      <input type="range" id="t-complexidade" min="1" max="5" value="3">
-      <div class="range-wrap">
-        <span>Fácil</span><span id="t-complexidade-val" class="range-val">3</span><span>Difícil</span>
+
+      <div class="crono-painel">
+        <h2 class="painel-titulo">🗓️ Distribuição Semanal</h2>
+        <div class="calendario-grid" id="calendario-semana"></div>
       </div>
-    </div>
-    <div class="prioridade-calc-box">
-      <span class="prioridade-calc-label">Prioridade calculada (P = U × C)</span>
-      <span id="t-prioridade-calc" class="prioridade-calc-val">9</span>
-    </div>
-    <div class="modal__acoes">
-      <button class="btn-cancelar" id="modal-tarefa-cancelar" type="button">Cancelar</button>
-      <button class="btn-salvar" id="modal-tarefa-salvar" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Adicionar
-      </button>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modal-tarefa" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal__conteudo">
+      <div class="modal__header">
+        <h3 id="modal-titulo" class="modal__titulo">Nova Missão de Estudo</h3>
+        <button id="modal-tarefa-fechar" class="modal__fechar" aria-label="Fechar modal">✕</button>
+      </div>
+      
+      <div class="modal__corpo">
+        <div class="form-grupo">
+          <label for="t-nome">O que você vai estudar?</label>
+          <input type="text" id="t-nome" placeholder="Ex: Estudar Sintaxe de JavaScript" required>
+        </div>
+
+        <div class="form-grupo">
+          <label for="t-materia">Matéria / Disciplina</label>
+          <input type="text" id="t-materia" placeholder="Ex: Programação (Padrão: Geral)">
+        </div>
+
+        <div class="form-grupo">
+          <label for="t-data">Data de Execução</label>
+          <input type="date" id="t-data" required>
+        </div>
+
+        <div class="form-grupo">
+          <label for="t-horas">Tempo Estimado (Horas)</label>
+          <input type="number" id="t-horas" min="0.5" step="0.5" placeholder="Ex: 2">
+        </div>
+
+        <input type="hidden" id="t-urgencia" value="3">
+        <input type="hidden" id="t-complexidade" value="3">
+      </div>
+
+      <div class="modal__acoes">
+        <button id="modal-tarefa-cancelar" class="btn-secundario">Cancelar</button>
+        <button id="modal-tarefa-salvar" class="btn-primario">Salvar Missão</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-  <span id="toast-msg"></span>
-</div>
+  <script>
+    // Configurações Locais Isoladas
+    const uInput = document.getElementById('t-urgencia');
+    const cInput = document.getElementById('t-complexidade');
 
-<script>
-// ── LOADING SCREEN REMOVER ────────────────────────────────────
-window.addEventListener('load', () => {
-  const loader = document.getElementById('loading-screen');
-  if (loader) {
-    loader.style.transition = 'opacity 0.5s ease';
-    loader.style.opacity = '0';
-    setTimeout(() => { loader.style.display = 'none'; }, 500);
-  }
-});
+    const carregar = () => {
+      try { return JSON.parse(localStorage.getItem('sf-tarefas')) || []; } catch { return []; }
+    };
+    const salvar = (t) => {
+      try { localStorage.setItem('sf-tarefas', JSON.stringify(t)); } catch {}
+    };
 
-// ── TOAST ─────────────────────────────────────────────────────
-function showToast(msg, tipo = 'info') {
-  document.getElementById('toast-msg').textContent = msg;
-  const t = document.getElementById('toast');
-  t.classList.add('visivel');
-  setTimeout(() => t.classList.remove('visivel'), 2500);
-}
+    let tarefas = carregar();
 
-// ── DADOS ─────────────────────────────────────────────────────
-function salvar(tarefas) { localStorage.setItem('sf-tarefas', JSON.stringify(tarefas)); }
-function carregar() {
-  try {
-    const s = localStorage.getItem('sf-tarefas');
-    return s ? JSON.parse(s) : gerarTarefasDemo();
-  } catch { return gerarTarefasDemo(); }
-}
+    const fmt = (d) => d.toISOString().split('T')[0];
+    const obterDiasSemana = () => {
+      const hoje = new Date();
+      const diaSemana = hoje.getDay(); 
+      const segunda = new Date(hoje);
+      segunda.setDate(hoje.getDate() - (diaSemana === 0 ? 6 : diaSemana - 1));
+      
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(segunda);
+        d.setDate(segunda.getDate() + i);
+        return d;
+      });
+    };
 
-function gerarTarefasDemo() {
-  const hoje = new Date();
-  const fmt  = d => d.toISOString().split('T')[0];
-  const add  = n => { const d = new Date(hoje); d.setDate(d.getDate() + n); return fmt(d); };
-  return [
-    { id:1, nome:'Estudar Integrais',        materia:'Cálculo',    data:fmt(hoje), horas:2,   U:4, C:4, feita:true  },
-    { id:2, nome:'Resolver Lista Grafos',    materia:'Algoritmos', data:fmt(hoje), horas:1.5, U:5, C:5, feita:false },
-    { id:3, nome:'Ler cap. 3 — Eletromag',  materia:'Física',     data:fmt(hoje), horas:1,   U:3, C:3, feita:false },
-    { id:4, nome:'Revisão Histologia',       materia:'Biologia',   data:add(1),    horas:2,   U:4, C:3, feita:false },
-    { id:5, nome:'Exercícios Termodinâmica', materia:'Física',     data:add(1),    horas:1.5, U:3, C:4, feita:false },
-    { id:6, nome:'Prova Cálculo',            materia:'Cálculo',    data:add(2),    horas:3,   U:5, C:5, feita:false },
-    { id:7, nome:'Seminário Algoritmos',     materia:'Algoritmos', data:add(3),    horas:2,   U:4, C:3, feita:false },
-    { id:8, nome:'Resumo Biologia',          materia:'Biologia',   data:add(4),    horas:1,   U:2, C:2, feita:false },
-  ];
-}
+    // ── RENDERIZADORES DO DOM ─────────────────────────────────────
+    function renderCalendario() {
+      const cal = document.getElementById('calendario-semana');
+      if (!cal) return;
+      cal.innerHTML = '';
 
-// ── UTILITÁRIOS DE DATA ────────────────────────────────────────
-const DIAS_NOME   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-const MESES_NOME  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const MESES_LONGO = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      const dias = obterDiasSemana();
+      const nomes = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
 
-function fmt(d) { return d.toISOString().split('T')[0]; }
-function inicioSemana(ref) {
-  const d = new Date(ref);
-  const dia = d.getDay();
-  d.setDate(d.getDate() - ((dia + 6) % 7));
-  d.setHours(0,0,0,0);
-  return d;
-}
-function classeP(P) {
-  if (P >= 16) return 'alta';
-  if (P >= 9)  return 'media';
-  return 'baixa';
-}
+      dias.forEach((dataDia, i) => {
+        const strDia = fmt(dataDia);
+        const tarefasDoDia = tarefas.filter(t => t.data === strDia);
+        
+        // Calcula horas acumuladas
+        const totalHoras = tarefasDoDia.reduce((acc, t) => acc + (t.horas || 0), 0);
 
-let tarefas   = carregar();
-let semanaRef = inicioSemana(new Date());
-
-// ── RENDER CALENDÁRIO ──────────────────────────────────────────
-function renderCalendario() {
-  const header = document.getElementById('semana-header');
-  const corpo  = document.getElementById('semana-corpo');
-  if(!header || !corpo) return;
-
-  const hoje   = fmt(new Date());
-  const dias   = [];
-  for (let i = 0; i < 7; i++) {
-    const d = new Date(semanaRef);
-    d.setDate(semanaRef.getDate() + i);
-    dias.push(d);
-  }
-  const ini = dias[0], fim = dias[6];
-  document.getElementById('semana-titulo').textContent =
-    `${ini.getDate()} ${MESES_NOME[ini.getMonth()]} — ${fim.getDate()} ${MESES_NOME[fim.getMonth()]} ${fim.getFullYear()}`;
-
-  header.innerHTML = dias.map(d => {
-    const isHoje = fmt(d) === hoje;
-    return `<div class="semana-header__dia${isHoje ? ' hoje' : ''}">
-      ${DIAS_NOME[(d.getDay())].substring(0,3)}<br>
-      <span style="font-size:14px;font-weight:800;color:${isHoje ? 'var(--accent)' : 'var(--text-primary)'}">${d.getDate()}</span>
-    </div>`;
-  }).join('');
-
-  corpo.innerHTML = dias.map(d => {
-    const chave  = fmt(d);
-    const isHoje = chave === hoje;
-    const do_dia = tarefas.filter(t => t.data === chave).sort((a, b) => (b.U * b.C) - (a.U * a.C));
-    
-    const blocoTarefas = do_dia.map(t => {
-      const pVal = t.U * t.C;
-      return `<div class="tarefa-bloco tarefa-bloco--${classeP(pVal)}${t.feita ? ' feita' : ''}" data-id="${t.id}">
-        <span class="tarefa-bloco__nome">${t.nome}</span>
-        <span class="tarefa-bloco__materia">${t.materia} · ${t.horas}h (P:${pVal})</span>
-      </div>`;
-    }).join('');
-
-    return `<div class="dia-col${isHoje ? ' hoje' : ''}">${blocoTarefas}</div>`;
-  }).join('');
-
-  vincularEventosBlocos();
-  renderPainelLateral();
-}
-
-// ── RENDER PAINEL LATERAL E CHEKLIST ───────────────────────────
-function renderPainelLateral() {
-  const hojeStr = fmt(new Date());
-  const tarefasHoje = tarefas.filter(t => t.data === hojeStr);
-  
-  // Resumos superiores
-  const concluidas = tarefasHoje.filter(t => t.feita).length;
-  document.getElementById('res-concluidas').textContent = `${concluidas} / ${tarefasHoje.length}`;
-  
-  const horasTotais = tarefasHoje.reduce((acc, t) => acc + parseFloat(t.horas || 0), 0);
-  document.getElementById('res-horas').textContent = `${horasTotais}h`;
-
-  try {
-    const dadosPerfil = JSON.parse(localStorage.getItem('sf-perfil') || '{}');
-    document.getElementById('res-sequencia').textContent = `${dadosPerfil.sequencia || 0} dias 🔥`;
-  } catch {
-    document.getElementById('res-sequencia').textContent = '0 dias 🔥';
-  }
-
-  // Checklist Tarefas de Hoje
-  const listaHoje = document.getElementById('lista-hoje');
-  if (listaHoje) {
-    if (tarefasHoje.length === 0) {
-      listaHoje.innerHTML = `
-        <div class="estado-vazio">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <p>Nenhuma tarefa agendada para hoje.</p>
-        </div>`;
-    } else {
-      listaHoje.innerHTML = tarefasHoje.map(t => {
-        const pVal = t.U * t.C;
-        return `
-          <div class="tarefa-pendente">
-            <input type="checkbox" id="chk-${t.id}" class="tarefa-pendente__checkbox" ${t.feita ? 'checked' : ''} data-id="${t.id}">
-            <label for="chk-${t.id}" class="tarefa-pendente__label">
-              <div class="tarefa-pendente__info">
-                <div>${t.nome}</div>
-                <div class="tarefa-pendente__meta">${t.materia} · ${t.horas}h</div>
+        const diaCard = document.createElement('div');
+        diaCard.className = `cal-dia ${fmt(new Date()) === strDia ? 'hoje' : ''}`;
+        
+        diaCard.innerHTML = `
+          <div class="cal-dia__header">
+            <span class="cal-dia__nome">${nomes[i]}</span>
+            <span class="cal-dia__num">${dataDia.getDate()}</span>
+          </div>
+          <div class="cal-dia__tarefas">
+            ${tarefasDoDia.map(t => `
+              <div class="cal-tarefa ${t.feita ? 'feita' : ''}" title="${t.nome}">
+                ${t.nome}
               </div>
-            </label>
-            <span class="tag-prioridade tag-prioridade--${classeP(pVal)}">${classeP(pVal).toUpperCase()}</span>
-          </div>`;
-      }).join('');
-      vincularEventosChecklist();
+            `).join('')}
+            ${tarefasDoDia.length === 0 ? '<span class="cal-vazio">Livre</span>' : ''}
+          </div>
+          <div class="cal-dia__footer">${totalHoras}h planejadas</div>
+        `;
+        cal.appendChild(diaCard);
+      });
     }
-  }
 
-  // Progresso das Matérias da Semana
-  const progWrap = document.getElementById('progresso-wrap');
-  if (progWrap) {
-    const materiasMap = {};
-    tarefas.forEach(t => {
-      if (!materiasMap[t.materia]) materiasMap[t.materia] = { total: 0, feitas: 0 };
-      materiasMap[t.materia].total++;
-      if (t.feita) materiasMap[t.materia].feitas++;
-    });
+    function renderTarefas() {
+      const feed = document.getElementById('lista-tarefas');
+      if (!feed) return;
+      feed.innerHTML = '';
 
-    const materiasLista = Object.keys(materiasMap);
-    if(materiasLista.length === 0) {
-      progWrap.innerHTML = '<p class="estado-vazio" style="font-size:12px; color:var(--text-secondary)">Sem dados de progresso.</p>';
-    } else {
-      progWrap.innerHTML = materiasLista.map(mat => {
-        const pct = Math.round((materiasMap[mat].feitas / materiasMap[mat].total) * 100) || 0;
-        return `
-          <div class="prog-item">
-            <div class="prog-item__header">
-              <span class="prog-item__nome">${mat}</span>
-              <span class="prog-item__pct">${pct}%</span>
+      // Ordena tarefas por prioridade P = U * C decrescente, e não feitas no topo
+      const ordenadas = [...tarefas].sort((a, b) => {
+        if (a.feita !== b.feita) return a.feita ? 1 : -1;
+        return (b.U * b.C) - (a.U * a.C);
+      });
+
+      if (ordenadas.length === 0) {
+        feed.innerHTML = `
+          <div style="text-align:center; padding:32px; color:var(--text-secondary);">
+            <p style="font-size:32px; margin-bottom:12px;">🎯</p>
+            <p>Nenhuma tarefa agendada. Clique em "Nova Tarefa" para começar!</p>
+          </div>
+        `;
+        return;
+      }
+
+      ordenadas.forEach(t => {
+        const p = t.U * t.C;
+        const item = document.createElement('div');
+        item.className = `tarefa-card ${t.feita ? 'feita' : ''}`;
+        
+        item.innerHTML = `
+          <div class="tarefa-card__check" onclick="alternarTarefa(${t.id})" role="checkbox" aria-checked="${t.feita}" tabindex="0">
+            ${t.feita ? '✅' : '⭕'}
+          </div>
+          <div class="tarefa-card__info">
+            <h3 class="tarefa-card__nome">${t.nome}</h3>
+            <div class="tarefa-card__meta">
+              <span class="tag-materia">${t.materia}</span>
+              <span>📅 ${t.data.split('-').reverse().slice(0,2).join('/')}</span>
+              <span>⏳ ${t.horas}h</span>
             </div>
-            <div class="prog-track">
-              <div class="prog-fill" style="width: ${pct}%"></div>
-            </div>
-          </div>`;
-      }).join('');
+          </div>
+          <div class="tarefa-card__prioridade">
+            <span class="p-fogo">🔥 P: ${p}</span>
+          </div>
+          <button class="tarefa-card__deletar" onclick="removerTarefa(${t.id})" aria-label="Excluir tarefa">🗑️</button>
+        `;
+        feed.appendChild(item);
+      });
     }
-  }
-}
 
-function vincularEventosBlocos() {
-  document.querySelectorAll('.tarefa-bloco').forEach(b => {
-    b.addEventListener('click', () => {
-      const id = parseInt(b.dataset.id);
-      const tarefa = tarefas.find(t => t.id === id);
-      if (tarefa) {
-        tarefa.feita = !tarefa.feita;
-        salvar(tarefas);
-        renderCalendario();
-        showToast(`Tarefa "${tarefa.nome}" atualizada!`);
-      }
+    // ── OPERAÇÕES DAS TAREFAS ─────────────────────────────────────
+    window.alternarTarefa = function(id) {
+      tarefas = tarefas.map(t => t.id === id ? { ...t, feita: !t.feita } : t);
+      salvar(tarefas);
+      renderTarefas();
+      renderCalendario();
+      if(typeof showToast === 'function') showToast('Status da missão atualizado!');
+    };
+
+    window.removerTarefa = function(id) {
+      tarefas = tarefas.filter(t => t.id !== id);
+      salvar(tarefas);
+      renderTarefas();
+      renderCalendario();
+      if(typeof showToast === 'function') showToast('Missão removida com sucesso!', 'aviso');
+    };
+
+    // Lógica do Modal
+    const modal = document.getElementById('modal-tarefa');
+    document.getElementById('btn-nova-tarefa')?.addEventListener('click', () => {
+      document.getElementById('t-nome').value = '';
+      document.getElementById('t-materia').value = '';
+      document.getElementById('t-data').value = fmt(new Date());
+      document.getElementById('t-horas').value = '';
+      modal.classList.add('aberto');
     });
-  });
-}
 
-function vincularEventosChecklist() {
-  document.querySelectorAll('.tarefa-pendente__checkbox').forEach(c => {
-    c.addEventListener('change', () => {
-      const id = parseInt(c.dataset.id);
-      const tarefa = tarefas.find(t => t.id === id);
-      if (tarefa) {
-        tarefa.feita = c.checked;
-        salvar(tarefas);
-        renderCalendario();
+    const fecharModal = () => modal.classList.remove('aberto');
+    document.getElementById('modal-tarefa-fechar')?.addEventListener('click', fecharModal);
+    document.getElementById('modal-tarefa-cancelar')?.addEventListener('click', fecharModal);
+
+    document.getElementById('modal-tarefa-salvar')?.addEventListener('click', () => {
+      const nome = document.getElementById('t-nome').value.trim();
+      const materia = document.getElementById('t-materia').value.trim() || 'Geral';
+      const data = document.getElementById('t-data').value;
+      const horas = parseFloat(document.getElementById('t-horas').value) || 1;
+
+      if (!nome) { 
+        if (typeof showToast === 'function') showToast('Defina um nome para a tarefa!', 'erro');
+        return; 
       }
+
+      const nova = {
+        id: Date.now(),
+        nome,
+        materia,
+        data,
+        horas,
+        U: parseInt(uInput.value),
+        C: parseInt(cInput.value),
+        feita: false
+      };
+
+      tarefas.push(nova);
+      salvar(tarefas);
+      fecharModal();
+      renderTarefas();
+      renderCalendario();
+      if(typeof showToast === 'function') showToast('Tarefa inserida com sucesso!', 'sucesso');
     });
-  });
-}
 
-// ── NAVEGAÇÃO DE SEMANAS ───────────────────────────────────────
-document.getElementById('btn-semana-ant')?.addEventListener('click', () => {
-  semanaRef.setDate(semanaRef.getDate() - 7);
-  renderCalendario();
-});
-document.getElementById('btn-semana-prox')?.addEventListener('click', () => {
-  semanaRef.setDate(semanaRef.getDate() + 7);
-  renderCalendario();
-});
+    // ── INITIALIZATION ────────────────────────────────────────────
+    const hoje = new Date();
+    const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById('data-hoje').textContent = hoje.toLocaleDateString('pt-BR', opcoes);
 
-// ── LÓGICA DO MODAL DE CRIAR TAREFA ────────────────────────────
-const modal = document.getElementById('modal-tarefa');
-const uInput = document.getElementById('t-urgencia');
-const cInput = document.getElementById('t-complexidade');
-const pCalc  = document.getElementById('t-prioridade-calc');
+    renderCalendario();
+    renderTarefas();
+  </script>
 
-function atualizarPrioridadeCalc() {
-  const u = parseInt(uInput.value || 3);
-  const c = parseInt(cInput.value || 3);
-  pCalc.textContent = u * c;
-}
-
-uInput?.addEventListener('input', (e) => {
-  document.getElementById('t-urgencia-val').textContent = e.target.value;
-  atualizarPrioridadeCalc();
-});
-cInput?.addEventListener('input', (e) => {
-  document.getElementById('t-complexidade-val').textContent = e.target.value;
-  atualizarPrioridadeCalc();
-});
-
-document.getElementById('btn-nova-tarefa')?.addEventListener('click', () => {
-  document.getElementById('t-nome').value = '';
-  document.getElementById('t-materia').value = '';
-  document.getElementById('t-data').value = fmt(new Date());
-  document.getElementById('t-horas').value = '';
-  modal.classList.add('aberto');
-});
-
-const fecharModal = () => modal.classList.remove('aberto');
-document.getElementById('modal-tarefa-fechar')?.addEventListener('click', fecharModal);
-document.getElementById('modal-tarefa-cancelar')?.addEventListener('click', fecharModal);
-
-document.getElementById('modal-tarefa-salvar')?.addEventListener('click', () => {
-  const nome = document.getElementById('t-nome').value.trim();
-  const materia = document.getElementById('t-materia').value.trim() || 'Geral';
-  const data = document.getElementById('t-data').value;
-  const horas = parseFloat(document.getElementById('t-horas').value) || 1;
-
-  if (!nome) { alert('Defina um nome para a tarefa!'); return; }
-
-  const nova = {
-    id: Date.now(),
-    nome,
-    materia,
-    data,
-    horas,
-    U: parseInt(uInput.value),
-    C: parseInt(cInput.value),
-    feita: false
-  };
-
-  tarefas.push(nova);
-  salvar(tarefas);
-  fecharModal();
-  renderCalendario();
-  showToast('Tarefa inserida com sucesso!');
-});
-
-// ── INITIALIZATION ────────────────────────────────────────────
-const hoje = new Date();
-const opcoes = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-document.getElementById('data-hoje').textContent = hoje.toLocaleDateString('pt-BR', opcoes);
-
-renderCalendario();
-</script>
-
-  <script src="core.js"></script>
-  <script src="perfil.js"></script>
-  <script src="controller.js"></script>
-
+  <script src="../../../js/core.js"></script>
+  <script src="../../../js/db.js"></script>
+  <script src="../../../js/controller.js"></script>
 </body>
 </html>
