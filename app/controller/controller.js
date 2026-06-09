@@ -1,117 +1,152 @@
 // ============================================================
-// StudyFlow | controller.js — Controlador Central
+// StudyFlow | controller.js — Controlador Central (CORRIGIDO)
 // ============================================================
-// Versão revisada — Code Review Técnico
-//
-// MUDANÇAS vs versão anterior:
-//   - Verificação segura de funções globais (iniciarBanco)
-//   - Selectors específicos (não mais tentativa/erro com 3 IDs)
-//   - Integrado ao design system real do StudyFlow
-//   - Funções de sincronização entre localStorage ↔ IndexedDB
-//   - Sem alert() — usa o sistema de toast do projeto
-//   - Exporta tarefas do cronograma para o IndexedDB
+// Versão revisada — Correção de erros de concorrência e DOM nulo
 // ============================================================
 
-// ── Inicialização ───────────────────────────────────────────
-// Roda quando o DOM estiver pronto e todas as dependências carregadas
 document.addEventListener('DOMContentLoaded', async function() {
   try {
-    // CORREÇÃO CRUCIAL: Verifica se a função existe no escopo global antes de chamá-la
+    // Verifica se a função de banco existe no escopo global
     if (typeof iniciarBanco === 'function') {
       await iniciarBanco();
     } else {
-      console.warn('[StudyFlow] Função "iniciarBanco" não foi encontrada no escopo global. Verifique se o arquivo db.js ou core.js foi carregado corretamente.');
-      // Lança erro controlado para cair no bloco catch e usar o localStorage como fallback
-      throw new Error('iniciarBanco não definido');
+      console.warn('[StudyFlow] Função "iniciarBanco" não encontrada. Usando localStorage como fallback.');
     }
 
-    // Detecta em qual página estamos e inicializa o que for necessário
+    // Detecta a página e inicializa de forma segura
     const pagina = detectarPagina();
 
     if (pagina === 'cronograma') {
-      await sincronizarTarefasComIndexedDB();
+      inicializarCronograma();
+    } else if (pagina === 'perfil') {
+      inicializarPerfil();
     }
 
-    if (pagina === 'perfil') {
-      await sincronizarPerfilComIndexedDB();
-    }
+    // Configura listeners comuns se houver necessidade global
+    configurarGlobalListeners();
 
-  } catch (erro) {
-    // Falha silenciosa — o site funciona sem IndexedDB
-    // (dados ficam só no localStorage como fallback)
-    console.error('[StudyFlow] IndexedDB indisponível, usando localStorage:', erro.message);
+  } catch (e) {
+    console.error('[StudyFlow] Erro na inicialização do controlador:', e.message);
   }
 });
 
-// ── Detecta a página atual pelo título ou URL ───────────────
+// ── Detecta em qual aba/página estamos ───────────────────────
 function detectarPagina() {
-  const url = window.location.pathname.toLowerCase();
-  if (url.includes('cronograma')) return 'cronograma';
-  if (url.includes('perfil'))     return 'perfil';
-  if (url.includes('foco'))       return 'foco';
-  if (url.includes('inscricao'))  return 'inscricao';
+  const path = window.location.pathname.toLowerCase();
+  if (path.includes('cronograma')) return 'cronograma';
+  if (path.includes('perfil') || path.includes('view.php')) return 'perfil';
+  
+  // Fallback baseado em elementos únicos na tela
+  if (document.getElementById('tabela-cronograma') || document.getElementById('btn-nova-tarefa')) {
+    return 'cronograma';
+  }
+  if (document.getElementById('form-perfil') || document.getElementById('perfil-nome')) {
+    return 'perfil';
+  }
   return 'index';
 }
 
-// ── Sincroniza tarefas do localStorage → IndexedDB ─────────
-// Garante que os dados do cronograma estejam persistidos no banco
-async function sincronizarTarefasComIndexedDB() {
-  try {
-    const raw = localStorage.getItem('sf-tarefas');
-    if (!raw) return;
+// ── Inicialização Segura da Aba Cronograma ──────────────────
+function inicializarCronograma() {
+  console.log('[StudyFlow] Inicializando módulo: Cronograma');
+  
+  const btnNovaTarefa = document.getElementById('btn-nova-tarefa');
+  const modalTarefa   = document.getElementById('modal-tarefa');
+  const btnFecharModal= document.getElementById('btn-fechar-modal');
+  const formTarefa    = document.getElementById('form-tarefa');
 
-    const tarefasLS  = JSON.parse(raw);
-    
-    // CORREÇÃO DE SEGURANÇA: Garante que a função buscarItens existe antes de rodar
-    if (typeof buscarItens !== 'function') return;
-    
-    const tarefasDB  = await buscarItens('tarefas');
-    const idsNoDB    = new Set(tarefasDB.map(t => t.id));
+  // Só adiciona os eventos se os elementos de fato existirem na tela
+  if (btnNovaTarefa && modalTarefa) {
+    btnNovaTarefa.addEventListener('click', () => {
+      modalTarefa.classList.add('ativo');
+      modalTarefa.style.display = 'flex'; // Garante exibição física se necessário
+    });
+  }
 
-    // Adiciona apenas as tarefas que ainda não estão no IndexedDB
-    const novas = tarefasLS.filter(t => !idsNoDB.has(t.id));
-    for (const tarefa of novas) {
-      if (typeof atualizarItem === 'function') {
-        // Usa put/atualizar em vez de add para evitar conflito de IDs
-        await atualizarItem(tarefa, 'tarefas');
+  if (btnFecharModal && modalTarefa) {
+    btnFecharModal.addEventListener('click', () => {
+      modalTarefa.classList.remove('ativo');
+      modalTarefa.style.display = 'none';
+    });
+  }
+
+  if (formTarefa) {
+    formTarefa.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const descInput = document.getElementById('tarefa-descricao');
+      const dataInput = document.getElementById('tarefa-data');
+      const horaInput = document.getElementById('tarefa-hora');
+
+      if (!descInput || !dataInput) return;
+
+      const novaTarefa = {
+        id: Date.now(),
+        descricao: descInput.value,
+        data: dataInput.value,
+        hora: horaInput ? horaInput.value : '',
+        concluida: false
+      };
+
+      const salvo = await salvarTarefa(novaTarefa);
+      if (salvo) {
+        if (typeof showToast === 'function') showToast('Tarefa adicionada com sucesso!', 'sucesso');
+        formTarefa.reset();
+        if (modalTarefa) {
+          modalTarefa.classList.remove('ativo');
+          modalTarefa.style.display = 'none';
+        }
+        // Recarrega a listagem se a função existir
+        if (typeof renderizarTarefas === 'function') renderizarTarefas();
       }
-    }
+    });
+  }
 
-  } catch (e) {
-    console.error('[StudyFlow] Erro ao sincronizar tarefas:', e.message);
+  // Renderização inicial das tarefas da aba
+  if (typeof renderizarTarefas === 'function') {
+    renderizarTarefas();
   }
 }
 
-// ── Sincroniza perfil do localStorage → IndexedDB ──────────
-async function sincronizarPerfilComIndexedDB() {
-  try {
-    const raw = localStorage.getItem('sf-perfil');
-    if (!raw) return;
-
-    if (typeof atualizarItem === 'function') {
-      await atualizarItem(
-        { chave: 'dados', valor: JSON.parse(raw), sincronizadoEm: new Date().toISOString() },
-        'perfil'
-      );
-    }
-  } catch (e) {
-    console.error('[StudyFlow] Erro ao sincronizar perfil:', e.message);
+// ── Inicialização Segura da Aba Perfil ──────────────────────
+function inicializarPerfil() {
+  console.log('[StudyFlow] Inicializando módulo: Perfil');
+  
+  const formPerfil = document.getElementById('form-perfil');
+  if (formPerfil) {
+    formPerfil.addEventListener('submit', function() {
+      if (typeof showToast === 'function') showToast('Sincronizando dados do perfil...', 'info');
+    });
   }
 }
 
-// ── Salva uma tarefa do formulário (cronograma) ─────────────
-// Chamada pelo cronograma.html ao submeter nova tarefa
-async function salvarTarefaComIndexedDB(tarefa) {
+// ── Configurações Globais Extras ────────────────────────────
+function configurarGlobalListeners() {
+  // Evita que cliques em links vazios ou desalinhados quebrem a execução
+  const abasLinks = document.querySelectorAll('.menu-link, .nav-link');
+  abasLinks.forEach(link => {
+    if (!link.getAttribute('href')) {
+      link.addEventListener('click', (e) => e.preventDefault());
+    }
+  });
+}
+
+// ── Sincronização e Salvamento de Tarefas ───────────────────
+async function salvarTarefa(tarefa) {
   try {
-    // 1. Salva no localStorage (fonte principal de verdade)
-    const raw     = localStorage.getItem('sf-tarefas');
+    // 1. Atualiza o localStorage
+    const raw = localStorage.getItem('sf-tarefas');
     const tarefas = raw ? JSON.parse(raw) : [];
     tarefas.push(tarefa);
     localStorage.setItem('sf-tarefas', JSON.stringify(tarefas));
 
-    // 2. Replica no IndexedDB (persistência secundária)
+    // 2. Replica no IndexedDB de forma secundária (se disponível)
     if (typeof adicionarItem === 'function') {
-      await adicionarItem(tarefa, 'tarefas');
+      try {
+        await adicionarItem(tarefa, 'tarefas');
+      } catch (dbErr) {
+        console.warn('[StudyFlow] Falha ao replicar no IndexedDB, mantido no localStorage:', dbErr.message);
+      }
     }
 
     return true;
@@ -122,7 +157,6 @@ async function salvarTarefaComIndexedDB(tarefa) {
 }
 
 // ── Salva sessão Pomodoro no IndexedDB ──────────────────────
-// Chamada pelo foco.html ao concluir um pomodoro
 async function salvarSessaoPomodoro(sessao) {
   try {
     if (typeof adicionarItem === 'function') {
@@ -139,7 +173,15 @@ async function salvarSessaoPomodoro(sessao) {
 // ── Exporta dados completos (para backup/debug) ─────────────
 async function exportarDados() {
   try {
-    if (typeof buscarItens !== 'function') return null;
+    if (typeof buscarItens !== 'function') {
+      // Fallback usando localStorage
+      return {
+        tarefas: JSON.parse(localStorage.getItem('sf-tarefas') || '[]'),
+        sessoes: [],
+        exportadoEm: new Date().toISOString(),
+        fonte: 'localStorage'
+      };
+    }
 
     const [tarefas, sessoes] = await Promise.all([
       buscarItens('tarefas'),
@@ -149,12 +191,10 @@ async function exportarDados() {
       tarefas,
       sessoes,
       exportadoEm: new Date().toISOString(),
-      versao: '1.0'
+      fonte: 'IndexedDB'
     };
   } catch (e) {
-    console.error('[StudyFlow] Erro ao exportar:', e.message);
+    console.error('[StudyFlow] Erro ao exportar dados:', e.message);
     return null;
   }
 }
-
-console.log('[StudyFlow] controller.js carregado');
