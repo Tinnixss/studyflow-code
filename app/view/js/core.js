@@ -1,22 +1,12 @@
 // ============================================================
-// StudyFlow | core.js — Utilitários Compartilhados
+// StudyFlow | core.js — Utilitários Compartilhados (CORRIGIDO)
 // ============================================================
 // Inclua este arquivo em TODAS as páginas, antes dos scripts
 // específicos de cada página:
 //   <script src="core.js"></script>
-//
-// Substitui o código duplicado de:
-//   - Toggle de tema (dark/light)
-//   - Navbar scroll + hambúrguer
-//   - Loading screen (com lógica de sessionStorage)
-//   - Wrapper seguro para localStorage
-//   - Sistema de Toast (sem alert())
 // ============================================================
 
 // ── Wrapper seguro para localStorage ───────────────────────
-// localStorage pode falhar em modo privado ou Safari.
-// Todas as páginas devem usar lsGet/lsSet em vez de
-// localStorage.getItem/setItem diretamente.
 function lsGet(chave, fallback = null) {
   try { return localStorage.getItem(chave) ?? fallback; }
   catch { return fallback; }
@@ -33,63 +23,72 @@ function lsRemove(chave) {
 }
 
 
-// ── Toggle Dark / Light ─────────────────────────────────────
-// Lê os elementos pelo ID padrão usado em todas as páginas:
-//   #toggle-tema  → <input type="checkbox">
-//   #label-tema   → <label> com o texto "Dark" / "Light"
-//   #icone-tema   → <span> com o emoji 🌙 / ☀️
-//
-// Como usar no HTML (igual ao que já existe):
-//   <input type="checkbox" id="toggle-tema" ...>
-//   <label id="label-tema">Dark</label>
-//   <span  id="icone-tema">🌙</span>
+// ── Toggle Dark / Light (Adaptado para Botão, Link ou Checkbox) ───
 function initTheme() {
   const htmlEl    = document.documentElement;
-  const inputTema = document.getElementById('toggle-tema');
+  const elementoTema = document.getElementById('toggle-tema');
   const labelTema = document.getElementById('label-tema');
   const iconeTema = document.getElementById('icone-tema');
 
-  // Sem toggle na página — encerra sem erro
-  if (!inputTema) return;
+  // Se o botão não existir nessa página específica, encerra sem quebrar o código
+  if (!elementoTema) return;
 
-  // Aplica o tema salvo ao carregar
-  const temaSalvo = lsGet('sf-tema');
+  // Recupera o tema salvo ou define 'dark' como padrão
+  const temaSalvo = lsGet('sf-tema') || 'dark';
+  
+  // Sincroniza o estado inicial visual com o tema salvo
   if (temaSalvo === 'light') {
-    inputTema.checked = true;
     htmlEl.setAttribute('data-tema', 'light');
+    if (elementoTema.type === 'checkbox') elementoTema.checked = true;
     if (labelTema) labelTema.textContent = 'Light';
     if (iconeTema) iconeTema.textContent = '☀️';
+  } else {
+    htmlEl.setAttribute('data-tema', 'dark');
+    if (elementoTema.type === 'checkbox') elementoTema.checked = false;
+    if (labelTema) labelTema.textContent = 'Dark';
+    if (iconeTema) iconeTema.textContent = '🌙';
   }
 
-  // Escuta mudanças no toggle
-  inputTema.addEventListener('change', () => {
-    const modoLight = inputTema.checked;
-    htmlEl.setAttribute('data-tema', modoLight ? 'light' : 'dark');
-    if (labelTema) labelTema.textContent = modoLight ? 'Light' : 'Dark';
-    if (iconeTema) iconeTema.textContent = modoLight ? '☀️' : '🌙';
-    lsSet('sf-tema', modoLight ? 'light' : 'dark');
-  });
+  // Função centralizada para alternar o estado do tema
+  function alternarTema() {
+    const temaAtual = htmlEl.getAttribute('data-tema') || 'dark';
+    const novoTema = temaAtual === 'dark' ? 'light' : 'dark';
+    
+    htmlEl.setAttribute('data-tema', novoTema);
+    lsSet('sf-tema', novoTema);
+
+    // Atualiza os elementos auxiliares se eles existirem na interface
+    if (labelTema) labelTema.textContent = novoTema === 'light' ? 'Light' : 'Dark';
+    if (iconeTema) iconeTema.textContent = novoTema === 'light' ? '☀️' : '🌙';
+    if (elementoTema.type === 'checkbox') elementoTema.checked = (novoTema === 'light');
+  }
+
+  // Detecta dinamicamente se deve escutar um 'change' (checkbox) ou 'click' (button/link)
+  if (elementoTema.type === 'checkbox') {
+    elementoTema.addEventListener('change', alternarTema);
+  } else {
+    elementoTema.addEventListener('click', (evento) => {
+      evento.preventDefault();
+      alternarTema();
+    });
+  }
 }
 
 
-// ── Navbar: scroll + hambúrguer ─────────────────────────────
-// Espera os IDs padrão:
-//   #nav-principal → <nav>
-//   #nav-toggle    → <button> hambúrguer
-//   #nav-links     → <ul> com os links
+// ── Navbar: scroll + hambúrguer (Protegido para Abas Internas) ──
 function initNavigation() {
   const navEl     = document.getElementById('nav-principal');
   const navToggle = document.getElementById('nav-toggle');
   const navLinks  = document.getElementById('nav-links');
 
-  // Adiciona classe .rolado ao rolar (para efeito de sombra/blur)
+  // Adiciona efeito visual na barra ao rolar a página
   if (navEl) {
     window.addEventListener('scroll', () => {
       navEl.classList.toggle('rolado', window.scrollY > 20);
     }, { passive: true });
   }
 
-  // Hambúrguer: abre/fecha o menu em mobile
+  // Configura menu sanduíche mobile (apenas se os seletores existirem)
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', () => {
       const aberto = navLinks.classList.toggle('aberto');
@@ -98,13 +97,17 @@ function initNavigation() {
       navToggle.setAttribute('aria-label', aberto ? 'Fechar menu' : 'Abrir menu');
     });
 
-    // Fecha o menu ao clicar em qualquer link (navegação em SPA-like)
+    // Fecha o menu mobile ao clicar, contanto que seja um link de âncora da Landing Page
     navLinks.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        navLinks.classList.remove('aberto');
-        navToggle.classList.remove('aberto');
-        navToggle.setAttribute('aria-expanded', 'false');
-        navToggle.setAttribute('aria-label', 'Abrir menu');
+        const href = link.getAttribute('href') || '';
+        // Só interfere se for uma âncora interna (#funcionalidades, etc.), liberando abas e rotas reais
+        if (href.startsWith('#')) {
+          navLinks.classList.remove('aberto');
+          navToggle.classList.remove('aberto');
+          navToggle.setAttribute('aria-expanded', 'false');
+          navToggle.setAttribute('aria-label', 'Abrir menu');
+        }
       });
     });
   }
@@ -112,14 +115,6 @@ function initNavigation() {
 
 
 // ── Loading Screen ──────────────────────────────────────────
-// Lógica com sessionStorage: aparece apenas na PRIMEIRA visita
-// da sessão, não em cada navegação entre páginas.
-//
-// Espera o ID: #loading-screen
-//
-// sessionStorage vs localStorage:
-//   localStorage   → persiste até o usuário limpar
-//   sessionStorage → some quando a aba é fechada
 function initLoadingScreen() {
   const loadingScreen = document.getElementById('loading-screen');
   if (!loadingScreen) return;
@@ -127,12 +122,10 @@ function initLoadingScreen() {
   const jaCarregou = sessionStorage.getItem('sf-loaded');
 
   if (jaCarregou) {
-    // Não é a primeira visita da sessão → esconde sem animação
     loadingScreen.style.display = 'none';
     return;
   }
 
-  // Primeira visita → registra e mostra normalmente
   sessionStorage.setItem('sf-loaded', 'true');
 
   function esconderLoading() {
@@ -147,7 +140,7 @@ function initLoadingScreen() {
     window.addEventListener('load', esconderLoading);
   }
 
-  // Segurança: esconde após 6s mesmo se algo travar
+  // Trava de segurança contra carregamentos infinitos
   setTimeout(() => {
     if (!loadingScreen.classList.contains('hidden')) {
       loadingScreen.classList.add('hidden');
@@ -157,20 +150,11 @@ function initLoadingScreen() {
 
 
 // ── Sistema de Toast ────────────────────────────────────────
-// Substitui alert() em todo o projeto.
-// Uso: showToast('Tarefa salva!', 'sucesso')
-//      showToast('Erro ao salvar.', 'erro')
-//      showToast('Atenção: prazo próximo.', 'aviso')
-//
-// Tipos disponíveis: 'sucesso' | 'erro' | 'aviso' | 'info'
-// Duração padrão: 3500ms
 function showToast(mensagem, tipo = 'info', duracao = 3500) {
-  // Cria container de toasts se ainda não existir
   let container = document.getElementById('sf-toast-container');
   if (!container) {
     container = document.createElement('div');
     container.id = 'sf-toast-container';
-    // Estilos inline mínimos — não dependem do CSS carregado
     Object.assign(container.style, {
       position: 'fixed',
       bottom: '24px',
@@ -184,7 +168,6 @@ function showToast(mensagem, tipo = 'info', duracao = 3500) {
     document.body.appendChild(container);
   }
 
-  // Cria o toast
   const toast = document.createElement('div');
   toast.setAttribute('role', 'status');
   toast.setAttribute('aria-live', 'polite');
@@ -218,7 +201,6 @@ function showToast(mensagem, tipo = 'info', duracao = 3500) {
   toast.innerHTML = `<span>${icones[tipo] || icones.info}</span><span>${mensagem}</span>`;
   container.appendChild(toast);
 
-  // Anima entrada
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       toast.style.opacity   = '1';
@@ -226,7 +208,6 @@ function showToast(mensagem, tipo = 'info', duracao = 3500) {
     });
   });
 
-  // Remove após duração
   setTimeout(() => {
     toast.style.opacity   = '0';
     toast.style.transform = 'translateY(8px)';
@@ -236,12 +217,10 @@ function showToast(mensagem, tipo = 'info', duracao = 3500) {
 
 
 // ── Inicialização automática ────────────────────────────────
-// Roda quando o DOM estiver pronto em qualquer página que
-// inclua este arquivo. Não é necessário chamar nada manualmente.
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
   initNavigation();
   initLoadingScreen();
 });
 
-console.log('[StudyFlow] core.js carregado');
+console.log('[StudyFlow] core.js carregado e atualizado com sucesso!');
