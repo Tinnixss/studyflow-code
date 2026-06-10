@@ -15,7 +15,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="../../../css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 
   <!-- Anti-FOUC: aplica tema salvo ANTES do body renderizar -->
   <script>try{var t=localStorage.getItem("sf-tema");if(t)document.documentElement.setAttribute("data-tema",t);}catch(e){}</script>
@@ -161,43 +161,43 @@
   <a href="#conteudo-principal" class="skip-link">Pular para o conteúdo</a>
 
   <header role="banner">
-    <nav class="nav" id="nav-principal" aria-label="Menu Principal">
-      <div class="nav__inner">
+   <nav class="nav" id="nav-principal" aria-label="Menu Principal">
+  <div class="nav__inner">
 
-        <a href="index.html" class="nav__logo" aria-label="StudyFlow — página inicial">
-          <!-- Mascote gato SVG -->
-          <img src="img/logo.png" alt="" class="cat-mascot" aria-hidden="true" loading="eager">
-          StudyFlow
-        </a>
+    <a href="/app/view/html/index.html" class="nav__logo" aria-label="StudyFlow — página inicial">
+      <img src="img/logo.png" alt="" class="cat-mascot" aria-hidden="true" loading="eager">
+      StudyFlow
+    </a>
 
-        <ul class="nav__links" id="nav-links" role="list">
-          <li><a href="#hero" aria-current="page">Início</a></li>
-          <li><a href="#funcionalidades">Funcionalidades</a></li>
-          <li><a href="perfil.html">Perfil</a></li>
-          <li><a href="cronograma.html">Cronograma</a></li>
-          <li><a href="foco.html">Modo Foco</a></li>
-        </ul>
+    <ul class="nav__links" id="nav-links" role="list">
+      <li><a href="#hero" aria-current="page">Início</a></li>
+      <li><a href="#funcionalidades">Funcionalidades</a></li>
+      
+      <li><a href="/app/view/html/perfil.html">Perfil</a></li>
+      <li><a href="/app/view/html/cronograma.html">Cronograma</a></li>
+      <li><a href="/app/view/html/foco.html">Modo Foco</a></li>
+    </ul>
 
-        <div class="nav__actions">
-          <div class="toggle-tema" title="Alternar tema">
-            <input type="checkbox" id="toggle-tema" class="toggle-tema__input"
-              role="switch" aria-label="Alternar entre dark e light mode">
-            <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
-              <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
-            </label>
-            <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
-          </div>
-          <a href="#cadastro" class="btn-nav">Começar grátis →</a>
-        </div>
-
-        <button class="nav__toggle" id="nav-toggle" type="button"
-          aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </button>
+    <div class="nav__actions">
+      <div class="toggle-tema" title="Alternar tema">
+        <input type="checkbox" id="toggle-tema" class="toggle-tema__input"
+          role="switch" aria-label="Alternar entre dark e light mode">
+        <label for="toggle-tema" class="toggle-tema__track" aria-hidden="true">
+          <span class="toggle-tema__thumb"><span id="icone-tema">🌙</span></span>
+        </label>
+        <label for="toggle-tema" class="toggle-tema__label" id="label-tema">Dark</label>
       </div>
-    </nav>
+      <a href="#cadastro" class="btn-nav">Começar grátis →</a>
+    </div>
+
+    <button class="nav__toggle" id="nav-toggle" type="button"
+      aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-links">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+  </div>
+</nav>
   </header>
 
   <main id="conteudo-principal" role="main">
@@ -430,7 +430,8 @@
     </p>
   </footer>
 
-  <script src="../core.js"></script>
-  <script src="js/script.js"></script>
+<script src="../js/core.js"></script>
+<script src="../js/script.js"></script>
+
 </body>
 </html>

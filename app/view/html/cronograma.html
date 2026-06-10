@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0d1b2a">
   <title>StudyFlow | Cronograma</title>
   <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAHDElEQVR42sWXa2xUxxXHfzP33t31PrzG7Bp71+ZRWwVDCQnpi7RVmqRECYE2VE0pISmVg0Dqh7ZqpDZNvqRSlNJGaqn6pYiHEtJUoQkpDS1qokpplZTyqCBWCkkwkQsYYzB+rPfau3fvvTP9sLv22rsG1C+50urMzpyZOfd/z/9/ZkTLvBVaaD62R36cmwPIckOLalurr9Jeb+xm55vlRhmJmbb2WHlQlPp0yYqbnH8dBGaPWBetEAhhgDBQWuFrVfwvDRCi9Ob6plGpQqDc1mLKSiQIQIOvXVxvAq1dfDUBSAwZQggLy+eUjgAAAABJRU5ErkJggg==">
-  <link rel="stylesheet" href="../../../css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
@@ -21,24 +21,24 @@
       </div>
 
       <nav class="navbar__menu" id="nav-links" aria-label="Menu principal">
-        <ul class="navbar__links">
-          <li>
-            <a href="cronograma.html" class="navbar__link ativo" aria-current="page">
-              <span>📅</span> Cronograma
+    <ul class="navbar__links">
+        <li>
+            <a href="/app/view/html/cronograma.html" class="navbar__link ativo" aria-current="page">
+                <span>📅</span> Cronograma
             </a>
-          </li>
-          <li>
-            <a href="foco.html" class="navbar__link">
-              <span>⏱️</span> Modo Foco
+        </li>
+        <li>
+            <a href="/app/view/html/foco.html" class="navbar__link">
+                <span>⏱️</span> Modo Foco
             </a>
-          </li>
-          <li>
-            <a href="perfil.html" class="navbar__link">
-              <span>🐱</span> Meu Perfil
+        </li>
+        <li>
+            <a href="/app/view/html/perfil.html" class="navbar__link">
+                <span>🐱</span> Meu Perfil
             </a>
-          </li>
-        </ul>
-      </nav>
+        </li>
+    </ul>
+</nav>
 
       <div class="navbar__actions">
         <button class="theme-toggle" id="toggle-tema" aria-label="Alternar tema visual">
@@ -306,8 +306,9 @@
     renderTarefas();
   </script>
 
-  <script src="../js/core.js"></script>
-  <script src="../../../js/db.js"></script>
-  <script src="../../../js/controller.js"></script>
+<script src="../js/db.js"></script>
+<script src="../js/core.js"></script>
+<script src="../../controller/controller.js"></script>
+
 </body>
 </html>
